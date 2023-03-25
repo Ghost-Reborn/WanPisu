@@ -85,29 +85,7 @@ public class AllAnime {
 
     public static String getAnimeServer(String animeID){
         String apiUrl =  ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_TAIL;
-
-        StringBuilder result = new StringBuilder();
-        try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = urlConnection.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                result.append(line);
-            }
-            bufferedReader.close();
-            inputStreamReader.close();
-            inputStream.close();
-            urlConnection.disconnect();
-        } catch (MalformedURLException e) {
-            Log.e(MainActivity.LOG_TAG, "Unable to parse URL");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result.toString();
+        return connectAndGetJsonSearchData(apiUrl);
     }
 
 }
