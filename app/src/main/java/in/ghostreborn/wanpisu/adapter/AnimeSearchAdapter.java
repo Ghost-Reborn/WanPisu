@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.WanPisu;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
 
-    private final ArrayList<String> animeNames;
+    private final ArrayList<WanPisu> animeNames;
 
-    public AnimeSearchAdapter(ArrayList<String> mAnimeNames) {
+    public AnimeSearchAdapter(ArrayList<WanPisu> mAnimeNames) {
         animeNames = mAnimeNames;
     }
 
@@ -31,7 +32,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull AnimeSearchAdapter.ViewHolder holder, int position) {
-        holder.animeTextView.setText(animeNames.get(position));
+        holder.animeTextView.setText(animeNames.get(position).getAnimeName());
     }
 
     @Override
