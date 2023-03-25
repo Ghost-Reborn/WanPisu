@@ -17,6 +17,9 @@ import in.ghostreborn.wanpisu.parser.AllAnime;
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "WANPISU";
 
+    ArrayList<WanPisu> animeDetailsArray;
+    AnimeSearchAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            ArrayList<WanPisu> animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("");
-            AnimeSearchAdapter adapter = new AnimeSearchAdapter(animeDetailsArray);
+            animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("");
+            adapter = new AnimeSearchAdapter(animeDetailsArray);
             runOnUiThread(() -> animeContainerView.setAdapter(adapter));
         };
         executor.execute(task);
@@ -39,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Runnable task = () -> {
-                    ArrayList<WanPisu> animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(
+                    animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(
                             searchView.getQuery().toString()
                     );
-                    AnimeSearchAdapter adapter = new AnimeSearchAdapter(animeDetailsArray);
+                    adapter = new AnimeSearchAdapter(animeDetailsArray);
                     runOnUiThread(() -> animeContainerView.setAdapter(adapter));
                 };
                 executor.execute(task);
