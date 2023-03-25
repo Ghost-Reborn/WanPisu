@@ -1,6 +1,5 @@
 package in.ghostreborn.wanpisu.adapter;
 
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
 
     private final ArrayList<String> animeNames;
 
-    public AnimeSearchAdapter(ArrayList<String> mAnimeNames){
+    public AnimeSearchAdapter(ArrayList<String> mAnimeNames) {
         animeNames = mAnimeNames;
     }
 
