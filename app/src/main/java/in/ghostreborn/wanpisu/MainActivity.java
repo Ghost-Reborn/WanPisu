@@ -12,7 +12,7 @@ import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "WANPISU";
-    public static TextView testText;
+    private TextView testText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
