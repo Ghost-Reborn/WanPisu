@@ -20,15 +20,17 @@ import in.ghostreborn.wanpisu.WanPisu;
 
 public class AllAnime {
 
-    // TODO use this as common function to get JSON data
-    private static String connectAndGetJsonSearchData(String animeName) {
-        String apiUrl = "https://api.allanime.to/allanimeapi?variables={\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"" +
-                animeName +
-                "\"},\"limit\":40,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail}}}";
+    public static final String ALL_ANIME_QUERY_HEAD = "https://api.allanime.to/allanimeapi?variables={\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"";
+    public static final String ALL_ANIME_QUERY_TAIL = "\"},\"limit\":40,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail}}}";
+    public static final String ALL_ANIME_SERVER_HEAD = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22";
+    public static final String ALL_ANIME_SERVER_TAIL = "%22,%22translationType%22:%22sub%22,%22episodeString%22:%221%22}&query=query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}";
+
+    private static String connectAndGetJsonSearchData(String url) {
+
         StringBuilder result = new StringBuilder();
         try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            URL queryURL = new URL(url);
+            HttpURLConnection urlConnection = (HttpURLConnection) queryURL.openConnection();
             InputStream inputStream = urlConnection.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -56,7 +58,9 @@ public class AllAnime {
      */
     public static ArrayList<WanPisu> parseAnimeIDAnimeNameAnimeThumbnail(String anime) {
         
-        String rawJson = connectAndGetJsonSearchData(anime);
+        String rawJson = connectAndGetJsonSearchData(
+                ALL_ANIME_QUERY_HEAD + anime + ALL_ANIME_QUERY_TAIL
+        );
         
         ArrayList<WanPisu> animeDetailsArray = new ArrayList<>();
         try {
@@ -80,9 +84,8 @@ public class AllAnime {
     }
 
     public static String getAnimeServer(String animeID){
-        String apiUrl = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22" +
-                animeID +
-                "%22,%22translationType%22:%22sub%22,%22episodeString%22:%221%22}&query=query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}";
+        String apiUrl =  ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_TAIL;
+
         StringBuilder result = new StringBuilder();
         try {
             URL url = new URL(apiUrl);
