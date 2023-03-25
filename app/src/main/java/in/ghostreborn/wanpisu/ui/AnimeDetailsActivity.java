@@ -24,7 +24,7 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         RecyclerView animeContainerView = findViewById(R.id.anime_episode_recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 5);
         animeContainerView.setLayoutManager(gridLayoutManager);
-        AnimeEpisodesAdapter adapter = new AnimeEpisodesAdapter(episodes);
+        AnimeEpisodesAdapter adapter = new AnimeEpisodesAdapter(episodes, this);
         animeContainerView.setAdapter(adapter);
 
     }

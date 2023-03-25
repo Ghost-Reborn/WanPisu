@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.ui.ExoPlayer;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
 
     int episodes = 0;
+    Context context;
 
-    public AnimeEpisodesAdapter(int episodes){
+    public AnimeEpisodesAdapter(int episodes, Context context){
         this.episodes = episodes;
+        this.context = context;
     }
 
     @NonNull
@@ -29,7 +34,18 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.episodeNumberTextView.setText(String.valueOf(position + 1));
+
+        int correctPosition = position + 1;
+
+        holder.episodeNumberTextView.setText(String.valueOf(correctPosition));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ExoPlayer.class);
+                intent.putExtra("ANIME_EPISODE_NUMBER", correctPosition);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
