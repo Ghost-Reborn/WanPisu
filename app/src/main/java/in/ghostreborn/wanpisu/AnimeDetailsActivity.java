@@ -3,6 +3,7 @@ package in.ghostreborn.wanpisu;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,7 +38,7 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_anime_details);
 
         findViews();
-        initPlayer();
+        initPlayer("https://workfields.backup-server222.lol/7d2473746a243c24296267726734296b63626f67353e36293e4e48677e5c735733635c73653544516e29757364293759323e3676286b7632242a2475727463676b63744f62243c245f722b5542247b");
 
         Intent intent = getIntent();
         String animeID = intent.getStringExtra("ANIME_ID");
@@ -51,6 +52,7 @@ public class AnimeDetailsActivity extends AppCompatActivity {
                 server.append(servers.get(i));
                 server.append("\n");
             }
+            Log.e("ANIME", server.toString());
         };
         executor.execute(task);
     }
@@ -59,22 +61,22 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         exoplayerView = findViewById(R.id.exoplayerView);
     }
 
-    private void initPlayer() {
+    private void initPlayer(String url) {
         simpleExoPlayer = new SimpleExoPlayer.Builder(this).build();
         exoplayerView.setPlayer(simpleExoPlayer);
 
-        createMediaSource();
+        createMediaSource(url);
 
         simpleExoPlayer.setMediaSource(mediaSource);
         simpleExoPlayer.prepare();
     }
 
-    private void createMediaSource(){
+    private void createMediaSource(String url){
         urlType = URLType.MP4;
-        urlType.setUrl("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
+        urlType.setUrl(url);
 
-//        urlType = URLType.HLS
-//        urlType.url = "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
+//        urlType = URLType.HLS;
+//        urlType.setUrl(url);
 
         simpleExoPlayer.seekTo(0);
         if (urlType == URLType.MP4) {
