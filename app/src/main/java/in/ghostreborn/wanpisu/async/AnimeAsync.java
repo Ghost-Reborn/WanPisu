@@ -1,15 +1,15 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.async;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.ui.AnimeDetailsActivity;
 import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class AnimeAsync extends AsyncTask<String, Void, ArrayList<String>> {
 
-    private ArrayList<String> servers = new ArrayList<>();
     String animeID;
     Context context;
 
@@ -20,17 +20,14 @@ public class AnimeAsync extends AsyncTask<String, Void, ArrayList<String>> {
 
     @Override
     protected ArrayList<String> doInBackground(String... strings) {
-        servers = AllAnime.getAnimeServer(animeID);
-        return servers;
+        return AllAnime.getAnimeServer(animeID);
     }
 
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         super.onPostExecute(strings);
 
-        ArrayList<String> servers = strings;
-
-        AnimeDetailsActivity.initPlayer(servers.get(0), context);
+        AnimeDetailsActivity.initPlayer(strings.get(0), context);
 
     }
 }
