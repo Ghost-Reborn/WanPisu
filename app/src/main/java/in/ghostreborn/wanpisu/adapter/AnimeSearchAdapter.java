@@ -1,11 +1,12 @@
 package in.ghostreborn.wanpisu.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,23 +15,24 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.AnimeDetailsActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.WanPisu;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
 
     private static ArrayList<WanPisu> animeNames;
+    private static Context context;
 
-    public AnimeSearchAdapter(ArrayList<WanPisu> mAnimeNames) {
+    public AnimeSearchAdapter(Context mContext,ArrayList<WanPisu> mAnimeNames) {
         animeNames = mAnimeNames;
+        context = mContext;
     }
 
     private static View.OnClickListener listener(int position){
-        return view -> Toast.makeText(
-                view.getContext(),
-                animeNames.get(position).getAnimeName(),
-                Toast.LENGTH_SHORT
-        ).show();
+        return view -> context.startActivity(
+                new Intent(context, AnimeDetailsActivity.class)
+        );
     }
 
     @NonNull

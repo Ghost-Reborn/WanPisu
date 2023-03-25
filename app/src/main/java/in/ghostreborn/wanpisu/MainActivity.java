@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
             animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("");
-            adapter = new AnimeSearchAdapter(animeDetailsArray);
+            adapter = new AnimeSearchAdapter(MainActivity.this,animeDetailsArray);
             runOnUiThread(() -> animeContainerView.setAdapter(adapter));
         };
         executor.execute(task);
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(
                             searchView.getQuery().toString()
                     );
-                    adapter = new AnimeSearchAdapter(animeDetailsArray);
+                    adapter = new AnimeSearchAdapter(MainActivity.this, animeDetailsArray);
                     runOnUiThread(() -> animeContainerView.setAdapter(adapter));
                 };
                 executor.execute(task);
