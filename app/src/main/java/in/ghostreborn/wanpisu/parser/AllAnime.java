@@ -57,11 +57,11 @@ public class AllAnime {
      * @return ArrayList<WanPisu>
      */
     public static ArrayList<WanPisu> parseAnimeIDAnimeNameAnimeThumbnail(String anime) {
-        
+
         String rawJson = connectAndGetJsonSearchData(
                 ALL_ANIME_QUERY_HEAD + anime + ALL_ANIME_QUERY_TAIL
         );
-        
+
         ArrayList<WanPisu> animeDetailsArray = new ArrayList<>();
         try {
             JSONArray edgesArray = new JSONObject(rawJson)
@@ -78,14 +78,32 @@ public class AllAnime {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        
+
         return animeDetailsArray;
-        
+
     }
 
-    public static String getAnimeServer(String animeID){
-        String apiUrl =  ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_TAIL;
-        return connectAndGetJsonSearchData(apiUrl);
+    public static ArrayList<String> getAnimeServer(String animeID) {
+        String apiUrl = ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_TAIL;
+        ArrayList<String> animeServers = new ArrayList<>();
+        try {
+            JSONObject baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
+            JSONArray sourceURLs = baseJSON.
+                    getJSONObject("data")
+                    .getJSONObject("episode")
+                    .getJSONArray("sourceUrls");
+            for (int i = 0; i < sourceURLs.length(); i++) {
+                String server = sourceURLs.getJSONObject(i).getString("sourceUrl");
+                if (server.contains("workfields")){
+                    animeServers.add(server);
+                }
+
+            }
+            return animeServers;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return animeServers;
     }
 
 }

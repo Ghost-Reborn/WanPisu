@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -24,8 +25,13 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         testText.setText(animeID);
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            String test = AllAnime.getAnimeServer(animeID);
-            runOnUiThread(() -> testText.setText(test));
+            ArrayList<String> servers = AllAnime.getAnimeServer(animeID);
+            StringBuilder server = new StringBuilder();
+            for (int i=0;i<servers.size();i++){
+                server.append(servers.get(i));
+                server.append("\n");
+            }
+            runOnUiThread(() -> testText.setText(server));
         };
         executor.execute(task);
     }
