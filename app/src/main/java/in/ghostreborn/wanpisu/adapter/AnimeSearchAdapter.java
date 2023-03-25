@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
@@ -33,6 +35,8 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
     @Override
     public void onBindViewHolder(@NonNull AnimeSearchAdapter.ViewHolder holder, int position) {
         holder.animeTextView.setText(animeNames.get(position).getAnimeName());
+        Picasso.get().load(animeNames.get(position).getAnimeThumbnailUrl())
+                .into(holder.animeImageView);
     }
 
     @Override
