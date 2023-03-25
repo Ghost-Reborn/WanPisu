@@ -1,5 +1,6 @@
 package in.ghostreborn.wanpisu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,53 +26,44 @@ import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class AnimeDetailsActivity extends AppCompatActivity {
 
-    private PlayerView exoplayerView;
+    private static PlayerView exoplayerView;
 
-    private SimpleExoPlayer simpleExoPlayer;
-    private MediaSource mediaSource;
+    private static SimpleExoPlayer simpleExoPlayer;
+    private static MediaSource mediaSource;
 
-    private URLType urlType;
+    private static URLType urlType;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anime_details);
 
-        findViews();
-        initPlayer("https://workfields.backup-server222.lol/7d2473746a243c24296267726734296b63626f67353e36293e4e48677e5c735733635c73653544516e29757364293759323e3676286b7632242a2475727463676b63744f62243c245f722b5542247b");
-
         Intent intent = getIntent();
         String animeID = intent.getStringExtra("ANIME_ID");
+        findViews();
 
+        AnimeAsync animeAsync = new AnimeAsync(animeID, this);
+        animeAsync.execute();
 
-        Executor executor = Executors.newSingleThreadExecutor();
-        Runnable task = () -> {
-            ArrayList<String> servers = AllAnime.getAnimeServer(animeID);
-            StringBuilder server = new StringBuilder();
-            for (int i = 0; i < servers.size(); i++) {
-                server.append(servers.get(i));
-                server.append("\n");
-            }
-            Log.e("ANIME", server.toString());
-        };
-        executor.execute(task);
     }
 
     private void findViews() {
         exoplayerView = findViewById(R.id.exoplayerView);
     }
 
-    private void initPlayer(String url) {
-        simpleExoPlayer = new SimpleExoPlayer.Builder(this).build();
+    public static void initPlayer(String url, Context context) {
+        simpleExoPlayer = new SimpleExoPlayer.Builder(context).build();
         exoplayerView.setPlayer(simpleExoPlayer);
 
-        createMediaSource(url);
+        createMediaSource(url, context);
 
         simpleExoPlayer.setMediaSource(mediaSource);
         simpleExoPlayer.prepare();
     }
 
-    private void createMediaSource(String url){
+    private static void createMediaSource(String url, Context context) {
         urlType = URLType.MP4;
         urlType.setUrl(url);
 
@@ -81,15 +73,15 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         simpleExoPlayer.seekTo(0);
         if (urlType == URLType.MP4) {
             DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
-                    this,
-                    Util.getUserAgent(this, getApplicationInfo().name)
+                    context,
+                    Util.getUserAgent(context, context.getApplicationInfo().name)
             );
             mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(MediaItem.fromUri(Uri.parse(urlType.getUrl())));
         } else if (urlType == URLType.HLS) {
             DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
-                    this,
-                    Util.getUserAgent(this, getApplicationInfo().name)
+                    context,
+                    Util.getUserAgent(context, context.getApplicationInfo().name)
             );
             mediaSource = new HlsMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(MediaItem.fromUri(Uri.parse(urlType.getUrl())));
