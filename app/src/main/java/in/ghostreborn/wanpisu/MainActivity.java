@@ -18,7 +18,7 @@ import in.ghostreborn.wanpisu.parser.AllAnime;
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "WANPISU";
 
-    ArrayList<WanPisu> animeDetailsArray;
+    public static ArrayList<WanPisu> animeDetailsArray;
     AnimeSearchAdapter adapter;
 
     @Override

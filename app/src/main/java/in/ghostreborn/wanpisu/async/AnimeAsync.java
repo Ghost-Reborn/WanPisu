@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.ui.AnimeDetailsActivity;
 import in.ghostreborn.wanpisu.parser.AllAnime;
+import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 
 public class AnimeAsync extends AsyncTask<String, Void, ArrayList<String>> {
 
@@ -26,5 +27,9 @@ public class AnimeAsync extends AsyncTask<String, Void, ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         super.onPostExecute(strings);
+
+        ArrayList<String> servers = strings;
+        ExoPlayerActivity.initPlayer(servers.get(0), context);
+
     }
 }

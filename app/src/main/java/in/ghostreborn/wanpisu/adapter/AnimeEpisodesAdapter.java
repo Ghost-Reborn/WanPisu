@@ -10,9 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.exoplayer2.ExoPlayer;
-
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
 
@@ -41,7 +40,7 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ExoPlayer.class);
+                Intent intent = new Intent(context, ExoPlayerActivity.class);
                 intent.putExtra("ANIME_EPISODE_NUMBER", correctPosition);
                 context.startActivity(intent);
             }
