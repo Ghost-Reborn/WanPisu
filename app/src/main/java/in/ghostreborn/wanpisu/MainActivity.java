@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -35,8 +36,17 @@ public class MainActivity extends AppCompatActivity {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            String test = AllAnime.parseSearchQuery("One Piece");
-            runOnUiThread(() -> testText.setText(test));
+            ArrayList<WanPisu> animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("One Piece");
+            runOnUiThread(() -> {
+                for (int i = 0; i < animeDetailsArray.size(); i++) {
+                    testText.append(
+                            animeDetailsArray.get(i).getAnimeID() +
+                                    "\t" +
+                                    animeDetailsArray.get(i).getAnimeName() +
+                                    "\n"
+                    );
+                }
+            });
         };
         executor.execute(task);
     }
