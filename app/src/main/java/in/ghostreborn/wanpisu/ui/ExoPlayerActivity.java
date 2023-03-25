@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import in.ghostreborn.wanpisu.R;
 
-public class ExoPlayer extends AppCompatActivity {
+public class ExoPlayerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

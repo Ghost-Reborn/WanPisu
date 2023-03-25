@@ -5,21 +5,21 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.exoplayer2.ExoPlayer;
+
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.ui.ExoPlayer;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
 
     int episodes = 0;
     Context context;
 
-    public AnimeEpisodesAdapter(int episodes, Context context){
+    public AnimeEpisodesAdapter(int episodes, Context context) {
         this.episodes = episodes;
         this.context = context;
     }
