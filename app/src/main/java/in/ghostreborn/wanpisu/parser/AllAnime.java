@@ -20,6 +20,7 @@ import in.ghostreborn.wanpisu.WanPisu;
 
 public class AllAnime {
 
+    // TODO use this as common function to get JSON data
     private static String connectAndGetJsonSearchData(String animeName) {
         String apiUrl = "https://api.allanime.to/allanimeapi?variables={\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"" +
                 animeName +
@@ -76,6 +77,34 @@ public class AllAnime {
         
         return animeDetailsArray;
         
+    }
+
+    public static String getAnimeServer(String animeID){
+        String apiUrl = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22" +
+                animeID +
+                "%22,%22translationType%22:%22sub%22,%22episodeString%22:%221%22}&query=query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}";
+        StringBuilder result = new StringBuilder();
+        try {
+            URL url = new URL(apiUrl);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream inputStream = urlConnection.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                result.append(line);
+            }
+            bufferedReader.close();
+            inputStreamReader.close();
+            inputStream.close();
+            urlConnection.disconnect();
+        } catch (MalformedURLException e) {
+            Log.e(MainActivity.LOG_TAG, "Unable to parse URL");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result.toString();
     }
 
 }
