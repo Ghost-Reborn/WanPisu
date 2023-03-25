@@ -26,8 +26,5 @@ public class AnimeAsync extends AsyncTask<String, Void, ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
         super.onPostExecute(strings);
-
-        AnimeDetailsActivity.initPlayer(strings.get(0), context);
-
     }
 }

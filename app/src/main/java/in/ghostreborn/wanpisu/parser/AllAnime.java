@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.MainActivity;
-import in.ghostreborn.wanpisu.WanPisu;
+import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class AllAnime {
 

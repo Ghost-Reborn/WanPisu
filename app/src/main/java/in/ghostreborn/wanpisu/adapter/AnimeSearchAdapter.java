@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.ui.AnimeDetailsActivity;
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.WanPisu;
+import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
 
@@ -41,7 +41,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
     @Override
     public AnimeSearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.anime_search_list_layout, parent, false);
+                .inflate(R.layout.anime_search_list, parent, false);
         return new ViewHolder(view);
     }
 
