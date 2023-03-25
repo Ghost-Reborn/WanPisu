@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayout"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/anime_image_view"
-        android:layout_width="300dp"
-        android:layout_height="460dp"
-        android:contentDescription="@string/app_name"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher" />
+    android:layout_height="wrap_content"
+    android:paddingStart="20dp"
+    android:paddingEnd="0dp"
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/anime_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
         android:text="@string/app_name"
-        android:layout_below="@id/anime_image_view"
-        android:layout_centerInParent="true"/>
+        app:layout_constraintEnd_toEndOf="@+id/anime_image_view"
+        app:layout_constraintStart_toStartOf="@+id/anime_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/anime_image_view" />
 
-</RelativeLayout>
+
+    <ImageView
+        android:id="@+id/anime_image_view"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
