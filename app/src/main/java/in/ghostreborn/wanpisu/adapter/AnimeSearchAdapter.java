@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,10 +19,18 @@ import in.ghostreborn.wanpisu.WanPisu;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
 
-    private final ArrayList<WanPisu> animeNames;
+    private static ArrayList<WanPisu> animeNames;
 
     public AnimeSearchAdapter(ArrayList<WanPisu> mAnimeNames) {
         animeNames = mAnimeNames;
+    }
+
+    private static View.OnClickListener listener(int position){
+        return view -> Toast.makeText(
+                view.getContext(),
+                animeNames.get(position).getAnimeName(),
+                Toast.LENGTH_SHORT
+        ).show();
     }
 
     @NonNull
@@ -37,6 +46,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         holder.animeTextView.setText(animeNames.get(position).getAnimeName());
         Picasso.get().load(animeNames.get(position).getAnimeThumbnailUrl())
                 .into(holder.animeImageView);
+        holder.itemView.setOnClickListener(listener(position));
     }
 
     @Override

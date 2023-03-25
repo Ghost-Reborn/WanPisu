@@ -1,6 +1,7 @@
 package in.ghostreborn.wanpisu;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -33,4 +34,5 @@ public class MainActivity extends AppCompatActivity {
         };
         executor.execute(task);
     }
+
 }
