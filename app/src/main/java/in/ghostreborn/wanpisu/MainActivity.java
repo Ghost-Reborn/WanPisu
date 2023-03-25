@@ -1,7 +1,7 @@
 package in.ghostreborn.wanpisu;
 
 import android.os.Bundle;
-import android.view.View;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,11 +28,33 @@ public class MainActivity extends AppCompatActivity {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            ArrayList<WanPisu> animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("One Piece");
+            ArrayList<WanPisu> animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("");
             AnimeSearchAdapter adapter = new AnimeSearchAdapter(animeDetailsArray);
             runOnUiThread(() -> animeContainerView.setAdapter(adapter));
         };
         executor.execute(task);
+
+        SearchView searchView = findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Runnable task = () -> {
+                    ArrayList<WanPisu> animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(
+                            searchView.getQuery().toString()
+                    );
+                    AnimeSearchAdapter adapter = new AnimeSearchAdapter(animeDetailsArray);
+                    runOnUiThread(() -> animeContainerView.setAdapter(adapter));
+                };
+                executor.execute(task);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
     }
 
 }
