@@ -5,7 +5,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import in.ghostreborn.wanpisu.network.AnimeSearchAsync;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "WANPISU";
@@ -29,7 +32,12 @@ public class MainActivity extends AppCompatActivity {
 //        animeContainerView.setAdapter(adapter);
 
         testText = findViewById(R.id.test_text);
-        AnimeSearchAsync animeSearchAsync = new AnimeSearchAsync();
-        animeSearchAsync.execute("One Piece");
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        Runnable task = () -> {
+            String test = AllAnime.parseSearchQuery("One Piece");
+            runOnUiThread(() -> testText.setText(test));
+        };
+        executor.execute(task);
     }
 }
