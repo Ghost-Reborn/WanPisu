@@ -29,7 +29,7 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.episodeNumberTextView.setText(String.valueOf(position));
+        holder.episodeNumberTextView.setText(String.valueOf(position + 1));
     }
 
     @Override
