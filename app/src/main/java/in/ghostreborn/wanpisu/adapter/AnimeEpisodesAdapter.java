@@ -17,10 +17,12 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
     int episodes = 0;
     Context context;
+    String animeID;
 
-    public AnimeEpisodesAdapter(int episodes, Context context) {
+    public AnimeEpisodesAdapter(int episodes, Context context, String animeID) {
         this.episodes = episodes;
         this.context = context;
+        this.animeID = animeID;
     }
 
     @NonNull
@@ -42,6 +44,7 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
             public void onClick(View view) {
                 Intent intent = new Intent(context, ExoPlayerActivity.class);
                 intent.putExtra("ANIME_EPISODE_NUMBER", correctPosition);
+                intent.putExtra("ANIME_ID", animeID);
                 context.startActivity(intent);
             }
         });

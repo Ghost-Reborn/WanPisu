@@ -33,11 +33,11 @@ public class ExoPlayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exo_player);
 
         Intent intent = getIntent();
-        int animeEpisodeNumber = intent.getIntExtra("ANIME_EPISODE_NUMBER", 0);
+        String animeID = intent.getStringExtra("ANIME_ID");
         findViews();
 
         AnimeAsync animeAsync = new AnimeAsync(
-                MainActivity.animeDetailsArray.get(animeEpisodeNumber - 1).getAnimeID(),
+                animeID,
                 this
         );
         animeAsync.execute();
