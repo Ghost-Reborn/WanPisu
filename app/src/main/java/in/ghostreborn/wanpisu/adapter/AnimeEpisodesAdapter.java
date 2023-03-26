@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.ServersSelectActivity;
 import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
@@ -42,7 +43,7 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ExoPlayerActivity.class);
+                Intent intent = new Intent(context, ServersSelectActivity.class);
                 intent.putExtra("ANIME_EPISODE_NUMBER", correctPosition);
                 intent.putExtra("ANIME_ID", animeID);
                 context.startActivity(intent);
