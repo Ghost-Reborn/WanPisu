@@ -23,7 +23,8 @@ public class AllAnime {
     public static final String ALL_ANIME_QUERY_HEAD = "https://api.allanime.to/allanimeapi?variables={\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"";
     public static final String ALL_ANIME_QUERY_TAIL = "\"},\"limit\":40,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail,lastEpisodeInfo}}}";
     public static final String ALL_ANIME_SERVER_HEAD = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22";
-    public static final String ALL_ANIME_SERVER_TAIL = "%22,%22translationType%22:%22sub%22,%22episodeString%22:%221%22}&query=query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}";
+    public static final String ALL_ANIME_SERVER_MIDDLE = "%22,%22translationType%22:%22sub%22,%22episodeString%22:%22";
+    public static final String ALL_ANIME_SERVER_TAIL = "%22}&query=query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}";
 
     private static String connectAndGetJsonSearchData(String url) {
 
@@ -91,8 +92,8 @@ public class AllAnime {
 
     }
 
-    public static ArrayList<String> getAnimeServer(String animeID) {
-        String apiUrl = ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_TAIL;
+    public static ArrayList<String> getAnimeServer(String animeID, String eposodeNumber) {
+        String apiUrl = ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_MIDDLE + eposodeNumber + ALL_ANIME_SERVER_TAIL;
         ArrayList<String> animeServers = new ArrayList<>();
         try {
             JSONObject baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
