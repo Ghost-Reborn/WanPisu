@@ -21,7 +21,7 @@ import in.ghostreborn.wanpisu.model.WanPisu;
 public class AllAnime {
 
     public static final String ALL_ANIME_QUERY_HEAD = "https://api.allanime.to/allanimeapi?variables={\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"";
-    public static final String ALL_ANIME_QUERY_TAIL = "\"},\"limit\":40,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail,lastEpisodeInfo}}}";
+    public static final String ALL_ANIME_QUERY_TAIL = "\"},\"limit\":40,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail,availableEpisodes}}}";
     public static final String ALL_ANIME_SERVER_HEAD = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22";
     public static final String ALL_ANIME_SERVER_MIDDLE = "%22,%22translationType%22:%22sub%22,%22episodeString%22:%22";
     public static final String ALL_ANIME_SERVER_TAIL = "%22}&query=query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}";
@@ -74,9 +74,8 @@ public class AllAnime {
                 String animeID = edges.getString("_id");
                 String animeName = edges.getString("name");
                 String animeThumbnailUrl = edges.getString("thumbnail");
-                String lastEpisode = edges.getJSONObject("lastEpisodeInfo")
-                                .getJSONObject("sub")
-                                        .getString("episodeString");
+                String lastEpisode = edges.getJSONObject("availableEpisodes")
+                        .getString("sub");
                 animeDetailsArray.add(new WanPisu(
                         animeID,
                         animeName,
@@ -103,7 +102,7 @@ public class AllAnime {
                     .getJSONArray("sourceUrls");
             for (int i = 0; i < sourceURLs.length(); i++) {
                 String server = sourceURLs.getJSONObject(i).getString("sourceUrl");
-                if (server.contains("workfields")){
+                if (server.contains("workfields")) {
                     animeServers.add(server);
                 }
 
