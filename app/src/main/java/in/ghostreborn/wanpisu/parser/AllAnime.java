@@ -25,6 +25,9 @@ public class AllAnime {
     public static final String ALL_ANIME_SERVER_HEAD = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22";
     public static final String ALL_ANIME_SERVER_MIDDLE = "%22,%22translationType%22:%22sub%22,%22episodeString%22:%22";
     public static final String ALL_ANIME_SERVER_TAIL = "%22}&query=query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}";
+    public static final String ALL_ANIME_BLOG_HEAD = "https://blog.allanime.pro/apivtwo/clock.json?";
+
+    public static boolean isHLS = false;
 
     private static String connectAndGetJsonSearchData(String url) {
 
@@ -91,9 +94,9 @@ public class AllAnime {
 
     }
 
-    public static ArrayList<String> getAnimeServer(String animeID, String eposodeNumber) {
+    public static String getAnimeServer(String animeID, String eposodeNumber) {
         String apiUrl = ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_MIDDLE + eposodeNumber + ALL_ANIME_SERVER_TAIL;
-        ArrayList<String> animeServers = new ArrayList<>();
+        String apiClock = "";
         try {
             JSONObject baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
             JSONArray sourceURLs = baseJSON.
@@ -102,16 +105,31 @@ public class AllAnime {
                     .getJSONArray("sourceUrls");
             for (int i = 0; i < sourceURLs.length(); i++) {
                 String server = sourceURLs.getJSONObject(i).getString("sourceUrl");
-                if (server.contains("workfields")) {
-                    animeServers.add(server);
+                if (server.contains("apivtwo")) {
+                    apiClock = server;
+                    break;
                 }
-
             }
-            return animeServers;
+            apiUrl = ALL_ANIME_BLOG_HEAD + apiClock.substring(15);
+            Log.e("ALLANIME", apiUrl);
+            baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
+            JSONArray links = baseJSON.getJSONArray("links");
+            String streamURL = "";
+            for (int i=0;i<links.length();i++){
+                JSONObject linkObject = links.getJSONObject(i);
+                String link = linkObject.getString("link");
+                if (!link.contains("vipanicdn")){
+                    streamURL = link;
+                    break;
+                }
+            }
+            return streamURL;
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return animeServers;
+
+        return "";
+
     }
 
 }

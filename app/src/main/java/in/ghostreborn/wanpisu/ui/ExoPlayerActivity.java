@@ -12,6 +12,7 @@ import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -69,11 +70,11 @@ public class ExoPlayerActivity extends AppCompatActivity {
                 context,
                 Util.getUserAgent(context, context.getApplicationInfo().name)
         );
-        mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+        mediaSource = new HlsMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(MediaItem.fromUri(Uri.parse(url)));
     }
 
-    class AnimeAsync extends AsyncTask<String, Void, ArrayList<String>> {
+    class AnimeAsync extends AsyncTask<String, Void, String> {
 
         String animeID;
         String episodeNumber;
@@ -84,16 +85,16 @@ public class ExoPlayerActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ArrayList<String> doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
             return AllAnime.getAnimeServer(animeID, episodeNumber);
         }
 
         @Override
-        protected void onPostExecute(ArrayList<String> strings) {
+        protected void onPostExecute(String strings) {
             super.onPostExecute(strings);
 
-            ArrayList<String> servers = strings;
-            ExoPlayerActivity.initPlayer(servers.get(0), ExoPlayerActivity.this);
+            String server = strings;
+            ExoPlayerActivity.initPlayer(server, ExoPlayerActivity.this);
 
         }
     }
