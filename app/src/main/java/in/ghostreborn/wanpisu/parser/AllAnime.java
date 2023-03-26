@@ -94,8 +94,8 @@ public class AllAnime {
 
     }
 
-    public static String getAnimeServer(String animeID, String eposodeNumber) {
-        String apiUrl = ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_MIDDLE + eposodeNumber + ALL_ANIME_SERVER_TAIL;
+    public static String getAnimeServer(String animeID, String episodeNumber) {
+        String apiUrl = ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_MIDDLE + episodeNumber + ALL_ANIME_SERVER_TAIL;
         String apiClock = "";
         try {
             JSONObject baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
