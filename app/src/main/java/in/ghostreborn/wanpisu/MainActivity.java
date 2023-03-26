@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         animeContainerView.setLayoutManager(gridLayoutManager);
 
+        // Get latest anime updates
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
             animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("");

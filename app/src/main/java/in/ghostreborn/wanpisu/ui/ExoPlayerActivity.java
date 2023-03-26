@@ -3,6 +3,7 @@ package in.ghostreborn.wanpisu.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,9 +17,10 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import in.ghostreborn.wanpisu.MainActivity;
+import java.util.ArrayList;
+
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.async.AnimeAsync;
+import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class ExoPlayerActivity extends AppCompatActivity {
 
@@ -39,7 +41,6 @@ public class ExoPlayerActivity extends AppCompatActivity {
 
         AnimeAsync animeAsync = new AnimeAsync(
                 animeID,
-                this,
                 String.valueOf(episodeNumber)
         );
         animeAsync.execute();
@@ -72,4 +73,30 @@ public class ExoPlayerActivity extends AppCompatActivity {
                 .createMediaSource(MediaItem.fromUri(Uri.parse(url)));
     }
 
+    class AnimeAsync extends AsyncTask<String, Void, ArrayList<String>> {
+
+        String animeID;
+        String episodeNumber;
+
+        public AnimeAsync(String mAnimeID, String mEpisodeNumber) {
+            animeID = mAnimeID;
+            episodeNumber = mEpisodeNumber;
+        }
+
+        @Override
+        protected ArrayList<String> doInBackground(String... strings) {
+            return AllAnime.getAnimeServer(animeID, episodeNumber);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> strings) {
+            super.onPostExecute(strings);
+
+            ArrayList<String> servers = strings;
+            ExoPlayerActivity.initPlayer(servers.get(0), ExoPlayerActivity.this);
+
+        }
+    }
+
 }
+
