@@ -36,15 +36,9 @@ public class ExoPlayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exo_player);
 
         Intent intent = getIntent();
-        String animeID = intent.getStringExtra("ANIME_ID");
-        int episodeNumber = intent.getIntExtra("ANIME_EPISODE_NUMBER", 1);
+        String server = intent.getStringExtra("ANIME_SERVER");
         findViews();
-
-        AnimeAsync animeAsync = new AnimeAsync(
-                animeID,
-                String.valueOf(episodeNumber)
-        );
-        animeAsync.execute();
+        initPlayer(server, ExoPlayerActivity.this);
 
     }
 
@@ -80,31 +74,6 @@ public class ExoPlayerActivity extends AppCompatActivity {
             );
             mediaSource = new HlsMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(MediaItem.fromUri(Uri.parse(url)));
-        }
-    }
-
-    class AnimeAsync extends AsyncTask<String, Void, ArrayList<String>> {
-
-        String animeID;
-        String episodeNumber;
-
-        public AnimeAsync(String mAnimeID, String mEpisodeNumber) {
-            animeID = mAnimeID;
-            episodeNumber = mEpisodeNumber;
-        }
-
-        @Override
-        protected ArrayList<String> doInBackground(String... strings) {
-            return AllAnime.getAnimeServer(animeID, episodeNumber);
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<String> strings) {
-            super.onPostExecute(strings);
-
-            ArrayList<String> server = strings;
-            ExoPlayerActivity.initPlayer(server.get(0), ExoPlayerActivity.this);
-
         }
     }
 

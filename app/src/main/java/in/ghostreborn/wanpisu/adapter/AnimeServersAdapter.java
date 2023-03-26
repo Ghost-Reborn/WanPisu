@@ -1,6 +1,7 @@
 package in.ghostreborn.wanpisu.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 
 public class AnimeServersAdapter extends RecyclerView.Adapter<AnimeServersAdapter.ViewHolder> {
 
@@ -33,9 +35,21 @@ public class AnimeServersAdapter extends RecyclerView.Adapter<AnimeServersAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        int mPosition = position;
+
         holder.animeServerSelectTextView.setText(
-                servers.get(position)
+                servers.get(mPosition)
         );
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(context, ExoPlayerActivity.class);
+                intent.putExtra("ANIME_SERVER", servers.get(mPosition));
+                context.startActivity(intent);
+            }
+        });
     }
 
 
