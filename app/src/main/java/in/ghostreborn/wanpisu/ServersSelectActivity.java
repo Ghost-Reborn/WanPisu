@@ -2,12 +2,15 @@ package in.ghostreborn.wanpisu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.adapter.AnimeServersAdapter;
 import in.ghostreborn.wanpisu.parser.AllAnime;
@@ -27,15 +30,15 @@ public class ServersSelectActivity extends AppCompatActivity {
         int episodeNumber = intent.getIntExtra("ANIME_EPISODE_NUMBER", 1);
 
         animeServerSelectRecyclerView = findViewById(R.id.anime_server_select_recycler_view);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 5);
-        animeServerSelectRecyclerView.setLayoutManager(gridLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        animeServerSelectRecyclerView.setLayoutManager(linearLayoutManager);
 
         AnimeAsync animeAsync = new AnimeAsync(animeID, String.valueOf(episodeNumber));
         animeAsync.execute();
 
     }
 
-    class AnimeAsync extends AsyncTask<String, Void, String> {
+    class AnimeAsync extends AsyncTask<String, Void, ArrayList<String>> {
 
         String animeID;
         String episodeNumber;
@@ -46,12 +49,12 @@ public class ServersSelectActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected ArrayList<String> doInBackground(String... strings) {
             return AllAnime.getAnimeServer(animeID, episodeNumber);
         }
 
         @Override
-        protected void onPostExecute(String strings) {
+        protected void onPostExecute(ArrayList<String> strings) {
             super.onPostExecute(strings);
 
             AnimeServersAdapter adapter = new AnimeServersAdapter(ServersSelectActivity.this, strings);

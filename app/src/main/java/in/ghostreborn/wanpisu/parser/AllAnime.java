@@ -94,8 +94,9 @@ public class AllAnime {
 
     }
 
-    public static String getAnimeServer(String animeID, String episodeNumber) {
+    public static ArrayList<String> getAnimeServer(String animeID, String episodeNumber) {
         String apiUrl = ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_MIDDLE + episodeNumber + ALL_ANIME_SERVER_TAIL;
+        ArrayList<String> servers = new ArrayList<>();
         String apiClock = "";
         try {
             JSONObject baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
@@ -107,31 +108,28 @@ public class AllAnime {
                 String server = sourceURLs.getJSONObject(i).getString("sourceUrl");
                 if (server.contains("apivtwo")) {
                     apiClock = server;
-                    break;
+                    continue;
                 }
+                servers.add(server);
             }
             apiUrl = ALL_ANIME_BLOG_HEAD + apiClock.substring(15);
             Log.e("ALLANIME", apiUrl);
             baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
             JSONArray links = baseJSON.getJSONArray("links");
-            String streamURL = "";
             for (int i=0;i<links.length();i++){
                 JSONObject linkObject = links.getJSONObject(i);
-                String link = linkObject.getString("link");
+                String server = linkObject.getString("link");
                 if (linkObject.has("mp4")){
                     isHLS = !linkObject.getBoolean("mp4");
                 }
-                if (!link.contains("vipanicdn")){
-                    streamURL = link;
-                    break;
-                }
+                servers.add(server);
             }
-            return streamURL;
+            return servers;
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return "";
+        return servers;
 
     }
 

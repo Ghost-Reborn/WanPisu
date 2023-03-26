@@ -83,7 +83,7 @@ public class ExoPlayerActivity extends AppCompatActivity {
         }
     }
 
-    class AnimeAsync extends AsyncTask<String, Void, String> {
+    class AnimeAsync extends AsyncTask<String, Void, ArrayList<String>> {
 
         String animeID;
         String episodeNumber;
@@ -94,16 +94,16 @@ public class ExoPlayerActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected ArrayList<String> doInBackground(String... strings) {
             return AllAnime.getAnimeServer(animeID, episodeNumber);
         }
 
         @Override
-        protected void onPostExecute(String strings) {
+        protected void onPostExecute(ArrayList<String> strings) {
             super.onPostExecute(strings);
 
-            String server = strings;
-            ExoPlayerActivity.initPlayer(server, ExoPlayerActivity.this);
+            ArrayList<String> server = strings;
+            ExoPlayerActivity.initPlayer(server.get(0), ExoPlayerActivity.this);
 
         }
     }

@@ -9,17 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class AnimeServersAdapter extends RecyclerView.Adapter<AnimeServersAdapter.ViewHolder> {
 
     Context context;
-    String data;
+    ArrayList<String> servers;
 
-    public AnimeServersAdapter(Context context, String data) {
+    public AnimeServersAdapter(Context context, ArrayList<String> servers) {
         this.context = context;
-        this.data = data;
+        this.servers = servers;
     }
 
     @NonNull
@@ -33,14 +34,14 @@ public class AnimeServersAdapter extends RecyclerView.Adapter<AnimeServersAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.animeServerSelectTextView.setText(
-                data
+                servers.get(position)
         );
     }
 
 
     @Override
     public int getItemCount() {
-        return 1;
+        return servers.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
