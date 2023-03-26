@@ -118,6 +118,9 @@ public class AllAnime {
             for (int i=0;i<links.length();i++){
                 JSONObject linkObject = links.getJSONObject(i);
                 String link = linkObject.getString("link");
+                if (linkObject.has("mp4")){
+                    isHLS = !linkObject.getBoolean("mp4");
+                }
                 if (!link.contains("vipanicdn")){
                     streamURL = link;
                     break;

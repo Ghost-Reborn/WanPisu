@@ -65,13 +65,22 @@ public class ExoPlayerActivity extends AppCompatActivity {
     private static void createMediaSource(String url, Context context) {
 
         simpleExoPlayer.seekTo(0);
-
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
-                context,
-                Util.getUserAgent(context, context.getApplicationInfo().name)
-        );
-        mediaSource = new HlsMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(MediaItem.fromUri(Uri.parse(url)));
+        boolean isHLS = AllAnime.isHLS;
+        if (!isHLS) {
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
+                    context,
+                    Util.getUserAgent(context, context.getApplicationInfo().name)
+            );
+            mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(MediaItem.fromUri(Uri.parse(url)));
+        } else {
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
+                    context,
+                    Util.getUserAgent(context, context.getApplicationInfo().name)
+            );
+            mediaSource = new HlsMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(MediaItem.fromUri(Uri.parse(url)));
+        }
     }
 
     class AnimeAsync extends AsyncTask<String, Void, String> {
