@@ -7,7 +7,7 @@
   <br>
 </h1>
 
-<h4 align="center">An app to stream and download anime</h4>
+<h4 align="center">An app to stream and download anime inpired from <a href="https://github.com/saikou-app/saikou">saikou</a></h4>
 
 <p align="center">
   <a href="https://saythanks.io/to/abhinandammanamkandy">
