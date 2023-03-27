@@ -11,8 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.ServersSelectActivity;
-import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
+import in.ghostreborn.wanpisu.ui.ServersSelectActivity;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
 

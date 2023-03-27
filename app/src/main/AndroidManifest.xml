@@ -15,10 +15,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".WanPisuActivity"
+            android:name=".ui.WanPisuActivity"
             android:exported="false" />
         <activity
-            android:name=".ServersSelectActivity"
+            android:name=".ui.ServersSelectActivity"
             android:exported="false" />
         <activity
             android:name=".ui.ExoPlayerActivity"

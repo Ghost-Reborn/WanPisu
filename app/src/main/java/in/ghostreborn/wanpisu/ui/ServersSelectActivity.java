@@ -1,20 +1,18 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeServersAdapter;
 import in.ghostreborn.wanpisu.parser.AllAnime;
-import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 
 public class ServersSelectActivity extends AppCompatActivity {
 

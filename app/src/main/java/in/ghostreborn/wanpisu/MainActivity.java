@@ -1,8 +1,12 @@
 package in.ghostreborn.wanpisu;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import in.ghostreborn.wanpisu.ui.WanPisuActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,6 +14,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView watchAnimeTextView = findViewById(R.id.watch_anime_text_view);
+        watchAnimeTextView.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, WanPisuActivity.class));
+        });
+
     }
 
 }

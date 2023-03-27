@@ -1,4 +1,4 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.model.WanPisu;
 import in.ghostreborn.wanpisu.parser.AllAnime;

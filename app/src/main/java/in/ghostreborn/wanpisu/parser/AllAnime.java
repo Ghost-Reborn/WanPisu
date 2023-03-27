@@ -15,8 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import in.ghostreborn.wanpisu.MainActivity;
-import in.ghostreborn.wanpisu.WanPisuActivity;
+import in.ghostreborn.wanpisu.ui.WanPisuActivity;
 import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class AllAnime {
