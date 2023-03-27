@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.MainActivity;
+import in.ghostreborn.wanpisu.WanPisuActivity;
 import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class AllAnime {
@@ -47,7 +48,7 @@ public class AllAnime {
             inputStream.close();
             urlConnection.disconnect();
         } catch (MalformedURLException e) {
-            Log.e(MainActivity.LOG_TAG, "Unable to parse URL");
+            Log.e(WanPisuActivity.LOG_TAG, "Unable to parse URL");
         } catch (IOException e) {
             e.printStackTrace();
         }
