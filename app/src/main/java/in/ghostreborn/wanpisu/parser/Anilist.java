@@ -1,7 +1,5 @@
 package in.ghostreborn.wanpisu.parser;
 
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,48 +24,9 @@ public class Anilist {
     public static String getAnilistUserDetails(String ACCESS_TOKEN) {
         String QUERY = "query { " +
                 "Viewer {" +
-                "id " +
                 "name " +
-                "about " +
-                "avatar {" +
-                "large " +
-                "medium " +
                 "} " +
-                "bannerImage " +
-                "isFollowing " +
-                "isFollower " +
-                "isBlocked " +
-                "bans " +
-                "options {" +
-                "titleLanguage " +
-                "displayAdultContent " +
-                "airingNotifications " +
-                "profileColor " +
-                "timezone " +
-                "activityMergeTime " +
-                "staffNameLanguage " +
-                "restrictMessagesToFollowing " +
-                "} " +
-                "mediaListOptions {" +
-                "scoreFormat " +
-                "rowOrder " +
-                "useLegacyLists " +
-                "sharedTheme " +
-                "sharedThemeEnabled " +
-                "} " +
-                "unreadNotificationCount " +
-                "siteUrl " +
-                "donatorTier " +
-                "donatorBadge " +
-                "createdAt " +
-                "updatedAt " +
-                "previousNames {" +
-                "name " +
-                "createdAt " +
-                "updatedAt " +
-                "} " +
-                "} " +
-                "}";
+                "} ";
 
         try {
             URL url = new URL(QUERY_API_BASE);
@@ -92,30 +51,28 @@ public class Anilist {
             reader.close();
             conn.disconnect();
 
-            return getImageURL(response.toString());
+            return getUserName(response.toString());
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
-        return "CHECK INTERNET CONNECTION AND TRY AGAIN";
+        return "";
 
     }
 
-    private static String getImageURL(String baseJSON){
-        try {
-            String imageURL = new JSONObject(baseJSON)
+    private static String getUserName(String baseJSON){
+        try{
+            JSONObject viewerObject = new JSONObject(baseJSON)
                     .getJSONObject("data")
-                    .getJSONObject("Viewer")
-                    .getJSONObject("avatar")
-                    .getString("large");
-            return imageURL;
+                    .getJSONObject("Viewer");
+
+            return viewerObject.getString("name");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        return "CHECK INTERNET CONNECTION AND TRY AGAIN";
-
+        return "";
     }
 
 }
