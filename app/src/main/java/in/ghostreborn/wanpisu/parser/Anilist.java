@@ -68,15 +68,13 @@ public class Anilist {
                 "} " +
                 "} " +
                 "}";
-        String AUTHORIZATION_HEADER = "Authorization";
-        String TOKEN_PREFIX = "Bearer ";
 
         try {
             URL url = new URL(QUERY_API_BASE);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty(AUTHORIZATION_HEADER, TOKEN_PREFIX + ACCESS_TOKEN);
+            conn.setRequestProperty("Authorization", "Bearer " + ACCESS_TOKEN);
 
             JSONObject requestBody = new JSONObject();
             requestBody.put("query", QUERY);
