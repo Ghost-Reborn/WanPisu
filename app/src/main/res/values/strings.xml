@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">WanPisu</string>
     <string name="one">1</string>
+    <string name="copy_and_paste_token_here">Copy and Paste token here</string>
 </resources>
