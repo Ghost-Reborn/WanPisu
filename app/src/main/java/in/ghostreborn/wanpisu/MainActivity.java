@@ -21,6 +21,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getAnilistTokenFromIntentFilter();
+
+        TextView anilistTextView = findViewById(R.id.anilist_text_view);
+        anilistTextView.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, AnilistLoginActivity.class));
+        });
+
+        TextView watchAnimeTextView = findViewById(R.id.watch_anime_text_view);
+        watchAnimeTextView.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, WanPisuActivity.class));
+        });
+
+    }
+
+    private void getAnilistTokenFromIntentFilter(){
         SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, Context.MODE_PRIVATE);
         Intent urlIntent = getIntent();
         Uri data = urlIntent.getData();
@@ -34,17 +49,6 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, token);
             editor.apply();
         }
-
-        TextView anilistTextView = findViewById(R.id.anilist_text_view);
-        anilistTextView.setOnClickListener(view -> {
-            startActivity(new Intent(MainActivity.this, AnilistLoginActivity.class));
-        });
-
-        TextView watchAnimeTextView = findViewById(R.id.watch_anime_text_view);
-        watchAnimeTextView.setOnClickListener(view -> {
-            startActivity(new Intent(MainActivity.this, WanPisuActivity.class));
-        });
-
     }
 
 }
