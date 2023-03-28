@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.parser;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -7,8 +9,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 public class Anilist {
@@ -24,11 +24,54 @@ public class Anilist {
     public static final String QUERY_API_BASE = "https://graphql.anilist.co/";
 
     public static String getAnilistUserName(String ACCESS_TOKEN) {
-        String QUERY = "query { Viewer { name } }";
+        String QUERY = "query { " +
+                "Viewer {" +
+                "id " +
+                "name " +
+                "about " +
+                "avatar {" +
+                "large " +
+                "medium " +
+                "} " +
+                "bannerImage " +
+                "isFollowing " +
+                "isFollower " +
+                "isBlocked " +
+                "bans " +
+                "options {" +
+                "titleLanguage " +
+                "displayAdultContent " +
+                "airingNotifications " +
+                "profileColor " +
+                "timezone " +
+                "activityMergeTime " +
+                "staffNameLanguage " +
+                "restrictMessagesToFollowing " +
+                "} " +
+                "mediaListOptions {" +
+                "scoreFormat " +
+                "rowOrder " +
+                "useLegacyLists " +
+                "sharedTheme " +
+                "sharedThemeEnabled " +
+                "} " +
+                "unreadNotificationCount " +
+                "siteUrl " +
+                "donatorTier " +
+                "donatorBadge " +
+                "createdAt " +
+                "updatedAt " +
+                "previousNames {" +
+                "name " +
+                "createdAt " +
+                "updatedAt " +
+                "} " +
+                "} " +
+                "}";
         String AUTHORIZATION_HEADER = "Authorization";
         String TOKEN_PREFIX = "Bearer ";
 
-        try{
+        try {
             URL url = new URL(QUERY_API_BASE);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
@@ -51,12 +94,9 @@ public class Anilist {
             reader.close();
             conn.disconnect();
 
-            String user = new JSONObject(response.toString())
-                    .getJSONObject("data")
-                    .getJSONObject("Viewer")
-                    .getString("name");
+            Log.e(LOG_TAG, response.toString());
 
-            return user;
+            return response.toString();
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
