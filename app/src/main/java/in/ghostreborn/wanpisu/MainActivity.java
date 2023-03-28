@@ -6,12 +6,11 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.ui.AnilistLoginActivity;
+import in.ghostreborn.wanpisu.ui.AnilistActivity;
 import in.ghostreborn.wanpisu.ui.WanPisuActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView anilistTextView = findViewById(R.id.anilist_text_view);
         anilistTextView.setOnClickListener(view -> {
-            startActivity(new Intent(MainActivity.this, AnilistLoginActivity.class));
+            startActivity(new Intent(MainActivity.this, AnilistActivity.class));
         });
 
         TextView watchAnimeTextView = findViewById(R.id.watch_anime_text_view);
