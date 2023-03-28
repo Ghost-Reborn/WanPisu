@@ -22,6 +22,7 @@ import in.ghostreborn.wanpisu.parser.Anilist;
 public class AnilistActivity extends AppCompatActivity {
 
     static TextView userNameTextView;
+    static String userName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,36 @@ public class AnilistActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             userNameTextView.setText(s);
+            AnilistAnimeAsync async = new AnilistAnimeAsync(
+                    TOKEN,
+                    s
+            );
+            async.execute();
         }
+
+    }
+
+    static class AnilistAnimeAsync extends AsyncTask<Void, Void, String> {
+
+        String TOKEN;
+        String userName;
+
+        public AnilistAnimeAsync(String TOKEN, String userName){
+            this.TOKEN = TOKEN;
+            this.userName = userName;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return Anilist.getAnimeDetails(userName, WanPisuConstants.ANIME_CURRENT, TOKEN);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            userNameTextView.setText(s);
+        }
+
     }
 
 }

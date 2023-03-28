@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+
 public class Anilist {
 
     public static final String LOG_TAG = "WAN_PISU";
@@ -73,6 +75,54 @@ public class Anilist {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static String getAnimeDetails(String userName, String animeStatus, String ACCESS_TOKEN){
+        String QUERY = "query{" +
+                "MediaListCollection(userName: \"" + userName + "\", type: ANIME, status: " + animeStatus + "){" +
+                "lists{" +
+                    "entries{" +
+                        "media{" +
+                            "title{" +
+                                "romaji" +
+                            "}" +
+                        "}" +
+                    "}" +
+                "}" +
+                "}" +
+                "}";
+
+        try {
+            URL url = new URL(QUERY_API_BASE);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Authorization", "Bearer " + ACCESS_TOKEN);
+
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("query", QUERY);
+            requestBody.put("variables", new JSONObject());
+
+            conn.setDoOutput(true);
+            conn.getOutputStream().write(requestBody.toString().getBytes());
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+            conn.disconnect();
+
+            return response.toString();
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "CHECK INTERNET CONNECTION AND TRY AGAIN";
+
     }
 
 }
