@@ -29,10 +29,10 @@ public class AnilistLoginActivity extends AppCompatActivity {
                     preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, ""),
                     Toast.LENGTH_SHORT
             ).show();
-        }else {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Anilist.ANILIST_TOKEN_URL));
-            startActivity(intent);
         }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Anilist.ANILIST_TOKEN_URL));
+        startActivity(intent);
 
         EditText anilistTokenEditText = findViewById(R.id.anilist_token_edit_text);
         Button anilistTokenSubmitButton = findViewById(R.id.anilist_token_submit_button);
