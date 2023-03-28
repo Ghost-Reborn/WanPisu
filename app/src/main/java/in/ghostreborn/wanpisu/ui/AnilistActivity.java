@@ -6,9 +6,12 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
@@ -16,14 +19,14 @@ import in.ghostreborn.wanpisu.parser.Anilist;
 
 public class AnilistActivity extends AppCompatActivity {
 
-    static TextView testText;
+    static ImageView userImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anilist);
 
-        testText = findViewById(R.id.test_text);
+        userImageView = findViewById(R.id.user_image_view);
 
         SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, Context.MODE_PRIVATE);
         if (!preferences.contains(WanPisuConstants.WAN_PISU_ANILIST_TOKEN)){
@@ -47,13 +50,13 @@ public class AnilistActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            return Anilist.getAnilistUserName(TOKEN);
+            return Anilist.getAnilistUserDetails(TOKEN);
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            testText.setText(s);
+            Picasso.get().load(s).into(userImageView);
         }
     }
 

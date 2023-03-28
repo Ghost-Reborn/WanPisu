@@ -23,7 +23,7 @@ public class Anilist {
     // Query API URLs
     public static final String QUERY_API_BASE = "https://graphql.anilist.co/";
 
-    public static String getAnilistUserName(String ACCESS_TOKEN) {
+    public static String getAnilistUserDetails(String ACCESS_TOKEN) {
         String QUERY = "query { " +
                 "Viewer {" +
                 "id " +
@@ -92,11 +92,25 @@ public class Anilist {
             reader.close();
             conn.disconnect();
 
-            Log.e(LOG_TAG, response.toString());
-
-            return response.toString();
+            return getImageURL(response.toString());
 
         } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "CHECK INTERNET CONNECTION AND TRY AGAIN";
+
+    }
+
+    private static String getImageURL(String baseJSON){
+        try {
+            String imageURL = new JSONObject(baseJSON)
+                    .getJSONObject("data")
+                    .getJSONObject("Viewer")
+                    .getJSONObject("avatar")
+                    .getString("large");
+            return imageURL;
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
