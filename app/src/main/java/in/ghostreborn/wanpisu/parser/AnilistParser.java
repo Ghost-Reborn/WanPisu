@@ -11,7 +11,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Anilist {
+import in.ghostreborn.wanpisu.model.Anilist;
+
+public class AnilistParser {
 
     public static final String LOG_TAG = "WAN_PISU";
 
@@ -77,8 +79,8 @@ public class Anilist {
         return "";
     }
 
-    public static ArrayList<in.ghostreborn.wanpisu.model.Anilist> getAnimeDetails(String userName, String animeStatus, String ACCESS_TOKEN) {
-        ArrayList<in.ghostreborn.wanpisu.model.Anilist> anilists = new ArrayList<>();
+    public static ArrayList<Anilist> getAnimeDetails(String userName, String animeStatus, String ACCESS_TOKEN) {
+        ArrayList<Anilist> anilistParsers = new ArrayList<>();
         String QUERY = "query{" +
                 "MediaListCollection(userName: \"" + userName + "\", type: ANIME, status: " + animeStatus + "){" +
                 "lists{" +
@@ -135,7 +137,7 @@ public class Anilist {
                             .getString("english");
                     String imageUrl = mediaObject.getJSONObject("coverImage")
                             .getString("extraLarge");
-                    anilists.add(new in.ghostreborn.wanpisu.model.Anilist(title, imageUrl));
+                    anilistParsers.add(new Anilist(title, imageUrl));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -145,7 +147,7 @@ public class Anilist {
             e.printStackTrace();
         }
 
-        return anilists;
+        return anilistParsers;
 
     }
 

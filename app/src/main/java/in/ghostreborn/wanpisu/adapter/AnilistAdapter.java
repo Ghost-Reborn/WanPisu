@@ -19,7 +19,7 @@ import in.ghostreborn.wanpisu.model.Anilist;
 
 public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHolder> {
 
-    ArrayList<in.ghostreborn.wanpisu.model.Anilist> anilists;
+    ArrayList<Anilist> anilists;
 
     public AnilistAdapter(ArrayList<Anilist> anilists){
         this.anilists = anilists;

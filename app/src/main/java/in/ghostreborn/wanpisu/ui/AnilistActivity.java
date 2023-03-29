@@ -1,14 +1,7 @@
 package in.ghostreborn.wanpisu.ui;
 
-import static in.ghostreborn.wanpisu.utils.Anilist.*;
-
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,10 +13,10 @@ import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnilistAdapter;
-import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.parser.AllAnime;
-import in.ghostreborn.wanpisu.utils.Anilist;
+import in.ghostreborn.wanpisu.model.Anilist;
+import in.ghostreborn.wanpisu.parser.AnilistParser;
+import in.ghostreborn.wanpisu.utils.AnilistUtils;
 
 public class AnilistActivity extends AppCompatActivity {
 
@@ -35,7 +28,7 @@ public class AnilistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anilist);
 
-        Anilist.checkAnilist(this);
+        AnilistUtils.checkAnilist(this);
 
         SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
         TOKEN = preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
@@ -47,7 +40,7 @@ public class AnilistActivity extends AppCompatActivity {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            ArrayList<in.ghostreborn.wanpisu.model.Anilist> anilists = in.ghostreborn.wanpisu.parser.Anilist.getAnimeDetails(userName, WanPisuConstants.ANIME_CURRENT, TOKEN);
+            ArrayList<Anilist> anilists = AnilistParser.getAnimeDetails(userName, WanPisuConstants.ANIME_CURRENT, TOKEN);
             AnilistAdapter adapter = new AnilistAdapter(anilists);
             runOnUiThread(() -> {
                 anilistRecyclerView.setAdapter(adapter);

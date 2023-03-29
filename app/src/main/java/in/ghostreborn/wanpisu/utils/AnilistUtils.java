@@ -9,13 +9,14 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.parser.AnilistParser;
 
-public class Anilist {
+public class AnilistUtils {
 
     public static void checkAnilist(Context context){
         SharedPreferences preferences = context.getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, Context.MODE_PRIVATE);
         if (!preferences.contains(WanPisuConstants.WAN_PISU_ANILIST_TOKEN)){
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(in.ghostreborn.wanpisu.parser.Anilist.ANILIST_TOKEN_URL));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(AnilistParser.ANILIST_TOKEN_URL));
             context.startActivity(intent);
         }else {
             String TOKEN = preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
@@ -28,7 +29,7 @@ public class Anilist {
         if (!preferences.contains(WanPisuConstants.ANILIST_USER_NAME)){
             Executor executor = Executors.newSingleThreadExecutor();
             Runnable task = () -> {
-                String userName = in.ghostreborn.wanpisu.parser.Anilist.getAnilistUserDetails(TOKEN);
+                String userName = AnilistParser.getAnilistUserDetails(TOKEN);
                 preferences.edit()
                         .putString(WanPisuConstants.ANILIST_USER_NAME, userName)
                         .apply();
