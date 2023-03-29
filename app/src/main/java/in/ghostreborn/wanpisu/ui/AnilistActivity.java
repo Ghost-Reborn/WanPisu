@@ -10,26 +10,35 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.adapter.AnilistAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.utils.Anilist;
 
 public class AnilistActivity extends AppCompatActivity {
-
-    static TextView userNameTextView;
-    static String userName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anilist);
 
-        userNameTextView = findViewById(R.id.user_name_text_view);
         Anilist.checkAnilist(this);
+        RecyclerView anilistRecyclerView = findViewById(R.id.anilist_recycler_view);
+        ArrayList<String> anilists = new ArrayList<>();
+        anilists.add("One Piece");
+        anilists.add("Naruto");
+        anilists.add("Dragon Ball");
+        AnilistAdapter adapter = new AnilistAdapter(anilists);
+        GridLayoutManager manager = new GridLayoutManager(this, 2);
+        anilistRecyclerView.setLayoutManager(manager);
+        anilistRecyclerView.setAdapter(adapter);
 
     }
 
