@@ -1,5 +1,6 @@
 package in.ghostreborn.wanpisu.parser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,8 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import java.util.ArrayList;
 
 public class Anilist {
 
@@ -63,8 +63,8 @@ public class Anilist {
 
     }
 
-    private static String getUserName(String baseJSON){
-        try{
+    private static String getUserName(String baseJSON) {
+        try {
             JSONObject viewerObject = new JSONObject(baseJSON)
                     .getJSONObject("data")
                     .getJSONObject("Viewer");
@@ -77,20 +77,21 @@ public class Anilist {
         return "";
     }
 
-    public static String getAnimeDetails(String userName, String animeStatus, String ACCESS_TOKEN){
+    public static ArrayList<in.ghostreborn.wanpisu.model.Anilist> getAnimeDetails(String userName, String animeStatus, String ACCESS_TOKEN) {
+        ArrayList<in.ghostreborn.wanpisu.model.Anilist> anilists = new ArrayList<>();
         String QUERY = "query{" +
                 "MediaListCollection(userName: \"" + userName + "\", type: ANIME, status: " + animeStatus + "){" +
                 "lists{" +
-                    "entries{" +
-                        "media{" +
-                            "title{" +
-                                "english" +
-                            "}" +
-                            "coverImage {" +
-                                "extraLarge " +
-                            "}" +
-                        "}" +
-                    "}" +
+                "entries{" +
+                "media{" +
+                "title{" +
+                "english" +
+                "}" +
+                "coverImage {" +
+                "extraLarge " +
+                "}" +
+                "}" +
+                "}" +
                 "}" +
                 "}" +
                 "}";
@@ -118,13 +119,33 @@ public class Anilist {
             reader.close();
             conn.disconnect();
 
-            return response.toString();
+            try {
+                JSONObject baseJSON = new JSONObject(response.toString());
+                JSONArray listArray = baseJSON
+                        .getJSONObject("data")
+                        .getJSONObject("MediaListCollection")
+                        .getJSONArray("lists");
+                JSONArray entriesArray = listArray.getJSONObject(0)
+                        .getJSONArray("entries");
+                for (int i = 0; i < entriesArray.length(); i++) {
+                    JSONObject mediaObject = entriesArray
+                            .getJSONObject(i)
+                            .getJSONObject("media");
+                    String title = mediaObject.getJSONObject("title")
+                            .getString("english");
+                    String imageUrl = mediaObject.getJSONObject("coverImage")
+                            .getString("extraLarge");
+                    anilists.add(new in.ghostreborn.wanpisu.model.Anilist(title, imageUrl));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
-        return "CHECK INTERNET CONNECTION AND TRY AGAIN";
+        return anilists;
 
     }
 

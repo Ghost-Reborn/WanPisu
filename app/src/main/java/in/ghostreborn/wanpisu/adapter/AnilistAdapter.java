@@ -4,20 +4,24 @@ package in.ghostreborn.wanpisu.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.model.Anilist;
 
 public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHolder> {
 
-    ArrayList<String> anilists;
+    ArrayList<in.ghostreborn.wanpisu.model.Anilist> anilists;
 
-    public AnilistAdapter(ArrayList<String> anilists){
+    public AnilistAdapter(ArrayList<Anilist> anilists){
         this.anilists = anilists;
     }
 
@@ -31,7 +35,10 @@ public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull AnilistAdapter.ViewHolder holder, int position) {
-        holder.anilistAnimeTextView.setText(anilists.get(position));
+        holder.anilistAnimeTextView.setText(anilists.get(position).getAnimeName());
+        Picasso.get().load(anilists.get(position).getAnimeImageUrl()).into(
+                holder.anilistImageView
+        );
     }
 
     @Override
@@ -42,10 +49,12 @@ public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView anilistAnimeTextView;
+        public ImageView anilistImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             anilistAnimeTextView = itemView.findViewById(R.id.anilist_anime_text_view);
+            anilistImageView = itemView.findViewById(R.id.anilist_anime_image_view);
         }
     }
 }
