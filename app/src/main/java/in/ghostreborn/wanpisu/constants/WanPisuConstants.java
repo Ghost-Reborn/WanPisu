@@ -4,6 +4,7 @@ public class WanPisuConstants {
 
     public static final String WAN_PISU_PREFERENCE = "WAN_PISU";
     public static final String WAN_PISU_ANILIST_TOKEN = "WAN_PISU_ANILIST_TOKEN";
+    public static final String ANILIST_USER_NAME = "ANILIST_USER_NAME";
 
     // Anime status constants
     public static final String ANIME_CURRENT = "CURRENT";

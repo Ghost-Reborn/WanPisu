@@ -84,7 +84,10 @@ public class Anilist {
                     "entries{" +
                         "media{" +
                             "title{" +
-                                "romaji" +
+                                "english" +
+                            "}" +
+                            "coverImage {" +
+                                "extraLarge " +
                             "}" +
                         "}" +
                     "}" +
