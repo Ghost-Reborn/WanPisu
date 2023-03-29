@@ -48,7 +48,11 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull AnimeSearchAdapter.ViewHolder holder, int position) {
+
+        String totalEpisodes = "Episodes: " + animeNames.get(position).getTotalEpisodes();
+
         holder.animeTextView.setText(animeNames.get(position).getAnimeName());
+        holder.totalEpisodesTextView.setText(totalEpisodes);
         Picasso.get().load(animeNames.get(position).getAnimeThumbnailUrl())
                 .into(holder.animeImageView);
         holder.itemView.setOnClickListener(listener(position));
@@ -63,11 +67,13 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
 
         public TextView animeTextView;
         public ImageView animeImageView;
+        public TextView totalEpisodesTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             animeTextView = itemView.findViewById(R.id.anime_text_view);
             animeImageView = itemView.findViewById(R.id.anime_image_view);
+            totalEpisodesTextView = itemView.findViewById(R.id.total_episodes_text_view);
         }
     }
 }
