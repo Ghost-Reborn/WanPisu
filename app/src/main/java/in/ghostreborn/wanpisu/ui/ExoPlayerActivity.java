@@ -3,7 +3,6 @@ package in.ghostreborn.wanpisu.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +17,6 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import java.util.ArrayList;
-
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.parser.AllAnime;
 
@@ -29,22 +26,6 @@ public class ExoPlayerActivity extends AppCompatActivity {
 
     private static SimpleExoPlayer simpleExoPlayer;
     private static MediaSource mediaSource;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exo_player);
-
-        Intent intent = getIntent();
-        String server = intent.getStringExtra("ANIME_SERVER");
-        findViews();
-        initPlayer(server, ExoPlayerActivity.this);
-
-    }
-
-    private void findViews() {
-        exoplayerView = findViewById(R.id.exoplayerView);
-    }
 
     public static void initPlayer(String url, Context context) {
         simpleExoPlayer = new SimpleExoPlayer.Builder(context).build();
@@ -75,6 +56,22 @@ public class ExoPlayerActivity extends AppCompatActivity {
             mediaSource = new HlsMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(MediaItem.fromUri(Uri.parse(url)));
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_exo_player);
+
+        Intent intent = getIntent();
+        String server = intent.getStringExtra("ANIME_SERVER");
+        findViews();
+        initPlayer(server, ExoPlayerActivity.this);
+
+    }
+
+    private void findViews() {
+        exoplayerView = findViewById(R.id.exoplayerView);
     }
 
 }
