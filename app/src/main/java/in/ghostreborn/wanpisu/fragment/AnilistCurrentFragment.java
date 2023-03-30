@@ -29,6 +29,12 @@ import in.ghostreborn.wanpisu.utils.AnilistUtils;
 
 public class AnilistCurrentFragment extends Fragment {
 
+    String ANIME_TYPE;
+
+    public AnilistCurrentFragment(String ANIME_TYPE){
+        this.ANIME_TYPE = ANIME_TYPE;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,7 +54,7 @@ public class AnilistCurrentFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            ArrayList<Anilist> anilists = AnilistParser.getAnimeDetails(userName, WanPisuConstants.ANIME_CURRENT, TOKEN);
+            ArrayList<Anilist> anilists = AnilistParser.getAnimeDetails(userName, ANIME_TYPE, TOKEN);
             AnilistRecyclerAdapter adapter = new AnilistRecyclerAdapter(anilists);
             getActivity().runOnUiThread(() -> {
                 anilistRecyclerView.setAdapter(adapter);

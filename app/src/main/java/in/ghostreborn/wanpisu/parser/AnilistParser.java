@@ -127,6 +127,7 @@ public class AnilistParser {
                         .getJSONObject("data")
                         .getJSONObject("MediaListCollection")
                         .getJSONArray("lists");
+                if (listArray.length() == 0){return anilistParsers;}
                 JSONArray entriesArray = listArray.getJSONObject(0)
                         .getJSONArray("entries");
                 for (int i = 0; i < entriesArray.length(); i++) {
