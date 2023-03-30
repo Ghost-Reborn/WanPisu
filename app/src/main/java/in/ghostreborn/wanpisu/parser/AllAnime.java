@@ -15,8 +15,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import in.ghostreborn.wanpisu.ui.WanPisuActivity;
 import in.ghostreborn.wanpisu.model.WanPisu;
+import in.ghostreborn.wanpisu.ui.WanPisuActivity;
 
 public class AllAnime {
 
@@ -79,10 +79,18 @@ public class AllAnime {
                 String animeThumbnailUrl = edges.getString("thumbnail");
                 String lastEpisode = edges.getJSONObject("availableEpisodes")
                         .getString("sub");
+                String url = "";
+                if (animeThumbnailUrl.contains("__Show__")) {
+                    if (animeThumbnailUrl.contains("images"))
+                        url = "https://wp.youtube-anime.com/aln.youtube-anime.com/";
+                    else {
+                        url = "https://wp.youtube-anime.com/aln.youtube-anime.com/images/";
+                    }
+                }
                 animeDetailsArray.add(new WanPisu(
                         animeID,
                         animeName,
-                        animeThumbnailUrl,
+                        url + animeThumbnailUrl,
                         Integer.parseInt(lastEpisode)
                 ));
             }
@@ -116,10 +124,10 @@ public class AllAnime {
             Log.e("ALLANIME", apiUrl);
             baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
             JSONArray links = baseJSON.getJSONArray("links");
-            for (int i=0;i<links.length();i++){
+            for (int i = 0; i < links.length(); i++) {
                 JSONObject linkObject = links.getJSONObject(i);
                 String server = linkObject.getString("link");
-                if (linkObject.has("mp4")){
+                if (linkObject.has("mp4")) {
                     isHLS = !linkObject.getBoolean("mp4");
                 }
                 servers.add(server);
