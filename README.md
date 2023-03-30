@@ -19,14 +19,14 @@
 
 * Multi server
 * High Speed Streaming
-* Uses AllAnime Api
+* Uses AllAnime Api 
+* Anilist API
 
 ## Planned Features
 
-* Anilist API
 * APIs other than AllAnime
 * News
-* Theme supoort
+* Theme support
 * TV Support
 * Bulk Download
 * Manga Reader
