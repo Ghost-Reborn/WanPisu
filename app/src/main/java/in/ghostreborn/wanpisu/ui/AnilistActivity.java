@@ -9,7 +9,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.adapter.AnilistAdapter;
+import in.ghostreborn.wanpisu.adapter.AnilistFragmentStateAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
 public class AnilistActivity extends AppCompatActivity {
@@ -20,7 +20,7 @@ public class AnilistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_anilist);
 
         ViewPager2 viewPager = findViewById(R.id.anilist_view_pager);
-        viewPager.setAdapter(new AnilistAdapter(this));
+        viewPager.setAdapter(new AnilistFragmentStateAdapter(this));
         TabLayout tabLayout = findViewById(R.id.anilist_tab_layout);
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> {

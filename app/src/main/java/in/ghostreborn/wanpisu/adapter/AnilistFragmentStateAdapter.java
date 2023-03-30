@@ -8,11 +8,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import in.ghostreborn.wanpisu.fragment.AnilistCurrentFragment;
 
-public class AnilistAdapter extends FragmentStateAdapter {
+public class AnilistFragmentStateAdapter extends FragmentStateAdapter {
 
     int TABS = 6;
 
-    public AnilistAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public AnilistFragmentStateAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
