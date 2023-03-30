@@ -14,13 +14,12 @@
         android:layout_height="0dp"
         android:keepScreenOn="true"
         android:saveEnabled="true"
-        app:surface_type="surface_view"
-        app:use_controller="true"
         app:controller_layout_id="@layout/wanpisu_exoplayer"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:surface_type="surface_view"
+        app:use_controller="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

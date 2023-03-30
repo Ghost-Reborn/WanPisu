@@ -25,7 +25,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.ExoPlayerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ui.AnimeDetailsActivity"
             android:exported="false" />
