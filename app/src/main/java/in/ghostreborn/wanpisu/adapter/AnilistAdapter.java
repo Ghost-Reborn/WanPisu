@@ -1,60 +1,29 @@
 package in.ghostreborn.wanpisu.adapter;
 
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.squareup.picasso.Picasso;
+import in.ghostreborn.wanpisu.fragment.AnilistCurrentFragment;
 
-import java.util.ArrayList;
+public class AnilistAdapter extends FragmentStateAdapter {
 
-import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.model.Anilist;
+    int TABS = 6;
 
-public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHolder> {
-
-    ArrayList<Anilist> anilists;
-
-    public AnilistAdapter(ArrayList<Anilist> anilists){
-        this.anilists = anilists;
+    public AnilistAdapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
     }
 
     @NonNull
     @Override
-    public AnilistAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(in.ghostreborn.wanpisu.R.layout.anilist_anime_list, parent, false);
-        return new AnilistAdapter.ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull AnilistAdapter.ViewHolder holder, int position) {
-        holder.anilistAnimeTextView.setText(anilists.get(position).getAnimeName());
-        Picasso.get().load(anilists.get(position).getAnimeImageUrl()).into(
-                holder.anilistImageView
-        );
+    public Fragment createFragment(int position) {
+        return new AnilistCurrentFragment();
     }
 
     @Override
     public int getItemCount() {
-        return anilists.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView anilistAnimeTextView;
-        public ImageView anilistImageView;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            anilistAnimeTextView = itemView.findViewById(R.id.anilist_anime_text_view);
-            anilistImageView = itemView.findViewById(R.id.anilist_anime_image_view);
-        }
+        return TABS;
     }
 }
