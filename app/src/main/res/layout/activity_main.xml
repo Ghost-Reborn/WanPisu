@@ -7,6 +7,17 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/kitsu_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:padding="20dp"
+        android:text="Kitsu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/anilist_text_view" />
+
+    <TextView
         android:id="@+id/anilist_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,5 +37,6 @@
         android:text="Watch Anime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/anilist_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/kitsu_text_view" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

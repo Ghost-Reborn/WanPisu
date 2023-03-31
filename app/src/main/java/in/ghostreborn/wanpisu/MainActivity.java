@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.ui.AnilistActivity;
+import in.ghostreborn.wanpisu.ui.KitsuActivity;
 import in.ghostreborn.wanpisu.ui.WanPisuActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
         TextView watchAnimeTextView = findViewById(R.id.watch_anime_text_view);
         watchAnimeTextView.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this, WanPisuActivity.class));
+        });
+
+        TextView kitsuTextView = findViewById(R.id.kitsu_text_view);
+        kitsuTextView.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, KitsuActivity.class));
         });
 
     }
