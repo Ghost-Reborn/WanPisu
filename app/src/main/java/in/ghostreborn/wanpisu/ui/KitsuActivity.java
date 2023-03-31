@@ -11,8 +11,8 @@ import in.ghostreborn.wanpisu.parser.Kitsu;
 
 public class KitsuActivity extends AppCompatActivity {
 
-    private static final String USERNAME = "";
-    private static final String PASSWORD = "";
+    private static final String USERNAME = "GhostReborn";
+    private static final String PASSWORD = "Androidjava@1#";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class KitsuActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String accessToken) {
             if (accessToken != null) {
-                Toast.makeText(KitsuActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(KitsuActivity.this, accessToken, Toast.LENGTH_SHORT).show();
                 // Store the access token or use it to make authenticated API requests
             } else {
                 Toast.makeText(KitsuActivity.this, "failed to login", Toast.LENGTH_SHORT).show();

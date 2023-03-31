@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.ui.AnilistActivity;
 import in.ghostreborn.wanpisu.ui.KitsuActivity;
 import in.ghostreborn.wanpisu.ui.WanPisuActivity;
 
@@ -22,11 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getAnilistTokenFromIntentFilter();
-
-        TextView anilistTextView = findViewById(R.id.anilist_text_view);
-        anilistTextView.setOnClickListener(view -> {
-            startActivity(new Intent(MainActivity.this, AnilistActivity.class));
-        });
 
         TextView watchAnimeTextView = findViewById(R.id.watch_anime_text_view);
         watchAnimeTextView.setOnClickListener(view -> {
