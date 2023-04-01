@@ -32,7 +32,9 @@ public class KitsuAnimeAdapter extends RecyclerView.Adapter<KitsuAnimeAdapter.Vi
         Picasso.get().load(WanPisuConstants.kitsus.get(position).getThumbnail()).into(holder.kitsuAnimeImageView);
         holder.itemView.setOnClickListener(view -> {
             Context context = holder.itemView.getContext();
-            context.startActivity(new Intent(context, WanPisuActivity.class));
+            Intent intent = new Intent(context, WanPisuActivity.class);
+            intent.putExtra("ANIME_NAME", WanPisuConstants.kitsus.get(position).getAnime());
+            context.startActivity(intent);
         });
     }
 
