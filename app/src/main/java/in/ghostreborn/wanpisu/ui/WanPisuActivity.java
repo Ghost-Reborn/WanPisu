@@ -35,7 +35,7 @@ public class WanPisuActivity extends AppCompatActivity {
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
             animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("");
-            adapter = new AnimeSearchAdapter(WanPisuActivity.this,animeDetailsArray);
+            adapter = new AnimeSearchAdapter(WanPisuActivity.this);
             runOnUiThread(() -> animeContainerView.setAdapter(adapter));
         };
         executor.execute(task);
@@ -48,7 +48,7 @@ public class WanPisuActivity extends AppCompatActivity {
                     animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(
                             searchView.getQuery().toString()
                     );
-                    adapter = new AnimeSearchAdapter(WanPisuActivity.this, animeDetailsArray);
+                    adapter = new AnimeSearchAdapter(WanPisuActivity.this);
                     runOnUiThread(() -> animeContainerView.setAdapter(adapter));
                 };
                 executor.execute(task);

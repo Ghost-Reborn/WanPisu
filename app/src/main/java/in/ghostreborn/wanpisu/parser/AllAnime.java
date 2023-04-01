@@ -15,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.WanPisu;
 import in.ghostreborn.wanpisu.ui.WanPisuActivity;
 
@@ -66,7 +67,8 @@ public class AllAnime {
                 ALL_ANIME_QUERY_HEAD + anime + ALL_ANIME_QUERY_TAIL
         );
 
-        ArrayList<WanPisu> animeDetailsArray = new ArrayList<>();
+        WanPisuConstants.animeNames = new ArrayList<>();
+
         try {
             JSONArray edgesArray = new JSONObject(rawJson)
                     .getJSONObject("data")
@@ -87,7 +89,7 @@ public class AllAnime {
                         url = "https://wp.youtube-anime.com/aln.youtube-anime.com/images/";
                     }
                 }
-                animeDetailsArray.add(new WanPisu(
+                WanPisuConstants.animeNames.add(new WanPisu(
                         animeID,
                         animeName,
                         url + animeThumbnailUrl,
@@ -98,7 +100,7 @@ public class AllAnime {
             e.printStackTrace();
         }
 
-        return animeDetailsArray;
+        return WanPisuConstants.animeNames;
 
     }
 

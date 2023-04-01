@@ -15,25 +15,24 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.ui.AnimeDetailsActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
 
-    private static ArrayList<WanPisu> animeNames;
     private static Context context;
 
-    public AnimeSearchAdapter(Context mContext,ArrayList<WanPisu> mAnimeNames) {
-        animeNames = mAnimeNames;
+    public AnimeSearchAdapter(Context mContext) {
         context = mContext;
     }
 
     private static View.OnClickListener listener(int position){
         return view -> {
             Intent intent = new Intent(context, AnimeDetailsActivity.class);
-            intent.putExtra("ANIME_ID", animeNames.get(position).getAnimeID());
-            intent.putExtra("ANIME_EPISODES", animeNames.get(position).getTotalEpisodes());
+            intent.putExtra("ANIME_ID", WanPisuConstants.animeNames.get(position).getAnimeID());
+            intent.putExtra("ANIME_EPISODES", WanPisuConstants.animeNames.get(position).getTotalEpisodes());
             context.startActivity(intent);
         };
     }
@@ -49,18 +48,18 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
     @Override
     public void onBindViewHolder(@NonNull AnimeSearchAdapter.ViewHolder holder, int position) {
 
-        String totalEpisodes = "Episodes: " + animeNames.get(position).getTotalEpisodes();
+        String totalEpisodes = "Episodes: " + WanPisuConstants.animeNames.get(position).getTotalEpisodes();
 
-        holder.animeTextView.setText(animeNames.get(position).getAnimeName());
+        holder.animeTextView.setText(WanPisuConstants.animeNames.get(position).getAnimeName());
         holder.totalEpisodesTextView.setText(totalEpisodes);
-        Picasso.get().load(animeNames.get(position).getAnimeThumbnailUrl())
+        Picasso.get().load(WanPisuConstants.animeNames.get(position).getAnimeThumbnailUrl())
                 .into(holder.animeImageView);
         holder.itemView.setOnClickListener(listener(position));
     }
 
     @Override
     public int getItemCount() {
-        return animeNames.size();
+        return WanPisuConstants.animeNames.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
