@@ -1,11 +1,11 @@
 package in.ghostreborn.wanpisu.ui;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
@@ -27,6 +27,9 @@ public class WanPisuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wan_pisu);
 
+        Intent intent = getIntent();
+        String animeName = intent.getStringExtra("ANIME_NAME");
+
         RecyclerView animeContainerView = findViewById(R.id.anime_container);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         animeContainerView.setLayoutManager(gridLayoutManager);
@@ -34,32 +37,12 @@ public class WanPisuActivity extends AppCompatActivity {
         // Get latest anime updates
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("");
+            String anime = animeName == null ? "" : animeName;
+            animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(anime);
             adapter = new AnimeSearchAdapter(WanPisuActivity.this);
             runOnUiThread(() -> animeContainerView.setAdapter(adapter));
         };
         executor.execute(task);
-
-        SearchView searchView = findViewById(R.id.searchView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                Runnable task = () -> {
-                    animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(
-                            searchView.getQuery().toString()
-                    );
-                    adapter = new AnimeSearchAdapter(WanPisuActivity.this);
-                    runOnUiThread(() -> animeContainerView.setAdapter(adapter));
-                };
-                executor.execute(task);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
 
     }
 }
