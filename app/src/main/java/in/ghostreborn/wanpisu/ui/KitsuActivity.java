@@ -48,7 +48,7 @@ public class KitsuActivity extends AppCompatActivity {
             ArrayList<Kitsu> kitsus = new ArrayList<>();
             Log.e("ANIME", USER_ID);
             try {
-                kitsus = KitsuAPI.getUserAnimeList(TOKEN, Integer.parseInt(USER_ID));
+//                kitsus = KitsuAPI.getUserAnimeList(TOKEN, Integer.parseInt(USER_ID));
             } catch (Exception e) {
                 e.printStackTrace();
             }

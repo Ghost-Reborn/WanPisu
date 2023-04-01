@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -23,11 +22,12 @@ import in.ghostreborn.wanpisu.adapter.KitsuAnimeAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import in.ghostreborn.wanpisu.parser.KitsuAPI;
-import in.ghostreborn.wanpisu.ui.KitsuActivity;
 import in.ghostreborn.wanpisu.ui.KitsuLoginActivity;
 
 public class KitsuFragment extends Fragment {
 
+    public static boolean hasNext = false;
+    public static String nextURL = "";
     RecyclerView kitsuRecyclerView;
 
     @Override
@@ -37,9 +37,10 @@ public class KitsuFragment extends Fragment {
         kitsuRecyclerView = view.findViewById(R.id.kitsu_recycler_view);
 
         SharedPreferences preferences = view.getContext().getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
-        if (!preferences.contains(WanPisuConstants.KITSU_LOGIN_FINISHED)){
+        if (!preferences.contains(WanPisuConstants.KITSU_LOGIN_FINISHED)) {
             startActivity(new Intent(view.getContext(), KitsuLoginActivity.class));
-        }else {
+        } else {
+            KitsuAPI.kitsus = new ArrayList<>();
             KitsuAnimeSearchTask searchTask = new KitsuAnimeSearchTask(view.getContext());
             searchTask.execute();
         }
@@ -51,7 +52,7 @@ public class KitsuFragment extends Fragment {
 
         Context context;
 
-        public KitsuAnimeSearchTask(Context context){
+        public KitsuAnimeSearchTask(Context context) {
             this.context = context;
         }
 
@@ -63,7 +64,11 @@ public class KitsuFragment extends Fragment {
             ArrayList<Kitsu> kitsus = new ArrayList<>();
             Log.e("ANIME", USER_ID);
             try {
-                kitsus = KitsuAPI.getUserAnimeList(TOKEN, Integer.parseInt(USER_ID));
+                String URL = KitsuAPI.KITSU_API_BASE + Integer.parseInt(USER_ID) + KitsuAPI.KITSU_API_TAIL;
+                if (hasNext){
+                    URL = nextURL;
+                }
+                kitsus = KitsuAPI.getUserAnimeList(TOKEN, Integer.parseInt(USER_ID), URL);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -76,6 +81,10 @@ public class KitsuFragment extends Fragment {
             GridLayoutManager manager = new GridLayoutManager(context, 3);
             kitsuRecyclerView.setLayoutManager(manager);
             kitsuRecyclerView.setAdapter(adapter);
+            if (hasNext){
+                KitsuAnimeSearchTask searchTask = new KitsuAnimeSearchTask(getContext());
+                searchTask.execute();
+            }
         }
     }
 

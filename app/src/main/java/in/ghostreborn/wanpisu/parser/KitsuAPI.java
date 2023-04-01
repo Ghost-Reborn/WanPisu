@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.KitsuFragment;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -20,6 +21,10 @@ public class KitsuAPI {
 
     private static final String TAG = "KitsuApi";
     private static final String AUTH_ENDPOINT = "https://kitsu.io/api/oauth/token";
+    public static final String KITSU_API_BASE = "https://kitsu.io/api/edge/users/";
+    public static final String KITSU_API_TAIL = "/library-entries?include=anime&page%5Blimit%5D=10&page%5Boffset%5D=0";
+
+    public static ArrayList<Kitsu> kitsus;
 
     public static ArrayList<String> login(String username, String password) {
         ArrayList<String> loginData = new ArrayList<>();
@@ -73,17 +78,16 @@ public class KitsuAPI {
                 .getString("id");
     }
 
-    public static ArrayList<Kitsu> getUserAnimeList(String TOKEN, int USER_ID) throws Exception {
-        ArrayList<Kitsu> kitsus = new ArrayList<>();
-        String url = "https://kitsu.io/api/edge/users/" + USER_ID + "/library-entries?include=anime&page[limit]=500";
+    public static ArrayList<Kitsu> getUserAnimeList(String TOKEN, int USER_ID, String URL) throws Exception {
         Request request = new Request.Builder()
-                .url(url)
+                .url(URL)
                 .addHeader("Authorization", "Bearer " + TOKEN)
                 .build();
         OkHttpClient client = new OkHttpClient();
         Response response = client.newCall(request).execute();
         String responseBody = response.body().string();
-        JSONArray included = new JSONObject(responseBody)
+        JSONObject responseObject = new JSONObject(responseBody);
+        JSONArray included = responseObject
                 .getJSONArray("included");
         for (int i = 0; i < included.length(); i++) {
             JSONObject attributes = included.getJSONObject(i)
@@ -94,6 +98,15 @@ public class KitsuAPI {
                     .getString("medium");
             kitsus.add(new Kitsu(anime, thumbnail));
         }
+
+        JSONObject links = responseObject.getJSONObject("links");
+        if (links.has("next")){
+            KitsuFragment.hasNext = true;
+            KitsuFragment.nextURL = links.getString("next");
+        }else {
+            KitsuFragment.hasNext = false;
+        }
+
         return kitsus;
     }
 
