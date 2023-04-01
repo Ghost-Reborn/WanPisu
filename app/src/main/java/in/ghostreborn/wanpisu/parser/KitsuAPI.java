@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import in.ghostreborn.wanpisu.KitsuFragment;
+import in.ghostreborn.wanpisu.fragments.KitsuFragment;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import okhttp3.MediaType;
