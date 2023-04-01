@@ -6,7 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
@@ -109,6 +114,43 @@ public class KitsuAPI {
         }
 
         return WanPisuConstants.kitsus;
+    }
+
+    public static String getAnimeDetails(String animeID) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        String endpoint = "https://kitsu.io/api/edge/anime/" + animeID;
+
+        Request request = new Request.Builder()
+                .url(endpoint)
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/vnd.api+json")
+                .build();
+
+        Response response = null;
+
+        try {
+            response = client.newCall(request).execute();
+
+            if (response.isSuccessful()) {
+                String responseBody = response.body().string();
+
+                JSONObject jsonResponse = new JSONObject(responseBody);
+                JSONObject anime = jsonResponse.getJSONObject("data");
+                String animeTitle = anime.getJSONObject("attributes").getString("titles");
+
+                return animeTitle;
+            } else {
+                Log.e("Error", "Unexpected response: " + response);
+            }
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
     }
 
 }
