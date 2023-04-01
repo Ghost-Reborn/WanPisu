@@ -56,4 +56,16 @@ public class Kitsu {
         }
         return accessToken;
     }
+
+    public static String getAnime(String TOKEN, int ANIME_ID) throws Exception {
+        String url = "https://kitsu.io/api/edge/anime/" + ANIME_ID;
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Authorization", "Bearer " + TOKEN)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Response response = client.newCall(request).execute();
+        return response.body().string();
+    }
+
 }
