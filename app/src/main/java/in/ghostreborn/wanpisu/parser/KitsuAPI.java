@@ -90,13 +90,8 @@ public class KitsuAPI {
                     .getJSONObject("attributes");
             String anime = attributes.getString("canonicalTitle");
             String thumbnail;
-            if (!attributes.isNull("coverImage")) {
-                thumbnail = attributes.getJSONObject("coverImage")
-                        .getString("tiny");
-            } else {
-                thumbnail = attributes.getJSONObject("posterImage")
-                        .getString("tiny");
-            }
+            thumbnail = attributes.getJSONObject("posterImage")
+                    .getString("medium");
             kitsus.add(new Kitsu(anime, thumbnail));
         }
         return kitsus;
