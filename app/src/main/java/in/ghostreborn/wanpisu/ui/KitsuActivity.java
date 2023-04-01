@@ -48,7 +48,8 @@ public class KitsuActivity extends AppCompatActivity {
             ArrayList<Kitsu> kitsus = new ArrayList<>();
             Log.e("ANIME", USER_ID);
             try {
-//                kitsus = KitsuAPI.getUserAnimeList(TOKEN, Integer.parseInt(USER_ID));
+                String URL = KitsuAPI.KITSU_API_BASE + Integer.parseInt(USER_ID) + KitsuAPI.KITSU_API_TAIL;
+                kitsus = KitsuAPI.getUserAnimeList(TOKEN, URL);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -57,7 +58,7 @@ public class KitsuActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<Kitsu> kitsus) {
-            KitsuAnimeAdapter adapter = new KitsuAnimeAdapter(kitsus);
+            KitsuAnimeAdapter adapter = new KitsuAnimeAdapter();
             GridLayoutManager manager = new GridLayoutManager(getBaseContext(), 2);
             kitsuRecyclerView.setLayoutManager(manager);
             kitsuRecyclerView.setAdapter(adapter);

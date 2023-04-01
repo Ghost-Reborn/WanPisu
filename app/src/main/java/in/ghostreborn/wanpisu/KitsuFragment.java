@@ -40,7 +40,7 @@ public class KitsuFragment extends Fragment {
         if (!preferences.contains(WanPisuConstants.KITSU_LOGIN_FINISHED)) {
             startActivity(new Intent(view.getContext(), KitsuLoginActivity.class));
         } else {
-            KitsuAPI.kitsus = new ArrayList<>();
+            WanPisuConstants.kitsus = new ArrayList<>();
             KitsuAnimeSearchTask searchTask = new KitsuAnimeSearchTask(view.getContext());
             searchTask.execute();
         }
@@ -68,7 +68,7 @@ public class KitsuFragment extends Fragment {
                 if (hasNext){
                     URL = nextURL;
                 }
-                kitsus = KitsuAPI.getUserAnimeList(TOKEN, Integer.parseInt(USER_ID), URL);
+                kitsus = KitsuAPI.getUserAnimeList(TOKEN, URL);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -77,7 +77,7 @@ public class KitsuFragment extends Fragment {
 
         @Override
         protected void onPostExecute(ArrayList<Kitsu> kitsus) {
-            KitsuAnimeAdapter adapter = new KitsuAnimeAdapter(kitsus);
+            KitsuAnimeAdapter adapter = new KitsuAnimeAdapter();
             GridLayoutManager manager = new GridLayoutManager(context, 3);
             kitsuRecyclerView.setLayoutManager(manager);
             kitsuRecyclerView.setAdapter(adapter);

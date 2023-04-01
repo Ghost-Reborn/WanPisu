@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.KitsuFragment;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -23,8 +24,6 @@ public class KitsuAPI {
     private static final String AUTH_ENDPOINT = "https://kitsu.io/api/oauth/token";
     public static final String KITSU_API_BASE = "https://kitsu.io/api/edge/users/";
     public static final String KITSU_API_TAIL = "/library-entries?include=anime&page%5Blimit%5D=10&page%5Boffset%5D=0";
-
-    public static ArrayList<Kitsu> kitsus;
 
     public static ArrayList<String> login(String username, String password) {
         ArrayList<String> loginData = new ArrayList<>();
@@ -78,7 +77,7 @@ public class KitsuAPI {
                 .getString("id");
     }
 
-    public static ArrayList<Kitsu> getUserAnimeList(String TOKEN, int USER_ID, String URL) throws Exception {
+    public static ArrayList<Kitsu> getUserAnimeList(String TOKEN, String URL) throws Exception {
         Request request = new Request.Builder()
                 .url(URL)
                 .addHeader("Authorization", "Bearer " + TOKEN)
@@ -96,7 +95,7 @@ public class KitsuAPI {
             String thumbnail;
             thumbnail = attributes.getJSONObject("posterImage")
                     .getString("medium");
-            kitsus.add(new Kitsu(anime, thumbnail));
+            WanPisuConstants.kitsus.add(new Kitsu(anime, thumbnail));
         }
 
         JSONObject links = responseObject.getJSONObject("links");
@@ -107,7 +106,7 @@ public class KitsuAPI {
             KitsuFragment.hasNext = false;
         }
 
-        return kitsus;
+        return WanPisuConstants.kitsus;
     }
 
 }

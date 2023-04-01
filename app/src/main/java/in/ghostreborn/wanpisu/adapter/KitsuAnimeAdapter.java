@@ -14,35 +14,26 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.model.Kitsu;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
 public class KitsuAnimeAdapter extends RecyclerView.Adapter<KitsuAnimeAdapter.ViewHolder> {
-
-    ArrayList<Kitsu> kitsus;
-
-    public KitsuAnimeAdapter(ArrayList<Kitsu> kitsus){
-        this.kitsus = kitsus;
-    }
 
     @NonNull
     @Override
     public KitsuAnimeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.kitsu_anime_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.kitsu_anime_list, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull KitsuAnimeAdapter.ViewHolder holder, int position) {
-        holder.kitsuAnimeNameTextView.setText(kitsus.get(position).getAnime());
-        Picasso.get().load(kitsus.get(position).getThumbnail()).into(
-                holder.kitsuAnimeImageView
-        );
+        holder.kitsuAnimeNameTextView.setText(WanPisuConstants.kitsus.get(position).getAnime());
+        Picasso.get().load(WanPisuConstants.kitsus.get(position).getThumbnail()).into(holder.kitsuAnimeImageView);
     }
 
     @Override
     public int getItemCount() {
-        return kitsus.size();
+        return WanPisuConstants.kitsus.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
