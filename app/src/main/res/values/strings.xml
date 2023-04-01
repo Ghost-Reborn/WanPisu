@@ -2,4 +2,6 @@
     <string name="app_name">WanPisu</string>
     <string name="one">1</string>
     <string name="copy_and_paste_token_here">Copy and Paste token here</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

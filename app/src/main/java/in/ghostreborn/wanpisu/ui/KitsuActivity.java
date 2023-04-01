@@ -36,8 +36,6 @@ public class KitsuActivity extends AppCompatActivity {
             new KitsuAnimeSearchTask().execute();
         }
 
-
-
     }
 
     private class KitsuAnimeSearchTask extends AsyncTask<Void, Void, ArrayList<Kitsu>> {

@@ -19,35 +19,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        getAnilistTokenFromIntentFilter();
-
-        TextView watchAnimeTextView = findViewById(R.id.watch_anime_text_view);
-        watchAnimeTextView.setOnClickListener(view -> {
-            startActivity(new Intent(MainActivity.this, WanPisuActivity.class));
-        });
-
-        TextView kitsuTextView = findViewById(R.id.kitsu_text_view);
-        kitsuTextView.setOnClickListener(view -> {
-            startActivity(new Intent(MainActivity.this, KitsuActivity.class));
-        });
-
     }
-
-    private void getAnilistTokenFromIntentFilter(){
-        SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, Context.MODE_PRIVATE);
-        Intent urlIntent = getIntent();
-        Uri data = urlIntent.getData();
-        if (data != null){
-            String url = data.toString();
-            String token = url.substring(
-                    url.indexOf("token=") + 6,
-                    url.indexOf("&token_type")
-            );
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(WanPisuConstants.KITSU_TOKEN, token);
-            editor.apply();
-        }
-    }
-
 }
