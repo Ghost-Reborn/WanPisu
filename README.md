@@ -20,7 +20,7 @@
 * Multi server
 * High Speed Streaming
 * Uses AllAnime Api 
-* Anilist API
+* Kitsu API
 
 ## Planned Features
 
