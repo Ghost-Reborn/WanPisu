@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.ui.WanPisuActivity;
 
 public class KitsuAnimeAdapter extends RecyclerView.Adapter<KitsuAnimeAdapter.ViewHolder> {
 
@@ -29,6 +30,10 @@ public class KitsuAnimeAdapter extends RecyclerView.Adapter<KitsuAnimeAdapter.Vi
     public void onBindViewHolder(@NonNull KitsuAnimeAdapter.ViewHolder holder, int position) {
         holder.kitsuAnimeNameTextView.setText(WanPisuConstants.kitsus.get(position).getAnime());
         Picasso.get().load(WanPisuConstants.kitsus.get(position).getThumbnail()).into(holder.kitsuAnimeImageView);
+        holder.itemView.setOnClickListener(view -> {
+            Context context = holder.itemView.getContext();
+            context.startActivity(new Intent(context, WanPisuActivity.class));
+        });
     }
 
     @Override
