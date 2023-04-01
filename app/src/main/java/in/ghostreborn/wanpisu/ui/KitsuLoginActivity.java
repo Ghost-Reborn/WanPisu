@@ -1,6 +1,7 @@
 package in.ghostreborn.wanpisu.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.Kitsu;
 
 public class KitsuLoginActivity extends AppCompatActivity {
@@ -28,6 +30,9 @@ public class KitsuLoginActivity extends AppCompatActivity {
         kitsuLoginButton.setOnClickListener(view -> {
             String USERNAME = kitsuUserNameTextView.getText().toString().trim();
             String PASSWORD = kitsuUserPassTextView.getText().toString().trim();
+            if (USERNAME.isEmpty() || PASSWORD.isEmpty()){
+                return;
+            }
             new KitsuLoginTask(
                     USERNAME,
                     PASSWORD
@@ -58,12 +63,14 @@ public class KitsuLoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String accessToken) {
-            if (accessToken != null) {
-                Toast.makeText(KitsuLoginActivity.this, accessToken, Toast.LENGTH_SHORT).show();
-                // Store the access token or use it to make authenticated API requests
-            } else {
-                Toast.makeText(KitsuLoginActivity.this, "failed to login", Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(String TOKEN) {
+            if (!TOKEN.isEmpty()){
+                SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
+                preferences.edit()
+                        .putBoolean(WanPisuConstants.KITSU_LOGIN_FINISHED, true)
+                        .putString(WanPisuConstants.KITSU_TOKEN, TOKEN)
+                        .apply();
+                finish();
             }
         }
     }

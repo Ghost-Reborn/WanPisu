@@ -22,6 +22,9 @@ public class KitsuActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
         if (!preferences.contains(WanPisuConstants.KITSU_LOGIN_FINISHED)){
             startActivity(new Intent(KitsuActivity.this, KitsuLoginActivity.class));
+        }else {
+            String TOKEN = preferences.getString(WanPisuConstants.KITSU_TOKEN, "");
+            Toast.makeText(this, TOKEN, Toast.LENGTH_SHORT).show();
         }
 
     }

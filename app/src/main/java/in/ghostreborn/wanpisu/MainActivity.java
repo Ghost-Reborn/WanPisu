@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     url.indexOf("&token_type")
             );
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, token);
+            editor.putString(WanPisuConstants.KITSU_TOKEN, token);
             editor.apply();
         }
     }

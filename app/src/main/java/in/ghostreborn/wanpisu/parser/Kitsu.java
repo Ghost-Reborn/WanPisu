@@ -27,7 +27,7 @@ public class Kitsu {
     private static final String AUTH_ENDPOINT = "https://kitsu.io/api/oauth/token";
 
     public static String login(String username, String password) {
-        String accessToken = null;
+        String accessToken = "";
         try {
             // Create HTTP client and request
             OkHttpClient client = new OkHttpClient();
