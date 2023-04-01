@@ -1,28 +1,33 @@
 package in.ghostreborn.wanpisu.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.adapter.KitsuAnimeAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.parser.Kitsu;
+import in.ghostreborn.wanpisu.model.Kitsu;
+import in.ghostreborn.wanpisu.parser.KitsuAPI;
 
 public class KitsuActivity extends AppCompatActivity {
 
-    static TextView testText;
+    static RecyclerView kitsuRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kitsu);
 
-        testText = findViewById(R.id.test_text);
+        kitsuRecyclerView = findViewById(R.id.kitsu_recycler_view);
 
         SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
         if (!preferences.contains(WanPisuConstants.KITSU_LOGIN_FINISHED)){
@@ -35,23 +40,29 @@ public class KitsuActivity extends AppCompatActivity {
 
     }
 
-    private class KitsuAnimeSearchTask extends AsyncTask<Void, Void, String> {
+    private class KitsuAnimeSearchTask extends AsyncTask<Void, Void, ArrayList<Kitsu>> {
 
         @Override
-        protected String doInBackground(Void... voids) {
+        protected ArrayList<Kitsu> doInBackground(Void... voids) {
             SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
             String TOKEN = preferences.getString(WanPisuConstants.KITSU_TOKEN, "");
+            String USER_ID = preferences.getString(WanPisuConstants.KITSU_USER_ID, "");
+            ArrayList<Kitsu> kitsus = new ArrayList<>();
+            Log.e("ANIME", USER_ID);
             try {
-                return Kitsu.getAnime(TOKEN, 12);
+                kitsus = KitsuAPI.getUserAnimeList(TOKEN, Integer.parseInt(USER_ID));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return "";
+            return kitsus;
         }
 
         @Override
-        protected void onPostExecute(String response) {
-            testText.setText(response);
+        protected void onPostExecute(ArrayList<Kitsu> kitsus) {
+            KitsuAnimeAdapter adapter = new KitsuAnimeAdapter(kitsus);
+            GridLayoutManager manager = new GridLayoutManager(getBaseContext(), 2);
+            kitsuRecyclerView.setLayoutManager(manager);
+            kitsuRecyclerView.setAdapter(adapter);
         }
     }
 

@@ -5,16 +5,16 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.parser.Kitsu;
+import in.ghostreborn.wanpisu.parser.KitsuAPI;
 
 public class KitsuLoginActivity extends AppCompatActivity {
 
@@ -48,7 +48,7 @@ public class KitsuLoginActivity extends AppCompatActivity {
 
     }
 
-    private class KitsuLoginTask extends AsyncTask<Void, Void, String> {
+    private class KitsuLoginTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
         String USERNAME, PASSWORD;
 
@@ -58,17 +58,18 @@ public class KitsuLoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(Void... voids) {
-            return Kitsu.login(USERNAME, PASSWORD);
+        protected ArrayList<String> doInBackground(Void... voids) {
+            return KitsuAPI.login(USERNAME, PASSWORD);
         }
 
         @Override
-        protected void onPostExecute(String TOKEN) {
-            if (!TOKEN.isEmpty()){
+        protected void onPostExecute(ArrayList<String> loginData) {
+            if (loginData != null){
                 SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
                 preferences.edit()
                         .putBoolean(WanPisuConstants.KITSU_LOGIN_FINISHED, true)
-                        .putString(WanPisuConstants.KITSU_TOKEN, TOKEN)
+                        .putString(WanPisuConstants.KITSU_TOKEN, loginData.get(0))
+                        .putString(WanPisuConstants.KITSU_USER_ID, loginData.get(1))
                         .apply();
                 finish();
             }
