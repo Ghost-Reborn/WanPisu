@@ -2,11 +2,12 @@ package in.ghostreborn.wanpisu.model;
 
 public class Kitsu {
 
-    String anime, thumbnail;
+    String animeID,anime, thumbnail;
 
-    public Kitsu(String anime, String thumbnail){
+    public Kitsu(String animeID,String anime, String thumbnail){
         this.anime = anime;
         this.thumbnail = thumbnail;
+        this.animeID = animeID;
     }
 
     public String getAnime() {
@@ -15,5 +16,9 @@ public class Kitsu {
 
     public String getThumbnail() {
         return thumbnail;
+    }
+
+    public String getAnimeID() {
+        return animeID;
     }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import in.ghostreborn.wanpisu.KitsuAnimeActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.ui.WanPisuActivity;
@@ -32,8 +33,8 @@ public class KitsuAnimeAdapter extends RecyclerView.Adapter<KitsuAnimeAdapter.Vi
         Picasso.get().load(WanPisuConstants.kitsus.get(position).getThumbnail()).into(holder.kitsuAnimeImageView);
         holder.itemView.setOnClickListener(view -> {
             Context context = holder.itemView.getContext();
-            Intent intent = new Intent(context, WanPisuActivity.class);
-            intent.putExtra("ANIME_NAME", WanPisuConstants.kitsus.get(position).getAnime());
+            Intent intent = new Intent(context, KitsuAnimeActivity.class);
+            intent.putExtra("ANIME_ID", WanPisuConstants.kitsus.get(position).getAnimeID());
             context.startActivity(intent);
         });
     }

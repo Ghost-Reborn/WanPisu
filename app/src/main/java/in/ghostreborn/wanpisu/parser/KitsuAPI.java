@@ -9,8 +9,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import in.ghostreborn.wanpisu.fragments.KitsuFragment;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.fragments.KitsuFragment;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -20,10 +20,10 @@ import okhttp3.Response;
 
 public class KitsuAPI {
 
-    private static final String TAG = "KitsuApi";
-    private static final String AUTH_ENDPOINT = "https://kitsu.io/api/oauth/token";
     public static final String KITSU_API_BASE = "https://kitsu.io/api/edge/users/";
     public static final String KITSU_API_TAIL = "/library-entries?include=anime&page%5Blimit%5D=10&page%5Boffset%5D=0";
+    private static final String TAG = "KitsuApi";
+    private static final String AUTH_ENDPOINT = "https://kitsu.io/api/oauth/token";
 
     public static ArrayList<String> login(String username, String password) {
         ArrayList<String> loginData = new ArrayList<>();
@@ -89,20 +89,22 @@ public class KitsuAPI {
         JSONArray included = responseObject
                 .getJSONArray("included");
         for (int i = 0; i < included.length(); i++) {
-            JSONObject attributes = included.getJSONObject(i)
+            JSONObject includedObject = included.getJSONObject(i);
+            JSONObject attributes = includedObject
                     .getJSONObject("attributes");
+            String animeID = includedObject.getString("id");
             String anime = attributes.getString("canonicalTitle");
             String thumbnail;
             thumbnail = attributes.getJSONObject("posterImage")
                     .getString("medium");
-            WanPisuConstants.kitsus.add(new Kitsu(anime, thumbnail));
+            WanPisuConstants.kitsus.add(new Kitsu(animeID, anime, thumbnail));
         }
 
         JSONObject links = responseObject.getJSONObject("links");
-        if (links.has("next")){
+        if (links.has("next")) {
             KitsuFragment.hasNext = true;
             KitsuFragment.nextURL = links.getString("next");
-        }else {
+        } else {
             KitsuFragment.hasNext = false;
         }
 
