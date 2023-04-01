@@ -92,10 +92,10 @@ public class KitsuAPI {
             String thumbnail;
             if (!attributes.isNull("coverImage")) {
                 thumbnail = attributes.getJSONObject("coverImage")
-                        .getString("original");
+                        .getString("tiny");
             } else {
                 thumbnail = attributes.getJSONObject("posterImage")
-                        .getString("original");
+                        .getString("tiny");
             }
             kitsus.add(new Kitsu(anime, thumbnail));
         }
