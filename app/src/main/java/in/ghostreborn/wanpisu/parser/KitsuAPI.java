@@ -6,17 +6,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.fragments.KitsuFragment;
 import in.ghostreborn.wanpisu.model.Kitsu;
+import in.ghostreborn.wanpisu.model.KitsuDetails;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -116,9 +112,10 @@ public class KitsuAPI {
         return WanPisuConstants.kitsus;
     }
 
-    public static String getAnimeDetails(String animeID) {
+    public static ArrayList<KitsuDetails> getAnimeDetails(String animeID) {
 
         OkHttpClient client = new OkHttpClient();
+        WanPisuConstants.kitsuDetails = new ArrayList<>();
 
         String endpoint = "https://kitsu.io/api/edge/anime/" + animeID;
 
@@ -127,6 +124,8 @@ public class KitsuAPI {
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/vnd.api+json")
                 .build();
+
+        Log.e("ANIME_ID", animeID);
 
         Response response = null;
 
@@ -137,10 +136,12 @@ public class KitsuAPI {
                 String responseBody = response.body().string();
 
                 JSONObject jsonResponse = new JSONObject(responseBody);
-                JSONObject anime = jsonResponse.getJSONObject("data");
-                String animeTitle = anime.getJSONObject("attributes").getString("titles");
-
-                return animeTitle;
+                JSONObject attributes = jsonResponse.getJSONObject("data")
+                        .getJSONObject("attributes");
+                String animeTitle = attributes.getString("canonicalTitle");
+                String thumbnail = attributes.getJSONObject("posterImage")
+                        .getString("medium");
+                WanPisuConstants.kitsuDetails.add(new KitsuDetails(animeTitle, thumbnail));
             } else {
                 Log.e("Error", "Unexpected response: " + response);
             }
@@ -149,7 +150,7 @@ public class KitsuAPI {
             e.printStackTrace();
         }
 
-        return "";
+        return WanPisuConstants.kitsuDetails;
 
     }
 

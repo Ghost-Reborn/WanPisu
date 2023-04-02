@@ -3,6 +3,7 @@ package in.ghostreborn.wanpisu.constants;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.model.Kitsu;
+import in.ghostreborn.wanpisu.model.KitsuDetails;
 import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class WanPisuConstants {
@@ -14,5 +15,6 @@ public class WanPisuConstants {
 
     public static ArrayList<WanPisu> animeNames;
     public static ArrayList<Kitsu> kitsus;
+    public static ArrayList<KitsuDetails> kitsuDetails;
 
 }
