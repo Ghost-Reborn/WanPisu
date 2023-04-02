@@ -1,4 +1,4 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.KitsuAnimeDetailsAdapter;
 import in.ghostreborn.wanpisu.model.KitsuDetails;
 import in.ghostreborn.wanpisu.parser.KitsuAPI;

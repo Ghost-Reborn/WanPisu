@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".KitsuAnimeActivity"
+            android:name=".ui.KitsuAnimeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.KitsuLoginActivity"
@@ -34,7 +34,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ui.AnimeDetailsActivity"
+            android:name=".ui.EpisodesSelectActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
