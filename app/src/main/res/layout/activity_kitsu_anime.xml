@@ -23,8 +23,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/kitsu_detail_image_view"
                 app:layout_constraintTop_toTopOf="@+id/kitsu_detail_image_view" />
@@ -33,11 +34,12 @@
                 android:id="@+id/kitsu_detail_watch_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="WATCH"
                 app:layout_constraintBottom_toBottomOf="@+id/kitsu_detail_image_view"
                 app:layout_constraintStart_toStartOf="@+id/kitsu_detail_rating_view"
-                app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_rating_view" />
+                app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_status_view"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/kitsu_detail_image_view"
@@ -70,7 +72,7 @@
                 android:id="@+id/kitsu_detail_rating_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="@+id/kitsu_detail_progress_view"
                 app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_progress_view" />
 
@@ -87,7 +89,7 @@
                 android:id="@+id/kitsu_detail_progress_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="@+id/kitsu_detail_text_view"
                 app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_text_view" />
 
