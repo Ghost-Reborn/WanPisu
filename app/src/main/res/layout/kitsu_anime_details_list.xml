@@ -55,4 +55,13 @@
         android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/kitsu_detail_episodes_view"
         app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_episodes_view" />
+
+    <Button
+        android:id="@+id/kitsu_detail_watch_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="WATCH"
+        app:layout_constraintStart_toStartOf="@+id/kitsu_detail_rating_view"
+        app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_rating_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
