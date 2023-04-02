@@ -2,9 +2,12 @@ package in.ghostreborn.wanpisu.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +32,7 @@ public class KitsuAnimeActivity extends AppCompatActivity {
     static TextView kitsuDetailProgressView;
     static TextView kitsuDetailDescriptionView;
     static ImageView kitsuDetailImageView;
+    static Button kitsuDetailWatchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class KitsuAnimeActivity extends AppCompatActivity {
         kitsuDetailProgressView = findViewById(R.id.kitsu_detail_progress_view);
         kitsuDetailDescriptionView = findViewById(R.id.kitsu_detail_description_view);
         kitsuDetailImageView = findViewById(R.id.kitsu_detail_image_view);
+        kitsuDetailWatchButton = findViewById(R.id.kitsu_detail_watch_button);
 
         new KitsuAnimeAsyncTask().execute();
 
@@ -69,6 +74,11 @@ public class KitsuAnimeActivity extends AppCompatActivity {
             kitsuDetailProgressView.setText(kitsu.getProgress());
             kitsuDetailDescriptionView.setText(kitsu.getDescription());
             Picasso.get().load(kitsu.getThumbnail()).into(kitsuDetailImageView);
+            kitsuDetailWatchButton.setOnClickListener(view -> {
+                Intent watchIntent = new Intent(KitsuAnimeActivity.this, WanPisuActivity.class);
+                watchIntent.putExtra("ANIME_NAME", kitsuDetailTextView.getText().toString());
+                startActivity(watchIntent);
+            });
         }
     }
 
