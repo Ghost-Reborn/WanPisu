@@ -60,35 +60,33 @@
                 android:id="@+id/kitsu_detail_episodes_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="@+id/kitsu_detail_text_view"
-                app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_text_view" />
+                app:layout_constraintStart_toEndOf="@+id/kitsu_detail_progress_view"
+                app:layout_constraintTop_toTopOf="@+id/kitsu_detail_progress_view" />
 
             <TextView
                 android:id="@+id/kitsu_detail_rating_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="@+id/kitsu_detail_episodes_view"
-                app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_episodes_view" />
+                app:layout_constraintStart_toStartOf="@+id/kitsu_detail_progress_view"
+                app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_progress_view" />
 
             <TextView
                 android:id="@+id/kitsu_detail_status_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
                 android:textAllCaps="true"
-                app:layout_constraintStart_toEndOf="@+id/kitsu_detail_text_view"
-                app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_text_view" />
+                app:layout_constraintStart_toEndOf="@+id/kitsu_detail_rating_view"
+                app:layout_constraintTop_toTopOf="@+id/kitsu_detail_rating_view" />
 
             <TextView
                 android:id="@+id/kitsu_detail_progress_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="@+id/kitsu_detail_status_view"
-                app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_status_view" />
+                app:layout_constraintStart_toStartOf="@+id/kitsu_detail_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_text_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

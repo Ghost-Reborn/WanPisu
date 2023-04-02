@@ -71,7 +71,7 @@ public class KitsuAnimeActivity extends AppCompatActivity {
             kitsuDetailEpisodesView.setText(kitsu.getTotalEpisodes());
             kitsuDetailStatusView.setText(kitsu.getStatus());
             kitsuDetailRatingView.setText(kitsu.getRating());
-            kitsuDetailProgressView.setText(kitsu.getProgress());
+            kitsuDetailProgressView.setText(kitsu.getProgress() + "/");
             kitsuDetailDescriptionView.setText(kitsu.getDescription());
             Picasso.get().load(kitsu.getThumbnail()).into(kitsuDetailImageView);
             kitsuDetailWatchButton.setOnClickListener(view -> {
