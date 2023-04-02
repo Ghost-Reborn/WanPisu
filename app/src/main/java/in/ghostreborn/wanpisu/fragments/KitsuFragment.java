@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -41,6 +42,8 @@ public class KitsuFragment extends Fragment {
         if (!preferences.contains(WanPisuConstants.KITSU_LOGIN_FINISHED)) {
             startActivity(new Intent(view.getContext(), KitsuLoginActivity.class));
         } else {
+            String USER_ID = preferences.getString(WanPisuConstants.KITSU_USER_ID, "");
+            Toast.makeText(getContext(), USER_ID, Toast.LENGTH_SHORT).show();
             WanPisuConstants.kitsus = new ArrayList<>();
             KitsuAnimeSearchTask searchTask = new KitsuAnimeSearchTask(view.getContext());
             searchTask.execute();

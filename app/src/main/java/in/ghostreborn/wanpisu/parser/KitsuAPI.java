@@ -23,7 +23,7 @@ import okhttp3.Response;
 public class KitsuAPI {
 
     public static final String KITSU_API_BASE = "https://kitsu.io/api/edge/users/";
-    public static final String KITSU_API_TAIL = "/library-entries?include=anime&page%5Blimit%5D=10&page%5Boffset%5D=0";
+    public static final String KITSU_API_TAIL = "/library-entries?include=anime";
     private static final String TAG = "KitsuApi";
     private static final String AUTH_ENDPOINT = "https://kitsu.io/api/oauth/token";
 
@@ -87,19 +87,36 @@ public class KitsuAPI {
         OkHttpClient client = new OkHttpClient();
         Response response = client.newCall(request).execute();
         String responseBody = response.body().string();
+        Log.e("JSON_RESPONSE", responseBody);
         JSONObject responseObject = new JSONObject(responseBody);
-        JSONArray included = responseObject
-                .getJSONArray("included");
+        JSONArray library = responseObject.getJSONArray("data");
+        JSONArray included = responseObject.getJSONArray("included");
         for (int i = 0; i < included.length(); i++) {
             JSONObject includedObject = included.getJSONObject(i);
+            JSONObject libraryObject = library.getJSONObject(i);
             JSONObject attributes = includedObject
                     .getJSONObject("attributes");
             String animeID = includedObject.getString("id");
             String anime = attributes.getString("canonicalTitle");
-            String thumbnail;
-            thumbnail = attributes.getJSONObject("posterImage")
+            String description = attributes.getString("description");
+            String thumbnail = attributes.getJSONObject("posterImage")
                     .getString("medium");
-            WanPisuConstants.kitsus.add(new Kitsu(animeID, anime, thumbnail));
+            String status = libraryObject.getJSONObject("attributes")
+                                .getString("status");
+            String progress =libraryObject.getJSONObject("attributes")
+                    .getString("progress");
+            String totalEpisodes = attributes.getString("episodeCount");
+            String rating = attributes.getString("averageRating");
+            WanPisuConstants.kitsus.add(new Kitsu(
+                    animeID,
+                    anime,
+                    description,
+                    thumbnail,
+                    status,
+                    progress,
+                    totalEpisodes,
+                    rating
+            ));
         }
 
         JSONObject links = responseObject.getJSONObject("links");

@@ -1,29 +1,34 @@
 package in.ghostreborn.wanpisu.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.adapter.KitsuAnimeDetailsAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.model.Kitsu;
 import in.ghostreborn.wanpisu.model.KitsuDetails;
 import in.ghostreborn.wanpisu.parser.KitsuAPI;
 
 public class KitsuAnimeActivity extends AppCompatActivity {
 
     static String animeID;
-    static TextView testText;
-    static RecyclerView kitsuDetailsRecyclerView;
+    static int animeIndex;
+    static TextView kitsuDetailTextView;
+    static TextView kitsuDetailEpisodesView;
+    static TextView kitsuDetailStatusView;
+    static TextView kitsuDetailRatingView;
+    static TextView kitsuDetailProgressView;
+    static TextView kitsuDetailDescriptionView;
+    static ImageView kitsuDetailImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +37,15 @@ public class KitsuAnimeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         animeID = intent.getStringExtra("ANIME_ID");
+        animeIndex = intent.getIntExtra("ANIME_INDEX", 0);
 
-        kitsuDetailsRecyclerView = findViewById(R.id.kitsu_details_recycler_view);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        kitsuDetailsRecyclerView.setLayoutManager(manager);
+        kitsuDetailTextView = findViewById(R.id.kitsu_detail_text_view);
+        kitsuDetailEpisodesView = findViewById(R.id.kitsu_detail_episodes_view);
+        kitsuDetailStatusView = findViewById(R.id.kitsu_detail_status_view);
+        kitsuDetailRatingView = findViewById(R.id.kitsu_detail_rating_view);
+        kitsuDetailProgressView = findViewById(R.id.kitsu_detail_progress_view);
+        kitsuDetailDescriptionView = findViewById(R.id.kitsu_detail_description_view);
+        kitsuDetailImageView = findViewById(R.id.kitsu_detail_image_view);
 
         new KitsuAnimeAsyncTask().execute();
 
@@ -51,8 +61,14 @@ public class KitsuAnimeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<KitsuDetails> s) {
             super.onPostExecute(s);
-            KitsuAnimeDetailsAdapter adapter = new KitsuAnimeDetailsAdapter();
-            kitsuDetailsRecyclerView.setAdapter(adapter);
+            Kitsu kitsu = WanPisuConstants.kitsus.get(animeIndex);
+            kitsuDetailTextView.setText(kitsu.getAnime());
+            kitsuDetailEpisodesView.setText(kitsu.getTotalEpisodes());
+            kitsuDetailStatusView.setText(kitsu.getStatus());
+            kitsuDetailRatingView.setText(kitsu.getRating());
+            kitsuDetailProgressView.setText(kitsu.getProgress());
+            kitsuDetailDescriptionView.setText(kitsu.getDescription());
+            Picasso.get().load(kitsu.getThumbnail()).into(kitsuDetailImageView);
         }
     }
 
