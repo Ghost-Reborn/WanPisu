@@ -25,6 +25,9 @@ public class KitsuAnimeDetailsAdapter extends RecyclerView.Adapter<KitsuAnimeDet
     @Override
     public void onBindViewHolder(@NonNull KitsuAnimeDetailsAdapter.ViewHolder holder, int position) {
         holder.kitsuDetailTextView.setText(WanPisuConstants.kitsuDetails.get(position).getAnime());
+        holder.kitsuDetailDescriptionView.setText(WanPisuConstants.kitsuDetails.get(position).getDescription());
+        holder.kitsuDetailEpisodesView.setText(WanPisuConstants.kitsuDetails.get(position).getEpisodes());
+        holder.kitsuDetailRatingView.setText(WanPisuConstants.kitsuDetails.get(position).getAverageRating());
         Picasso.get().load(WanPisuConstants.kitsuDetails.get(position).getThumbnail()).into(holder.kitsuDetailImageView);
     }
 
@@ -36,11 +39,17 @@ public class KitsuAnimeDetailsAdapter extends RecyclerView.Adapter<KitsuAnimeDet
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView kitsuDetailTextView;
         public ImageView kitsuDetailImageView;
+        public TextView kitsuDetailDescriptionView;
+        public TextView kitsuDetailEpisodesView;
+        public TextView kitsuDetailRatingView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             kitsuDetailTextView = itemView.findViewById(R.id.kitsu_detail_text_view);
             kitsuDetailImageView = itemView.findViewById(R.id.kitsu_detail_image_view);
+            kitsuDetailDescriptionView = itemView.findViewById(R.id.kitsu_detail_description_view);
+            kitsuDetailEpisodesView = itemView.findViewById(R.id.kitsu_detail_episodes_view);
+            kitsuDetailRatingView = itemView.findViewById(R.id.kitsu_detail_rating_view);
         }
     }
 }

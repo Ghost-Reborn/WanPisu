@@ -5,14 +5,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.KitsuAnimeDetailsAdapter;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.KitsuDetails;
 import in.ghostreborn.wanpisu.parser.KitsuAPI;
 
@@ -38,7 +41,7 @@ public class KitsuAnimeActivity extends AppCompatActivity {
 
     }
 
-    static class KitsuAnimeAsyncTask extends AsyncTask<Void, Void, ArrayList<KitsuDetails>> {
+    class KitsuAnimeAsyncTask extends AsyncTask<Void, Void, ArrayList<KitsuDetails>> {
 
         @Override
         protected ArrayList<KitsuDetails> doInBackground(Void... voids) {

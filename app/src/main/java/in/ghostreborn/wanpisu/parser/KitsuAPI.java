@@ -13,6 +13,7 @@ import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.fragments.KitsuFragment;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import in.ghostreborn.wanpisu.model.KitsuDetails;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -141,7 +142,16 @@ public class KitsuAPI {
                 String animeTitle = attributes.getString("canonicalTitle");
                 String thumbnail = attributes.getJSONObject("posterImage")
                         .getString("medium");
-                WanPisuConstants.kitsuDetails.add(new KitsuDetails(animeTitle, thumbnail));
+                String description = attributes.getString("description");
+                String averageRating = attributes.getString("averageRating");
+                String episodes = attributes.getString("episodeCount");
+                WanPisuConstants.kitsuDetails.add(new KitsuDetails(
+                        animeTitle,
+                        thumbnail,
+                        description,
+                        averageRating,
+                        episodes
+                ));
             } else {
                 Log.e("Error", "Unexpected response: " + response);
             }
@@ -151,6 +161,34 @@ public class KitsuAPI {
         }
 
         return WanPisuConstants.kitsuDetails;
+
+    }
+
+    public static String getAnimeCastings(String TOKEN){
+        OkHttpClient client = new OkHttpClient();
+        HttpUrl url = HttpUrl.parse("https://kitsu.io/api/edge/")
+                .newBuilder()
+                .addPathSegment("anime")
+                .addPathSegment("20")
+                .addQueryParameter("include", "person")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Accept", "application/vnd.api+json")
+                .addHeader("Content-Type", "application/vnd.api+json")
+                .addHeader("Authorization", "Bearer " + TOKEN)
+                .build();
+        Response response = null;
+        String json = null;
+        try {
+            response = client.newCall(request).execute();
+            json = response.body().string();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return json;
 
     }
 
