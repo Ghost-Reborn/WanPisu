@@ -29,7 +29,7 @@ public class ServersSelectActivity extends AppCompatActivity {
                 .getString(WanPisuConstants.ALL_ANIME_ANIME_ID, "");
         int episodeNumber = Integer.parseInt(
                 WanPisuConstants.preferences
-                        .getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, "0")
+                        .getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODE_NUMBER, "0")
         );
 
         Log.e("SERVERS_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
