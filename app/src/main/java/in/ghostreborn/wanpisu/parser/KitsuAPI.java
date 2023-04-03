@@ -83,55 +83,59 @@ public class KitsuAPI {
                 .getString("id");
     }
 
-    public static ArrayList<Kitsu> getUserAnimeList(String TOKEN, String URL) throws Exception {
-        Request request = new Request.Builder()
-                .url(URL)
-                .addHeader("Authorization", "Bearer " + TOKEN)
-                .build();
-        OkHttpClient client = new OkHttpClient();
-        Response response = client.newCall(request).execute();
-        String responseBody = response.body().string();
-        Log.e("JSON_RESPONSE", responseBody);
-        JSONObject responseObject = new JSONObject(responseBody);
-        JSONArray library = responseObject.getJSONArray("data");
-        JSONArray included = responseObject.getJSONArray("included");
-        for (int i = 0; i < included.length(); i++) {
-            JSONObject includedObject = included.getJSONObject(i);
-            JSONObject libraryObject = library.getJSONObject(i);
-            JSONObject attributes = includedObject
-                    .getJSONObject("attributes");
-            String animeID = includedObject.getString("id");
-            String anime = attributes.getString("canonicalTitle");
-            String description = attributes.getString("description");
-            String thumbnail = attributes.getJSONObject("posterImage")
-                    .getString("medium");
-            String status = libraryObject.getJSONObject("attributes")
-                                .getString("status");
-            String progress =libraryObject.getJSONObject("attributes")
-                    .getString("progress");
-            String totalEpisodes = attributes.getString("episodeCount");
-            String rating = attributes.getString("averageRating");
-            WanPisuConstants.kitsus.add(new Kitsu(
-                    animeID,
-                    anime,
-                    description,
-                    thumbnail,
-                    status,
-                    progress,
-                    totalEpisodes,
-                    rating
-            ));
-        }
+    public static ArrayList<Kitsu> getUserAnimeList(String TOKEN, String URL, ArrayList<Kitsu> kitsus) {
+        try{
+            Request request = new Request.Builder()
+                    .url(URL)
+                    .addHeader("Authorization", "Bearer " + TOKEN)
+                    .build();
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            String responseBody = response.body().string();
+            Log.e("JSON_RESPONSE", responseBody);
+            JSONObject responseObject = new JSONObject(responseBody);
+            JSONArray library = responseObject.getJSONArray("data");
+            JSONArray included = responseObject.getJSONArray("included");
+            for (int i = 0; i < included.length(); i++) {
+                JSONObject includedObject = included.getJSONObject(i);
+                JSONObject libraryObject = library.getJSONObject(i);
+                JSONObject attributes = includedObject
+                        .getJSONObject("attributes");
+                String animeID = includedObject.getString("id");
+                String anime = attributes.getString("canonicalTitle");
+                String description = attributes.getString("description");
+                String thumbnail = attributes.getJSONObject("posterImage")
+                        .getString("medium");
+                String status = libraryObject.getJSONObject("attributes")
+                        .getString("status");
+                String progress =libraryObject.getJSONObject("attributes")
+                        .getString("progress");
+                String totalEpisodes = attributes.getString("episodeCount");
+                String rating = attributes.getString("averageRating");
+                kitsus.add(new Kitsu(
+                        animeID,
+                        anime,
+                        description,
+                        thumbnail,
+                        status,
+                        progress,
+                        totalEpisodes,
+                        rating
+                ));
+            }
 
-        JSONObject links = responseObject.getJSONObject("links");
-        if (links.has("next")) {
-            KitsuFragment.hasNext = true;
-            KitsuFragment.nextURL = links.getString("next");
-        } else {
-            KitsuFragment.hasNext = false;
-        }
+            JSONObject links = responseObject.getJSONObject("links");
+            if (links.has("next")) {
+                WanPisuConstants.hasNext = true;
+                WanPisuConstants.nextURL = links.getString("next");
+            } else {
+                WanPisuConstants.hasNext = false;
+            }
 
-        return WanPisuConstants.kitsus;
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+        return kitsus;
     }
 
     public static ArrayList<KitsuDetails> getAnimeDetails(String animeID) {

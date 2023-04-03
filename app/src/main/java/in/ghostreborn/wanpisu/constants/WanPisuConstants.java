@@ -23,8 +23,12 @@ public class WanPisuConstants {
     public static final String KITSU_ANIME_INDEX = "KITSU_ANIME_INDEX";
     public static final String KITSU_ANIME_NAME = "KITSU_ANIME_NAME";
 
+    public static boolean hasNext = false;
+    public static String nextURL = "";
+
     public static ArrayList<WanPisu> animeNames;
     public static ArrayList<Kitsu> kitsus;
+    public static ArrayList<Kitsu> userKitsus;
     public static ArrayList<KitsuDetails> kitsuDetails;
 
     public static SharedPreferences preferences;

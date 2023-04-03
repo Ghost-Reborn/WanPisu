@@ -13,11 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
+import in.ghostreborn.wanpisu.model.Kitsu;
 import in.ghostreborn.wanpisu.ui.KitsuAnimeActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
 public class KitsuAnimeAdapter extends RecyclerView.Adapter<KitsuAnimeAdapter.ViewHolder> {
+
+    ArrayList<Kitsu> kitsus = new ArrayList<>();
+
+    public KitsuAnimeAdapter(ArrayList<Kitsu> kitsus){
+        this.kitsus = kitsus;
+    }
 
     @NonNull
     @Override
@@ -28,8 +37,8 @@ public class KitsuAnimeAdapter extends RecyclerView.Adapter<KitsuAnimeAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull KitsuAnimeAdapter.ViewHolder holder, int position) {
-        holder.kitsuAnimeNameTextView.setText(WanPisuConstants.kitsus.get(position).getAnime());
-        Picasso.get().load(WanPisuConstants.kitsus.get(position).getThumbnail()).into(holder.kitsuAnimeImageView);
+        holder.kitsuAnimeNameTextView.setText(kitsus.get(position).getAnime());
+        Picasso.get().load(kitsus.get(position).getThumbnail()).into(holder.kitsuAnimeImageView);
         holder.itemView.setOnClickListener(view -> {
             Context context = holder.itemView.getContext();
             Intent intent = new Intent(context, KitsuAnimeActivity.class);
@@ -43,7 +52,7 @@ public class KitsuAnimeAdapter extends RecyclerView.Adapter<KitsuAnimeAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return WanPisuConstants.kitsus.size();
+        return kitsus.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

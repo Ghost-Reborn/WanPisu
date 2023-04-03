@@ -1,10 +1,13 @@
 package in.ghostreborn.wanpisu.ui;
 
+import static in.ghostreborn.wanpisu.constants.WanPisuConstants.preferences;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -66,7 +69,6 @@ public class KitsuLoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<String> loginData) {
             if (loginData != null){
-                SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
                 preferences.edit()
                         .putBoolean(WanPisuConstants.KITSU_LOGIN_FINISHED, true)
                         .putString(WanPisuConstants.KITSU_TOKEN, loginData.get(0))

@@ -23,8 +23,6 @@ import in.ghostreborn.wanpisu.parser.KitsuAPI;
 
 public class KitsuFragment extends Fragment {
 
-    public static boolean hasNext = false;
-    public static String nextURL = "";
     RecyclerView kitsuRecyclerView;
     ProgressBar kitsuProgressBar;
     boolean isSearching = false;
@@ -83,7 +81,7 @@ public class KitsuFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Kitsu> kitsus) {
             kitsuProgressBar.setVisibility(View.GONE);
-            KitsuAnimeAdapter adapter = new KitsuAnimeAdapter();
+            KitsuAnimeAdapter adapter = new KitsuAnimeAdapter(WanPisuConstants.kitsus);
             GridLayoutManager manager = new GridLayoutManager(context, 3);
             kitsuRecyclerView.setLayoutManager(manager);
             kitsuRecyclerView.setAdapter(adapter);
