@@ -14,6 +14,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView2"
         tools:layout="@layout/fragment_kitsu" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:name="in.ghostreborn.wanpisu.KitsuUserAnimeFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_kitsu_user_anime"
+        tools:layout_editor_absoluteY="19dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
