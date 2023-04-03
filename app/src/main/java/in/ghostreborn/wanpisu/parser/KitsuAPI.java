@@ -218,7 +218,7 @@ public class KitsuAPI {
         OkHttpClient client = new OkHttpClient();
         WanPisuConstants.kitsuDetails = new ArrayList<>();
 
-        String endpoint = KITSU_SEARCH_API_BASE + anime + KITSU_SEARCH_API_TAIL;
+        String endpoint = "https://kitsu.io/api/edge/anime?filter[text]=" + anime;
 
         Request request = new Request.Builder()
                 .url(endpoint)
@@ -230,14 +230,36 @@ public class KitsuAPI {
 
         try {
             response = client.newCall(request).execute();
-
-            if (response.isSuccessful()) {
-                return response.body().string();
-            } else {
-                Log.e("Error", "Unexpected response: " + response);
+            String responseBody = response.body().string();
+            Log.e("JSON_RESPONSE", responseBody);
+            JSONObject responseObject = new JSONObject(responseBody);
+            JSONArray data = responseObject.getJSONArray("data");
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject dataObject = data.getJSONObject(i);
+                JSONObject attributes = dataObject
+                        .getJSONObject("attributes");
+                String animeID = dataObject.getString("id");
+                String animeName = attributes.getString("canonicalTitle");
+                String description = attributes.getString("description");
+                String thumbnail = attributes.getJSONObject("posterImage")
+                        .getString("medium");
+                String status = dataObject.getJSONObject("attributes")
+                        .getString("status");
+                String totalEpisodes = attributes.getString("episodeCount");
+                String rating = attributes.getString("averageRating");
+                WanPisuConstants.kitsus.add(new Kitsu(
+                        animeID,
+                        animeName,
+                        description,
+                        thumbnail,
+                        status,
+                        "",
+                        totalEpisodes,
+                        rating
+                ));
             }
 
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 

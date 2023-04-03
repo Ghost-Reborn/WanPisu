@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -26,6 +27,7 @@ public class KitsuFragment extends Fragment {
     public static String nextURL = "";
     RecyclerView kitsuRecyclerView;
     ProgressBar kitsuProgressBar;
+    boolean isSearching = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,8 +36,25 @@ public class KitsuFragment extends Fragment {
         kitsuRecyclerView = view.findViewById(R.id.kitsu_recycler_view);
         kitsuProgressBar = view.findViewById(R.id.kitsu_recycler_progress);
 
-        KitsuAnimeSearchTask searchTask = new KitsuAnimeSearchTask(view.getContext());
+        KitsuAnimeSearchTask searchTask = new KitsuAnimeSearchTask(view.getContext(), "");
         searchTask.execute();
+
+        SearchView kitsuSearchView = view.findViewById(R.id.kitsu_search_view);
+        kitsuSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                isSearching = true;
+                kitsuProgressBar.setVisibility(View.VISIBLE);
+                KitsuAnimeSearchTask searchTask = new KitsuAnimeSearchTask(getContext(), kitsuSearchView.getQuery().toString());
+                searchTask.execute();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
 
         return view;
     }
@@ -43,15 +62,21 @@ public class KitsuFragment extends Fragment {
     private class KitsuAnimeSearchTask extends AsyncTask<Void, Void, ArrayList<Kitsu>> {
 
         Context context;
+        String anime;
 
-        public KitsuAnimeSearchTask(Context context) {
+        public KitsuAnimeSearchTask(Context context, String anime) {
             this.context = context;
+            this.anime = anime;
         }
 
         @Override
         protected ArrayList<Kitsu> doInBackground(Void... voids) {
             WanPisuConstants.kitsus = new ArrayList<>();
-            KitsuAPI.getTrendingAnime();
+            if (isSearching){
+                KitsuAPI.searchAnime(anime);
+            }else {
+                KitsuAPI.getTrendingAnime();
+            }
             return WanPisuConstants.kitsus;
         }
 
