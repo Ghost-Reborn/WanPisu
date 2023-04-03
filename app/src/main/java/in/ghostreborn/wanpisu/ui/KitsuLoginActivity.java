@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.MainActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.KitsuAPI;
@@ -71,7 +72,9 @@ public class KitsuLoginActivity extends AppCompatActivity {
                         .putString(WanPisuConstants.KITSU_TOKEN, loginData.get(0))
                         .putString(WanPisuConstants.KITSU_USER_ID, loginData.get(1))
                         .apply();
-                finish();
+                Intent intent = new Intent(KitsuLoginActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         }
     }
