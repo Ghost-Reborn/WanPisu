@@ -6,23 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingBottom="8dp"
+        android:text="Trending Anime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/users_anime_list" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingBottom="8dp"
+        android:text="Your Anime List"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/users_anime_list"
-        android:name="in.ghostreborn.wanpisu.KitsuUserAnimeFragment"
+        android:name="in.ghostreborn.wanpisu.fragments.KitsuUserAnimeFragment"
         android:layout_width="0dp"
         android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:layout="@layout/fragment_kitsu_user_anime" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/trending_anime_list"
-        android:name="in.ghostreborn.wanpisu.KitsuTrendingAnimeFragment"
+        android:name="in.ghostreborn.wanpisu.fragments.KitsuTrendingAnimeFragment"
         android:layout_width="0dp"
         android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/users_anime_list"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:layout="@layout/fragment_kitsu_user_anime" />
 </androidx.constraintlayout.widget.ConstraintLayout>
