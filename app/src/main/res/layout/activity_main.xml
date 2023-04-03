@@ -7,23 +7,22 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="in.ghostreborn.wanpisu.fragments.KitsuFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView2"
-        tools:layout="@layout/fragment_kitsu" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView2"
+        android:id="@+id/users_anime_list"
         android:name="in.ghostreborn.wanpisu.KitsuUserAnimeFragment"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_kitsu_user_anime" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/trending_anime_list"
+        android:name="in.ghostreborn.wanpisu.KitsuTrendingAnimeFragment"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/users_anime_list"
         tools:layout="@layout/fragment_kitsu_user_anime" />
 </androidx.constraintlayout.widget.ConstraintLayout>

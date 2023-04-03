@@ -48,12 +48,12 @@ public class KitsuUserAnimeFragment extends Fragment {
             String USER_ID = preferences.getString(WanPisuConstants.KITSU_USER_ID, "");
             Toast.makeText(getContext(), USER_ID, Toast.LENGTH_SHORT).show();
             WanPisuConstants.userKitsus = new ArrayList<>();
-            new KitsuAnimeSearchTask().execute();
+            new KitsuUserAnimeTask().execute();
         }
         return view;
     }
 
-    private class KitsuAnimeSearchTask extends AsyncTask<Void, Void, ArrayList<Kitsu>> {
+    private class KitsuUserAnimeTask extends AsyncTask<Void, Void, ArrayList<Kitsu>> {
 
         @Override
         protected ArrayList<Kitsu> doInBackground(Void... voids) {
@@ -74,8 +74,8 @@ public class KitsuUserAnimeFragment extends Fragment {
             kitsuUserAnimeRecycler.setLayoutManager(manager);
             kitsuUserAnimeRecycler.setAdapter(adapter);
             if (WanPisuConstants.hasNext){
-                KitsuAnimeSearchTask searchTask = new KitsuAnimeSearchTask();
-                searchTask.execute();
+                KitsuUserAnimeTask userAnimeTask = new KitsuUserAnimeTask();
+                userAnimeTask.execute();
             }
         }
     }
