@@ -7,6 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
@@ -242,5 +244,50 @@ public class KitsuAPI {
         return "ERROR";
 
     }
+
+    public static void getTrendingAnime() {
+        String URL = "https://kitsu.io/api/edge/trending/anime?limit=50";
+
+        try {
+            Request request = new Request.Builder()
+                    .url(new URL(URL))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/vnd.api+json")
+                    .build();
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            String responseBody = response.body().string();
+            Log.e("JSON_RESPONSE", responseBody);
+            JSONObject responseObject = new JSONObject(responseBody);
+            JSONArray data = responseObject.getJSONArray("data");
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject dataObject = data.getJSONObject(i);
+                JSONObject attributes = dataObject
+                        .getJSONObject("attributes");
+                String animeID = dataObject.getString("id");
+                String anime = attributes.getString("canonicalTitle");
+                String description = attributes.getString("description");
+                String thumbnail = attributes.getJSONObject("posterImage")
+                        .getString("medium");
+                String status = dataObject.getJSONObject("attributes")
+                        .getString("status");
+                String totalEpisodes = attributes.getString("episodeCount");
+                String rating = attributes.getString("averageRating");
+                WanPisuConstants.kitsus.add(new Kitsu(
+                        animeID,
+                        anime,
+                        description,
+                        thumbnail,
+                        status,
+                        "",
+                        totalEpisodes,
+                        rating
+                ));
+            }
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
