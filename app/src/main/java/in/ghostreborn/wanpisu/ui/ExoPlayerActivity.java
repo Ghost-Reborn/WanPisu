@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.ActionBar;
@@ -20,6 +21,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class ExoPlayerActivity extends AppCompatActivity {
@@ -64,6 +66,8 @@ public class ExoPlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exo_player);
+
+        Log.e("EXOPLAYER", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);

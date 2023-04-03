@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         WanPisuConstants.kitsus = new ArrayList<>();
-        new AnimeTest().execute();
+        WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
+        Log.e("MAIN_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
 
     }
 
@@ -32,20 +33,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-    }
-
-    class AnimeTest extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            return KitsuAPI.searchAnime("One Piece");
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.e("ANIME_TAG", s);
-        }
     }
 
 }

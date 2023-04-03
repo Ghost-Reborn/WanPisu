@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.ui.ServersSelectActivity;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
@@ -39,14 +40,12 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
         int correctPosition = position + 1;
 
         holder.episodeNumberTextView.setText(String.valueOf(correctPosition));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ServersSelectActivity.class);
-                intent.putExtra("ANIME_EPISODE_NUMBER", correctPosition);
-                intent.putExtra("ANIME_ID", animeID);
-                context.startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ServersSelectActivity.class);
+            WanPisuConstants.preferences.edit()
+                            .putString(WanPisuConstants.ALL_ANIME_ANIME_EPISODE_NUMBER, String.valueOf(correctPosition))
+                                    .apply();
+            context.startActivity(intent);
         });
     }
 

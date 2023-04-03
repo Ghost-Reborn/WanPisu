@@ -2,6 +2,7 @@ package in.ghostreborn.wanpisu.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,12 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
     private static View.OnClickListener listener(int position){
         return view -> {
             Intent intent = new Intent(context, EpisodesSelectActivity.class);
-            intent.putExtra("ANIME_ID", WanPisuConstants.animeNames.get(position).getAnimeID());
-            intent.putExtra("ANIME_EPISODES", WanPisuConstants.animeNames.get(position).getTotalEpisodes());
+            String animeID = WanPisuConstants.animeNames.get(position).getAnimeID();
+            Log.e("ANIME_ID", animeID);
+            WanPisuConstants.preferences.edit()
+                            .putString(WanPisuConstants.ALL_ANIME_ANIME_ID, animeID)
+                            .putString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, String.valueOf(WanPisuConstants.animeNames.get(position).getTotalEpisodes()))
+                    .apply();
             context.startActivity(intent);
         };
     }

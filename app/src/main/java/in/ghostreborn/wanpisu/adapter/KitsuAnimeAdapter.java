@@ -33,8 +33,10 @@ public class KitsuAnimeAdapter extends RecyclerView.Adapter<KitsuAnimeAdapter.Vi
         holder.itemView.setOnClickListener(view -> {
             Context context = holder.itemView.getContext();
             Intent intent = new Intent(context, KitsuAnimeActivity.class);
-            intent.putExtra("ANIME_ID", WanPisuConstants.kitsus.get(position).getAnimeID());
-            intent.putExtra("ANIME_INDEX", position);
+            WanPisuConstants.preferences.edit()
+                            .putString(WanPisuConstants.KITSU_ANIME_ID,  WanPisuConstants.kitsus.get(position).getAnimeID())
+                            .putString(WanPisuConstants.KITSU_ANIME_INDEX,  String.valueOf(position))
+                                    .apply();
             context.startActivity(intent);
         });
     }

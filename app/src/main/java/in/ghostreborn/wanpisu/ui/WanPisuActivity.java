@@ -2,6 +2,7 @@ package in.ghostreborn.wanpisu.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,6 +14,7 @@ import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.WanPisu;
 import in.ghostreborn.wanpisu.parser.AllAnime;
 
@@ -27,8 +29,10 @@ public class WanPisuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wan_pisu);
 
-        Intent intent = getIntent();
-        String animeName = intent.getStringExtra("ANIME_NAME");
+        Log.e("WANPISU_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
+
+        String animeName = WanPisuConstants.preferences
+                .getString(WanPisuConstants.KITSU_ANIME_NAME, "");
 
         RecyclerView animeContainerView = findViewById(R.id.anime_container);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
@@ -37,7 +41,7 @@ public class WanPisuActivity extends AppCompatActivity {
         // Get latest anime updates
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            String anime = animeName == null ? "" : animeName;
+            String anime = animeName;
             animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(anime);
             adapter = new AnimeSearchAdapter(WanPisuActivity.this);
             runOnUiThread(() -> animeContainerView.setAdapter(adapter));

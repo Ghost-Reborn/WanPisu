@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,7 +25,7 @@ import in.ghostreborn.wanpisu.parser.KitsuAPI;
 public class KitsuAnimeActivity extends AppCompatActivity {
 
     static String animeID;
-    static int animeIndex;
+    static String animeIndex;
     static TextView kitsuDetailTextView;
     static TextView kitsuDetailEpisodesView;
     static TextView kitsuDetailStatusView;
@@ -39,9 +40,12 @@ public class KitsuAnimeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kitsu_anime);
 
-        Intent intent = getIntent();
-        animeID = intent.getStringExtra("ANIME_ID");
-        animeIndex = intent.getIntExtra("ANIME_INDEX", 0);
+        Log.e("KITSU_ANIME_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
+
+        animeID = WanPisuConstants.preferences
+                .getString(WanPisuConstants.KITSU_ANIME_ID, "");
+        animeIndex = WanPisuConstants.preferences
+                .getString(WanPisuConstants.KITSU_ANIME_INDEX, "");
 
         kitsuDetailTextView = findViewById(R.id.kitsu_detail_text_view);
         kitsuDetailEpisodesView = findViewById(R.id.kitsu_detail_episodes_view);
@@ -66,7 +70,7 @@ public class KitsuAnimeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<KitsuDetails> s) {
             super.onPostExecute(s);
-            Kitsu kitsu = WanPisuConstants.kitsus.get(animeIndex);
+            Kitsu kitsu = WanPisuConstants.kitsus.get(Integer.parseInt(animeIndex));
             kitsuDetailTextView.setText(kitsu.getAnime());
             kitsuDetailEpisodesView.setText(kitsu.getTotalEpisodes());
             kitsuDetailStatusView.setText(kitsu.getStatus());
@@ -76,7 +80,9 @@ public class KitsuAnimeActivity extends AppCompatActivity {
             Picasso.get().load(kitsu.getThumbnail()).into(kitsuDetailImageView);
             kitsuDetailWatchButton.setOnClickListener(view -> {
                 Intent watchIntent = new Intent(KitsuAnimeActivity.this, WanPisuActivity.class);
-                watchIntent.putExtra("ANIME_NAME", kitsuDetailTextView.getText().toString());
+                WanPisuConstants.preferences.edit()
+                                .putString(WanPisuConstants.KITSU_ANIME_NAME,  kitsuDetailTextView.getText().toString())
+                        .apply();
                 startActivity(watchIntent);
             });
         }

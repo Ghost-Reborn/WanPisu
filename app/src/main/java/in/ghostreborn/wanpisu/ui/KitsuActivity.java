@@ -29,6 +29,8 @@ public class KitsuActivity extends AppCompatActivity {
 
         kitsuRecyclerView = findViewById(R.id.kitsu_recycler_view);
 
+        Log.e("KITSU_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
+
         SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
         if (!preferences.contains(WanPisuConstants.KITSU_LOGIN_FINISHED)){
             startActivity(new Intent(KitsuActivity.this, KitsuLoginActivity.class));

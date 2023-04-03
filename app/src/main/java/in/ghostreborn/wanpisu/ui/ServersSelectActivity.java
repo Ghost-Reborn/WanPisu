@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeServersAdapter;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class ServersSelectActivity extends AppCompatActivity {
@@ -23,9 +25,14 @@ public class ServersSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servers_select);
 
-        Intent intent = getIntent();
-        String animeID = intent.getStringExtra("ANIME_ID");
-        int episodeNumber = intent.getIntExtra("ANIME_EPISODE_NUMBER", 1);
+        String animeID = WanPisuConstants.preferences
+                .getString(WanPisuConstants.ALL_ANIME_ANIME_ID, "");
+        int episodeNumber = Integer.parseInt(
+                WanPisuConstants.preferences
+                        .getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, "0")
+        );
+
+        Log.e("SERVERS_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
 
         animeServerSelectRecyclerView = findViewById(R.id.anime_server_select_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
