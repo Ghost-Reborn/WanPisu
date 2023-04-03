@@ -43,7 +43,7 @@ public class KitsuTrendingAnimeFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Kitsu> kitsus) {
             KitsuAnimeAdapter adapter = new KitsuAnimeAdapter(WanPisuConstants.kitsus);
-            GridLayoutManager manager = new GridLayoutManager(getContext(), 3);
+            GridLayoutManager manager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
             kitsuTrendingRecycler.setLayoutManager(manager);
             kitsuTrendingRecycler.setAdapter(adapter);
         }

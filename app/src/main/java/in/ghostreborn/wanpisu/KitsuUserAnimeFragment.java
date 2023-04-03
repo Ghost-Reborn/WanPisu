@@ -70,7 +70,7 @@ public class KitsuUserAnimeFragment extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<Kitsu> kitsus) {
             KitsuAnimeAdapter adapter = new KitsuAnimeAdapter(WanPisuConstants.userKitsus);
-            GridLayoutManager manager = new GridLayoutManager(getContext(), 3);
+            GridLayoutManager manager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
             kitsuUserAnimeRecycler.setLayoutManager(manager);
             kitsuUserAnimeRecycler.setAdapter(adapter);
             if (WanPisuConstants.hasNext){
