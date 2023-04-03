@@ -1,17 +1,13 @@
 package in.ghostreborn.wanpisu;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.ui.KitsuActivity;
-import in.ghostreborn.wanpisu.ui.WanPisuActivity;
+import in.ghostreborn.wanpisu.parser.KitsuAPI;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new AnimeTest().execute();
+
     }
 
     @Override
@@ -30,4 +29,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    class AnimeTest extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return KitsuAPI.searchAnime("One Piece");
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("ANIME_TAG", s);
+        }
+    }
+
 }

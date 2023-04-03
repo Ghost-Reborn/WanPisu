@@ -26,6 +26,8 @@ public class KitsuAPI {
     public static final String KITSU_API_TAIL = "/library-entries?include=anime";
     private static final String TAG = "KitsuApi";
     private static final String AUTH_ENDPOINT = "https://kitsu.io/api/oauth/token";
+    private static final String KITSU_SEARCH_API_BASE = "https://kitsu.io/api/edge/anime?filter[text]=";
+    private static final String KITSU_SEARCH_API_TAIL = "&fields[anime]=id,canonicalTitle";
 
     public static ArrayList<String> login(String username, String password) {
         ArrayList<String> loginData = new ArrayList<>();
@@ -206,6 +208,38 @@ public class KitsuAPI {
         }
 
         return json;
+
+    }
+
+    public static String searchAnime(String anime) {
+
+        OkHttpClient client = new OkHttpClient();
+        WanPisuConstants.kitsuDetails = new ArrayList<>();
+
+        String endpoint = KITSU_SEARCH_API_BASE + anime + KITSU_SEARCH_API_TAIL;
+
+        Request request = new Request.Builder()
+                .url(endpoint)
+                .header("Content-Type", "application/json")
+                .header("Accept", "application/vnd.api+json")
+                .build();
+
+        Response response = null;
+
+        try {
+            response = client.newCall(request).execute();
+
+            if (response.isSuccessful()) {
+                return response.body().string();
+            } else {
+                Log.e("Error", "Unexpected response: " + response);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "ERROR";
 
     }
 
