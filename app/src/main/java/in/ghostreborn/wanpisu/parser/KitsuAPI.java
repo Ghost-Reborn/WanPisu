@@ -81,7 +81,7 @@ public class KitsuAPI {
                 .getString("id");
     }
 
-    public static ArrayList<Kitsu> getUserAnimeList(String TOKEN, String URL, ArrayList<Kitsu> kitsus) {
+    public static ArrayList<Kitsu> getUserAnimeList(String TOKEN, String URL) {
         try{
             Request request = new Request.Builder()
                     .url(URL)
@@ -109,7 +109,7 @@ public class KitsuAPI {
                         .getString("progress");
                 String totalEpisodes = attributes.getString("episodeCount");
                 String rating = attributes.getString("averageRating");
-                kitsus.add(new Kitsu(
+                WanPisuConstants.userKitsus.add(new Kitsu(
                         animeID,
                         anime,
                         description,
@@ -132,7 +132,7 @@ public class KitsuAPI {
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
-        return kitsus;
+        return WanPisuConstants.userKitsus;
     }
 
     public static ArrayList<KitsuDetails> getAnimeDetails(String animeID) {

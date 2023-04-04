@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.KitsuAnimeAdapter;
+import in.ghostreborn.wanpisu.adapter.KitsuUserAnimeAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import in.ghostreborn.wanpisu.parser.KitsuAPI;
@@ -64,13 +65,13 @@ public class KitsuUserAnimeFragment extends Fragment {
             if (WanPisuConstants.hasNext){
                 URL = WanPisuConstants.nextURL;
             }
-            KitsuAPI.getUserAnimeList(TOKEN, URL, WanPisuConstants.userKitsus);
+            KitsuAPI.getUserAnimeList(TOKEN, URL);
             return WanPisuConstants.userKitsus;
         }
 
         @Override
         protected void onPostExecute(ArrayList<Kitsu> kitsus) {
-            KitsuAnimeAdapter adapter = new KitsuAnimeAdapter(WanPisuConstants.userKitsus);
+            KitsuUserAnimeAdapter adapter = new KitsuUserAnimeAdapter();
             GridLayoutManager manager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
             kitsuUserAnimeRecycler.setLayoutManager(manager);
             kitsuUserAnimeRecycler.setAdapter(adapter);

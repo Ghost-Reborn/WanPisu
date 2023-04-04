@@ -70,7 +70,12 @@ public class KitsuAnimeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<KitsuDetails> s) {
             super.onPostExecute(s);
-            Kitsu kitsu = WanPisuConstants.kitsus.get(Integer.parseInt(animeIndex));
+            Kitsu kitsu;
+            if (WanPisuConstants.isUserAnime){
+                kitsu = WanPisuConstants.userKitsus.get(Integer.parseInt(animeIndex));
+            }else {
+                kitsu = WanPisuConstants.kitsus.get(Integer.parseInt(animeIndex));
+            }
             kitsuDetailTextView.setText(kitsu.getAnime());
             kitsuDetailEpisodesView.setText(kitsu.getTotalEpisodes());
             kitsuDetailStatusView.setText(kitsu.getStatus());

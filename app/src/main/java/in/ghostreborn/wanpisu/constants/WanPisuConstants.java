@@ -26,6 +26,7 @@ public class WanPisuConstants {
     public static final String KITSU_ANIME_NAME = "KITSU_ANIME_NAME";
 
     public static boolean hasNext = false;
+    public static boolean isUserAnime = false;
     public static String nextURL = "";
 
     public static ArrayList<WanPisu> animeNames;

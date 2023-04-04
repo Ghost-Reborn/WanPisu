@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.KitsuAnimeAdapter;
+import in.ghostreborn.wanpisu.adapter.KitsuTrendingAnimeAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import in.ghostreborn.wanpisu.parser.KitsuAPI;
@@ -43,7 +44,7 @@ public class KitsuTrendingAnimeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(ArrayList<Kitsu> kitsus) {
-            KitsuAnimeAdapter adapter = new KitsuAnimeAdapter(WanPisuConstants.kitsus);
+            KitsuTrendingAnimeAdapter adapter = new KitsuTrendingAnimeAdapter();
             GridLayoutManager manager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
             kitsuTrendingRecycler.setLayoutManager(manager);
             kitsuTrendingRecycler.setAdapter(adapter);
