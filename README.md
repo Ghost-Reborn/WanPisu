@@ -34,3 +34,6 @@
 * TV Support
 * Bulk Download
 * Manga Reader
+
+### TODO 
+* Drop KitsuDetails model
