@@ -60,11 +60,14 @@ public class KitsuAnimeActivity extends AppCompatActivity {
         }else {
             kitsu = WanPisuConstants.kitsus.get(Integer.parseInt(animeIndex));
         }
+
+        String progress = kitsu.getProgress().equals("") ? "0/" : kitsu.getProgress() + "/";
+
         kitsuDetailTextView.setText(kitsu.getAnime());
         kitsuDetailEpisodesView.setText(kitsu.getTotalEpisodes());
         kitsuDetailStatusView.setText(kitsu.getStatus());
         kitsuDetailRatingView.setText(kitsu.getRating());
-        kitsuDetailProgressView.setText(kitsu.getProgress());
+        kitsuDetailProgressView.setText(progress);
         kitsuDetailDescriptionView.setText(kitsu.getDescription());
         Picasso.get().load(kitsu.getThumbnail()).into(kitsuDetailImageView);
         kitsuDetailWatchButton.setOnClickListener(view -> {
