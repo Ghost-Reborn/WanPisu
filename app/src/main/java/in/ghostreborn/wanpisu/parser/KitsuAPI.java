@@ -1,19 +1,15 @@
 package in.ghostreborn.wanpisu.parser;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Kitsu;
-import in.ghostreborn.wanpisu.model.KitsuDetails;
 import in.ghostreborn.wanpisu.model.KitsuEpisode;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -135,53 +131,6 @@ public class KitsuAPI {
         return WanPisuConstants.userKitsus;
     }
 
-    public static ArrayList<KitsuDetails> getAnimeDetails(String animeID) {
-
-        OkHttpClient client = new OkHttpClient();
-        WanPisuConstants.kitsuDetails = new ArrayList<>();
-
-        String endpoint = "https://kitsu.io/api/edge/anime/" + animeID;
-
-        Request request = new Request.Builder()
-                .url(endpoint)
-                .header("Content-Type", "application/json")
-                .header("Accept", "application/vnd.api+json")
-                .build();
-
-        Response response = null;
-
-        try {
-            response = client.newCall(request).execute();
-
-            if (response.isSuccessful()) {
-                String responseBody = response.body().string();
-
-                JSONObject jsonResponse = new JSONObject(responseBody);
-                JSONObject attributes = jsonResponse.getJSONObject("data")
-                        .getJSONObject("attributes");
-                String animeTitle = attributes.getString("canonicalTitle");
-                String thumbnail = attributes.getJSONObject("posterImage")
-                        .getString("medium");
-                String description = attributes.getString("description");
-                String averageRating = attributes.getString("averageRating");
-                String episodes = attributes.getString("episodeCount");
-                WanPisuConstants.kitsuDetails.add(new KitsuDetails(
-                        animeTitle,
-                        thumbnail,
-                        description,
-                        averageRating,
-                        episodes
-                ));
-            }
-
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-
-        return WanPisuConstants.kitsuDetails;
-
-    }
-
     public static String getAnimeCastings(String TOKEN){
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.parse("https://kitsu.io/api/edge/")
@@ -213,7 +162,6 @@ public class KitsuAPI {
     public static String searchAnime(String anime) {
 
         OkHttpClient client = new OkHttpClient();
-        WanPisuConstants.kitsuDetails = new ArrayList<>();
 
         String endpoint = "https://kitsu.io/api/edge/anime?filter[text]=" + anime;
 
