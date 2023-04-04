@@ -7,12 +7,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import in.ghostreborn.wanpisu.model.KitsuDetails;
+import in.ghostreborn.wanpisu.model.KitsuEpisode;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -304,5 +306,42 @@ public class KitsuAPI {
         }
     }
 
+    public static void getEpisodeDetails(){
+        String URL = "https://kitsu.io/api/edge/anime/" +
+                WanPisuConstants.preferences.getString(WanPisuConstants.KITSU_ANIME_ID, "1") +
+                "/episodes?fields[episodes]=number,canonicalTitle,thumbnail&page[limit]=20";
+
+        WanPisuConstants.kitsuEpisodes = new ArrayList<>();
+
+        try {
+            Request request = new Request.Builder()
+                    .url(new URL(URL))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/vnd.api+json")
+                    .build();
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            String responseBody = response.body().string();
+            JSONObject responseObject = new JSONObject(responseBody);
+            JSONArray data = responseObject.getJSONArray("data");
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject dataObject = data.getJSONObject(i);
+                JSONObject attributes = dataObject
+                        .getJSONObject("attributes");
+                String episodeNumber = attributes.getString("number");
+                String title = attributes.getString("canonicalTitle");
+                String thumbnail = attributes.getJSONObject("thumbnail")
+                                .getString("original");
+                WanPisuConstants.kitsuEpisodes.add(new KitsuEpisode(
+                        episodeNumber,
+                        title,
+                        thumbnail
+                ));
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
