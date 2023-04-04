@@ -23,12 +23,10 @@ import in.ghostreborn.wanpisu.ui.ServersSelectActivity;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
 
-    int episodes = 0;
     Context context;
     String animeID;
 
-    public AnimeEpisodesAdapter(int episodes, Context context, String animeID) {
-        this.episodes = episodes;
+    public AnimeEpisodesAdapter(Context context, String animeID) {
         this.context = context;
         this.animeID = animeID;
     }

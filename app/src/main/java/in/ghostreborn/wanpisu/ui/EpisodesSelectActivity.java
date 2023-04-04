@@ -42,8 +42,6 @@ public class EpisodesSelectActivity extends AppCompatActivity {
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 5);
             animeContainerView.setLayoutManager(gridLayoutManager);
             AnimeEpisodesAdapter adapter = new AnimeEpisodesAdapter(
-                    Integer.parseInt(WanPisuConstants.preferences
-                            .getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, "0")),
                     EpisodesSelectActivity.this,
                     WanPisuConstants.preferences
                             .getString(WanPisuConstants.ALL_ANIME_ANIME_ID, "")
