@@ -21,9 +21,6 @@
             android:name=".ui.KitsuLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.KitsuActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.WanPisuActivity"
             android:exported="false" />
         <activity

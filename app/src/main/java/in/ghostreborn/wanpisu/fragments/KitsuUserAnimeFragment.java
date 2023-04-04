@@ -1,8 +1,5 @@
 package in.ghostreborn.wanpisu.fragments;
 
-import static android.content.Context.MODE_PRIVATE;
-import static in.ghostreborn.wanpisu.constants.WanPisuConstants.KITSU_TOKEN;
-import static in.ghostreborn.wanpisu.constants.WanPisuConstants.WAN_PISU_PREFERENCE;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.preferences;
 
 import android.content.Intent;
@@ -16,13 +13,11 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.adapter.KitsuAnimeAdapter;
 import in.ghostreborn.wanpisu.adapter.KitsuUserAnimeAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Kitsu;
@@ -62,7 +57,7 @@ public class KitsuUserAnimeFragment extends Fragment {
             String TOKEN = preferences.getString(WanPisuConstants.KITSU_TOKEN, "");
             String USER_ID = preferences.getString(WanPisuConstants.KITSU_USER_ID, "");
             String URL = KitsuAPI.KITSU_API_BASE + Integer.parseInt(USER_ID) + KitsuAPI.KITSU_API_TAIL;
-            if (WanPisuConstants.hasNext){
+            if (WanPisuConstants.hasNext) {
                 URL = WanPisuConstants.nextURL;
             }
             KitsuAPI.getUserAnimeList(TOKEN, URL);
@@ -75,7 +70,7 @@ public class KitsuUserAnimeFragment extends Fragment {
             GridLayoutManager manager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
             kitsuUserAnimeRecycler.setLayoutManager(manager);
             kitsuUserAnimeRecycler.setAdapter(adapter);
-            if (WanPisuConstants.hasNext){
+            if (WanPisuConstants.hasNext) {
                 KitsuUserAnimeTask userAnimeTask = new KitsuUserAnimeTask();
                 userAnimeTask.execute();
             }

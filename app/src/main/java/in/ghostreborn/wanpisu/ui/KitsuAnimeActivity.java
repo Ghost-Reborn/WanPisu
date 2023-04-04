@@ -1,23 +1,19 @@
 package in.ghostreborn.wanpisu.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.adapter.KitsuAnimeAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import in.ghostreborn.wanpisu.model.KitsuDetails;
@@ -71,9 +67,9 @@ public class KitsuAnimeActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<KitsuDetails> s) {
             super.onPostExecute(s);
             Kitsu kitsu;
-            if (WanPisuConstants.isUserAnime){
+            if (WanPisuConstants.isUserAnime) {
                 kitsu = WanPisuConstants.userKitsus.get(Integer.parseInt(animeIndex));
-            }else {
+            } else {
                 kitsu = WanPisuConstants.kitsus.get(Integer.parseInt(animeIndex));
             }
             kitsuDetailTextView.setText(kitsu.getAnime());
@@ -86,7 +82,7 @@ public class KitsuAnimeActivity extends AppCompatActivity {
             kitsuDetailWatchButton.setOnClickListener(view -> {
                 Intent watchIntent = new Intent(KitsuAnimeActivity.this, WanPisuActivity.class);
                 WanPisuConstants.preferences.edit()
-                                .putString(WanPisuConstants.KITSU_ANIME_NAME,  kitsuDetailTextView.getText().toString())
+                        .putString(WanPisuConstants.KITSU_ANIME_NAME, kitsuDetailTextView.getText().toString())
                         .apply();
                 startActivity(watchIntent);
             });
