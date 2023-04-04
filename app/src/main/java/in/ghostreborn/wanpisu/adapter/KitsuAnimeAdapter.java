@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.model.Kitsu;
+import in.ghostreborn.wanpisu.parser.KitsuAPI;
 import in.ghostreborn.wanpisu.ui.KitsuAnimeActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;

@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.adapter.KitsuAnimeAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import in.ghostreborn.wanpisu.model.KitsuDetails;
@@ -62,6 +63,7 @@ public class KitsuAnimeActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<KitsuDetails> doInBackground(Void... voids) {
+            KitsuAPI.getEpisodeDetails();
             return KitsuAPI.getAnimeDetails(animeID);
         }
 

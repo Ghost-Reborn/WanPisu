@@ -6,13 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.model.Kitsu;
+import in.ghostreborn.wanpisu.model.KitsuEpisode;
+import in.ghostreborn.wanpisu.parser.KitsuAPI;
 import in.ghostreborn.wanpisu.ui.ServersSelectActivity;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
@@ -40,7 +46,10 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
         int correctPosition = position + 1;
 
-        holder.episodeNumberTextView.setText(String.valueOf(correctPosition));
+        KitsuEpisode kitsuEpisode = WanPisuConstants.kitsuEpisodes.get(position);
+        holder.episodeNumberTextView.setText(kitsuEpisode.getEpisodeNumber());
+        Picasso.get().load(kitsuEpisode.getThumbnail())
+                        .into(holder.episodeNumberImageView);
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ServersSelectActivity.class);
             WanPisuConstants.preferences.edit()
@@ -52,16 +61,18 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
     @Override
     public int getItemCount() {
-        return episodes;
+        return WanPisuConstants.kitsuEpisodes.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView episodeNumberTextView;
+        public ImageView episodeNumberImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             episodeNumberTextView = itemView.findViewById(R.id.episode_number_text_view);
+            episodeNumberImageView = itemView.findViewById(R.id.episode_number_image_view);
         }
     }
 
