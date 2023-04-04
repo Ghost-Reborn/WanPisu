@@ -47,8 +47,6 @@ public class AllAnime {
             inputStreamReader.close();
             inputStream.close();
             urlConnection.disconnect();
-        } catch (MalformedURLException e) {
-            Log.e(WanPisuActivity.LOG_TAG, "Unable to parse URL");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,7 +121,6 @@ public class AllAnime {
                 servers.add(server);
             }
             apiUrl = ALL_ANIME_BLOG_HEAD + apiClock.substring(15);
-            Log.e("ALLANIME", apiUrl);
             baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
             JSONArray links = baseJSON.getJSONArray("links");
             for (int i = 0; i < links.length(); i++) {

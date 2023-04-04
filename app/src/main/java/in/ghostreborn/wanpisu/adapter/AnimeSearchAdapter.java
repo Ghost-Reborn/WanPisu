@@ -30,7 +30,6 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         return view -> {
             Intent intent = new Intent(context, EpisodesSelectActivity.class);
             String animeID = WanPisuConstants.animeNames.get(position).getAnimeID();
-            Log.e("ANIME_ID", animeID);
             WanPisuConstants.preferences.edit()
                             .putString(WanPisuConstants.ALL_ANIME_ANIME_ID, animeID)
                             .putString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, String.valueOf(WanPisuConstants.animeNames.get(position).getTotalEpisodes()))

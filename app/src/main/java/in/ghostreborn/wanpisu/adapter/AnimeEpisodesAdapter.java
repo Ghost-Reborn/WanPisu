@@ -46,7 +46,6 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
             WanPisuConstants.preferences.edit()
                             .putString(WanPisuConstants.ALL_ANIME_ANIME_EPISODE_NUMBER, String.valueOf(correctPosition))
                                     .apply();
-            Log.e("LOG_TAG", "Episodes: " + WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODE_NUMBER, ""));
             context.startActivity(intent);
         });
     }

@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
         WanPisuConstants.kitsus = new ArrayList<>();
         WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
-        Log.e("MAIN_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
 
     }
 

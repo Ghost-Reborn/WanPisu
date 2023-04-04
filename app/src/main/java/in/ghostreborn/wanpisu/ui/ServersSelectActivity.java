@@ -32,8 +32,6 @@ public class ServersSelectActivity extends AppCompatActivity {
                         .getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODE_NUMBER, "0")
         );
 
-        Log.e("SERVERS_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
-
         animeServerSelectRecyclerView = findViewById(R.id.anime_server_select_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         animeServerSelectRecyclerView.setLayoutManager(linearLayoutManager);

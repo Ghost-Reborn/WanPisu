@@ -40,8 +40,6 @@ public class KitsuAnimeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kitsu_anime);
 
-        Log.e("KITSU_ANIME_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
-
         animeID = WanPisuConstants.preferences
                 .getString(WanPisuConstants.KITSU_ANIME_ID, "");
         animeIndex = WanPisuConstants.preferences

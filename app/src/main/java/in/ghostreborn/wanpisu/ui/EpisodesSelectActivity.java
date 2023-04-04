@@ -23,8 +23,6 @@ public class EpisodesSelectActivity extends AppCompatActivity {
         int episodes = Integer.parseInt(WanPisuConstants.preferences
                 .getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, "0"));
 
-        Log.e("EPISODES_SELECT", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
-
         RecyclerView animeContainerView = findViewById(R.id.anime_episode_recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 5);
         animeContainerView.setLayoutManager(gridLayoutManager);

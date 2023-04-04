@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 
 public class AnimeServersAdapter extends RecyclerView.Adapter<AnimeServersAdapter.ViewHolder> {
@@ -47,7 +48,9 @@ public class AnimeServersAdapter extends RecyclerView.Adapter<AnimeServersAdapte
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, ExoPlayerActivity.class);
-                intent.putExtra("ANIME_SERVER", servers.get(mPosition));
+                WanPisuConstants.preferences.edit()
+                        .putString(WanPisuConstants.ALL_ANIME_ANIME_SERVER,servers.get(mPosition))
+                        .apply();
                 context.startActivity(intent);
             }
         });

@@ -67,8 +67,6 @@ public class ExoPlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exo_player);
 
-        Log.e("EXOPLAYER", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ActionBar actionBar = getSupportActionBar();
@@ -76,8 +74,7 @@ public class ExoPlayerActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
-        Intent intent = getIntent();
-        String server = intent.getStringExtra("ANIME_SERVER");
+        String server = WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_SERVER, "");
         findViews();
         initPlayer(server, ExoPlayerActivity.this);
 

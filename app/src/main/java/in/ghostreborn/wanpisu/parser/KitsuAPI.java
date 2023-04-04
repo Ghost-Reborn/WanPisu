@@ -52,9 +52,7 @@ public class KitsuAPI {
             // Parse JSON response
             JSONObject jsonObject = new JSONObject(json);
             loginData.add(jsonObject.getString("access_token"));
-        } catch (IOException e) {
-            Log.e(TAG, "Error making API request", e);
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -90,7 +88,6 @@ public class KitsuAPI {
             OkHttpClient client = new OkHttpClient();
             Response response = client.newCall(request).execute();
             String responseBody = response.body().string();
-            Log.e("JSON_RESPONSE", responseBody);
             JSONObject responseObject = new JSONObject(responseBody);
             JSONArray library = responseObject.getJSONArray("data");
             JSONArray included = responseObject.getJSONArray("included");
@@ -149,8 +146,6 @@ public class KitsuAPI {
                 .header("Accept", "application/vnd.api+json")
                 .build();
 
-        Log.e("ANIME_ID", animeID);
-
         Response response = null;
 
         try {
@@ -175,8 +170,6 @@ public class KitsuAPI {
                         averageRating,
                         episodes
                 ));
-            } else {
-                Log.e("Error", "Unexpected response: " + response);
             }
 
         } catch (IOException | JSONException e) {
@@ -233,7 +226,6 @@ public class KitsuAPI {
         try {
             response = client.newCall(request).execute();
             String responseBody = response.body().string();
-            Log.e("JSON_RESPONSE", responseBody);
             JSONObject responseObject = new JSONObject(responseBody);
             JSONArray data = responseObject.getJSONArray("data");
             for (int i = 0; i < data.length(); i++) {
@@ -281,7 +273,6 @@ public class KitsuAPI {
             OkHttpClient client = new OkHttpClient();
             Response response = client.newCall(request).execute();
             String responseBody = response.body().string();
-            Log.e("JSON_RESPONSE", responseBody);
             JSONObject responseObject = new JSONObject(responseBody);
             JSONArray data = responseObject.getJSONArray("data");
             for (int i = 0; i < data.length(); i++) {

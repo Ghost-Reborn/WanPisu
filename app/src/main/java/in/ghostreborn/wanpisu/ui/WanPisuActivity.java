@@ -29,8 +29,6 @@ public class WanPisuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wan_pisu);
 
-        Log.e("WANPISU_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
-
         String animeName = WanPisuConstants.preferences
                 .getString(WanPisuConstants.KITSU_ANIME_NAME, "");
 

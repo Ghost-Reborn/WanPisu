@@ -29,8 +29,6 @@ public class KitsuActivity extends AppCompatActivity {
 
         kitsuRecyclerView = findViewById(R.id.kitsu_recycler_view);
 
-        Log.e("KITSU_ACTIVITY", WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""));
-
         SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
         if (!preferences.contains(WanPisuConstants.KITSU_LOGIN_FINISHED)){
             startActivity(new Intent(KitsuActivity.this, KitsuLoginActivity.class));
@@ -48,7 +46,6 @@ public class KitsuActivity extends AppCompatActivity {
             String TOKEN = preferences.getString(WanPisuConstants.KITSU_TOKEN, "");
             String USER_ID = preferences.getString(WanPisuConstants.KITSU_USER_ID, "");
             ArrayList<Kitsu> kitsus = new ArrayList<>();
-            Log.e("ANIME", USER_ID);
             try {
                 String URL = KitsuAPI.KITSU_API_BASE + Integer.parseInt(USER_ID) + KitsuAPI.KITSU_API_TAIL;
                 kitsus = KitsuAPI.getUserAnimeList(TOKEN, URL, WanPisuConstants.kitsus);
