@@ -73,7 +73,8 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
                     public void onProgress(long bytesRead, long contentLength, boolean done) {
                         Handler handler = new Handler(Looper.getMainLooper());
                         handler.post(() -> {
-                            animeDowns.get(0).setProgress(50);
+                            double progress = ((double) bytesRead / contentLength) * 100;
+                            animeDowns.get(0).setProgress((int)progress);
                             adapter = new AnimeDownloadAdapter(animeDowns);
                             animeDownloadRecycler.setAdapter(adapter);
                         });
