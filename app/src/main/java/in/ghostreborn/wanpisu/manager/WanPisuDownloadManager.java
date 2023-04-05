@@ -1,4 +1,4 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.manager;
 
 import java.io.File;
 import java.io.FileOutputStream;

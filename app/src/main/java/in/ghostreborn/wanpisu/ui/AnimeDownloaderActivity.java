@@ -1,4 +1,4 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.ui;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.manager.WanPisuDownloadManager;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.AnimeDown;
 import in.ghostreborn.wanpisu.parser.AllAnime;

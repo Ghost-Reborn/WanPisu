@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import in.ghostreborn.wanpisu.AnimeDownloaderActivity;
+import in.ghostreborn.wanpisu.ui.AnimeDownloaderActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 

@@ -18,10 +18,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".WanPisuDownloaderActivity"
+            android:name=".ui.WanPisuDownloaderActivity"
             android:exported="false" />
         <activity
-            android:name=".AnimeDownloaderActivity"
+            android:name=".ui.AnimeDownloaderActivity"
             android:exported="false" />
         <activity
             android:name=".ui.KitsuAnimeActivity"
