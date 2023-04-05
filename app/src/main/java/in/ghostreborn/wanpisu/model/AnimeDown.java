@@ -5,11 +5,21 @@ public class AnimeDown {
     String animeName;
     String episode;
     int progress;
+    String server;
+    boolean isDownloadFinished;
 
-    public AnimeDown(String animeName, String episode,int progress){
+    public AnimeDown(
+            String animeName,
+            String episode,
+            int progress,
+            String server,
+            boolean isDownloadFinished
+    ) {
         this.animeName = animeName;
         this.episode = episode;
         this.progress = progress;
+        this.server = server;
+        this.isDownloadFinished = isDownloadFinished;
     }
 
     public String getAnimeName() {
@@ -20,11 +30,19 @@ public class AnimeDown {
         return episode;
     }
 
+    public String getServer() {
+        return server;
+    }
+
     public int getProgress() {
         return progress;
     }
 
     public void setProgress(int progress) {
         this.progress = progress;
+    }
+
+    public boolean isDownloadFinished() {
+        return isDownloadFinished;
     }
 }

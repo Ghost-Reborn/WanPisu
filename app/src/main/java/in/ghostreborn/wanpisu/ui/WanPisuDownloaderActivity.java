@@ -1,15 +1,21 @@
 package in.ghostreborn.wanpisu.ui;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
+
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeDownloadAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.manager.WanPisuDownloadManager;
+import in.ghostreborn.wanpisu.model.AnimeDown;
 
 public class WanPisuDownloaderActivity extends AppCompatActivity {
 
@@ -21,6 +27,7 @@ public class WanPisuDownloaderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wan_pisu_downloader);
 
         wanPisuDownloaderRecycler = findViewById(R.id.wanpisu_downloader_recycler);
+        new WanPisuDownloadAsync().execute();
 
     }
 
@@ -44,4 +51,34 @@ public class WanPisuDownloaderActivity extends AppCompatActivity {
         mRunnable.run();
 
     }
+
+    class WanPisuDownloadAsync extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            WanPisuDownloadManager downloadManager = new WanPisuDownloadManager();
+            for (int i=0;i<WanPisuConstants.animeDowns.size();i++){
+                AnimeDown animeDowns = WanPisuConstants.animeDowns.get(i);
+                String fileNameDestination = WanPisuConstants.wanPisuFolder.getAbsolutePath()
+                        + animeDowns.getAnimeName()
+                        + " - "
+                        + animeDowns.getEpisode()
+                        + ".mp4";
+
+                try {
+                    downloadManager.download(animeDowns.getServer(), fileNameDestination, (bytesRead, contentLength, done) -> {
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(() -> {
+                            double progress = ((double) bytesRead / contentLength) * 100;
+                            WanPisuConstants.animeDowns.get(WanPisuConstants.animeDowns.indexOf(animeDowns)).setProgress((int)progress);
+                        });
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
+
 }
