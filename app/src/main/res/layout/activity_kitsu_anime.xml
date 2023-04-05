@@ -65,6 +65,8 @@
                 android:id="@+id/kitsu_detail_episodes_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/kitsu_detail_progress_view"
                 app:layout_constraintStart_toEndOf="@+id/kitsu_detail_progress_view"
                 app:layout_constraintTop_toTopOf="@+id/kitsu_detail_progress_view" />
 
@@ -88,7 +90,7 @@
             <EditText
                 android:id="@+id/kitsu_detail_progress_view"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="@+id/kitsu_detail_text_view"
                 app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_text_view" />
