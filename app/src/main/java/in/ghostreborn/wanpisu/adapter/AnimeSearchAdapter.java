@@ -29,9 +29,11 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         return view -> {
             Intent intent = new Intent(context, AnimeDownloaderActivity.class);
             String animeID = WanPisuConstants.animeNames.get(position).getAnimeID();
+            String animeName = WanPisuConstants.animeNames.get(position).getAnimeName();
             WanPisuConstants.preferences.edit()
                             .putString(WanPisuConstants.ALL_ANIME_ANIME_ID, animeID)
                             .putString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, String.valueOf(WanPisuConstants.animeNames.get(position).getTotalEpisodes()))
+                            .putString(WanPisuConstants.ALL_ANIME_ANIME_NAME, animeName)
                     .apply();
             context.startActivity(intent);
         };
