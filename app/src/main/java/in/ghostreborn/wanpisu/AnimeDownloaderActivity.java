@@ -8,16 +8,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.adapter.AnimeDownloadAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.model.AnimeDown;
 import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class AnimeDownloaderActivity extends AppCompatActivity {
 
     EditText animeEpisodeEditText;
+    RecyclerView animeDownloadRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,7 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
 
         TextView animeName = findViewById(R.id.anime_download_text_view);
         TextView totalEpisodes = findViewById(R.id.anime_total_text_view);
+        animeDownloadRecycler = findViewById(R.id.anime_download_recycler);
         animeEpisodeEditText = findViewById(R.id.anime_episode_edit_text);
         animeName.setText(WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_NAME, "0"));
         totalEpisodes.setText(WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, "0"));
@@ -33,6 +39,15 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
         animeDownloadButton.setOnClickListener(view -> {
             new AnimeDownloadTask().execute();
         });
+
+        ArrayList<AnimeDown> animeDowns = new ArrayList<>();
+        animeDowns.add(new AnimeDown("One Piece", 50));
+        animeDowns.add(new AnimeDown("naruto", 50));
+        animeDowns.add(new AnimeDown("bleach", 70));
+        AnimeDownloadAdapter adapter = new AnimeDownloadAdapter(animeDowns);
+        LinearLayoutManager manager = new LinearLayoutManager(AnimeDownloaderActivity.this);
+        animeDownloadRecycler.setLayoutManager(manager);
+        animeDownloadRecycler.setAdapter(adapter);
 
     }
 
@@ -64,7 +79,6 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String server) {
-
         }
     }
 

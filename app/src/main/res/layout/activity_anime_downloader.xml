@@ -58,4 +58,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/anime_download_image_view"
         app:layout_constraintTop_toBottomOf="@+id/anime_episode_edit_text" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/anime_download_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/anime_download_image_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
