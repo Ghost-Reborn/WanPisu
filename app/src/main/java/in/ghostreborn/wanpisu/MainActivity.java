@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            return KitsuAPI.saveUserData();
+            return KitsuAPI.saveUserData("93397596", WanPisuConstants.KITSU_PROGRESS_CURRENT, "10");
         }
 
         @Override

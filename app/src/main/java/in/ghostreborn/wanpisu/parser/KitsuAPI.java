@@ -1,6 +1,7 @@
 package in.ghostreborn.wanpisu.parser;
 
 import android.content.ContentProviderOperation;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -294,8 +295,9 @@ public class KitsuAPI {
 
     }
 
-    public static String saveUserData(){
-        String url = "https://kitsu.io/api/edge/library-entries/" + "93397596";
+    public static String saveUserData(String ANIME_MEDIA_ID,String ANIME_STATUS, String ANIME_PROGRESS){
+
+        String url = "https://kitsu.io/api/edge/library-entries/" + ANIME_MEDIA_ID;
 
         String accessToken = WanPisuConstants.preferences.getString(WanPisuConstants.KITSU_TOKEN, "");
         OkHttpClient client = new OkHttpClient();
@@ -304,9 +306,10 @@ public class KitsuAPI {
         String requestBody = "{\n"
                 + "    \"data\": {\n"
                 + "        \"type\": \"libraryEntries\",\n"
-                + "        \"id\": \"" + 93397596 + "\",\n"
+                + "        \"id\": \"" + ANIME_MEDIA_ID + "\",\n"
                 + "        \"attributes\": {\n"
-                + "            \"status\": \"" + "current" + "\"\n"
+                + "            \"status\": \"" + ANIME_STATUS + "\",\n"
+                + "            \"progress\": \"" + ANIME_PROGRESS + "\"\n"
                 + "        }\n"
                 + "    }\n"
                 + "}";
@@ -323,7 +326,11 @@ public class KitsuAPI {
 
         try {
             Response response = client.newCall(request).execute();
-            return response.body().string();
+            if (response.isSuccessful()){
+                Log.e("SAVE_DATA", "Saved anime data");
+            }else {
+                Log.e("SAVE_DATA", response.body().string());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

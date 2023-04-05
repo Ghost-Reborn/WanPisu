@@ -24,6 +24,13 @@ public class WanPisuConstants {
     public static final String KITSU_ANIME_INDEX = "KITSU_ANIME_INDEX";
     public static final String KITSU_ANIME_NAME = "KITSU_ANIME_NAME";
 
+    public static final String KITSU_PROGRESS_CURRENT = "current";
+    public static final String KITSU_PROGRESS_COMPLETED = "completed";
+    public static final String KITSU_PROGRESS_ON_HOLD = "on_hold";
+    public static final String KITSU_PROGRESS_DROPPED = "dropped";
+    public static final String KITSU_PROGRESS_PLANNED = "planned";
+    public static final String KITSU_PROGRESS_NONE = "none";
+
     public static boolean hasNext = false;
     public static boolean isUserAnime = false;
     public static String nextURL = "";
