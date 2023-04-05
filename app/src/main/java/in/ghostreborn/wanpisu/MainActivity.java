@@ -7,6 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -23,10 +25,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WanPisuConstants.kitsus = new ArrayList<>();
-        WanPisuConstants.kitsuEpisodes = new ArrayList<>();
-        WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
+        checkPermissions();
+        initializeVariables();
 
+        Button wanPisuDownloadButton = findViewById(R.id.wanpisu_download_button);
+        wanPisuDownloadButton.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, WanPisuDownloaderActivity.class));
+        });
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if ((intent.getFlags() & Intent.FLAG_ACTIVITY_CLEAR_TOP) != 0) {
+            finish();
+        }
+
+    }
+
+    private void checkPermissions(){
         String[] permissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (!Environment.isExternalStorageManager()) {
@@ -41,17 +60,12 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, permissions, 1);
             }
         }
-
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        if ((intent.getFlags() & Intent.FLAG_ACTIVITY_CLEAR_TOP) != 0) {
-            finish();
-        }
-
+    private void initializeVariables(){
+        WanPisuConstants.kitsus = new ArrayList<>();
+        WanPisuConstants.kitsuEpisodes = new ArrayList<>();
+        WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
     }
 
 }
