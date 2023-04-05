@@ -2,7 +2,8 @@ package in.ghostreborn.wanpisu;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
 
     EditText animeEpisodeEditText;
     RecyclerView animeDownloadRecycler;
+    ArrayList<AnimeDown> animeDowns;
+    AnimeDownloadAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +43,8 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
             new AnimeDownloadTask().execute();
         });
 
-        ArrayList<AnimeDown> animeDowns = new ArrayList<>();
-        animeDowns.add(new AnimeDown("One Piece", 50));
-        animeDowns.add(new AnimeDown("naruto", 50));
-        animeDowns.add(new AnimeDown("bleach", 70));
-        AnimeDownloadAdapter adapter = new AnimeDownloadAdapter(animeDowns);
+        animeDowns = new ArrayList<>();
+        adapter = new AnimeDownloadAdapter(animeDowns);
         LinearLayoutManager manager = new LinearLayoutManager(AnimeDownloaderActivity.this);
         animeDownloadRecycler.setLayoutManager(manager);
         animeDownloadRecycler.setAdapter(adapter);
@@ -65,10 +65,18 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
             }
             WanPisuDownloadManager downloadManager = new WanPisuDownloadManager();
             try {
+                String animeName = WanPisuConstants.preferences
+                                .getString(WanPisuConstants.ALL_ANIME_ANIME_NAME, "");
+                animeDowns.add(new AnimeDown(animeName, 0));
                 downloadManager.download(srvr, "/sdcard/file.mp4",new WanPisuDownloadManager.ProgressListener() {
                     @Override
                     public void onProgress(long bytesRead, long contentLength, boolean done) {
-                        Log.e("DOWNLOADING: ", bytesRead + " / " + contentLength);
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(() -> {
+                            animeDowns.get(0).setProgress(50);
+                            adapter = new AnimeDownloadAdapter(animeDowns);
+                            animeDownloadRecycler.setAdapter(adapter);
+                        });
                     }
                 });
             } catch (IOException e) {
