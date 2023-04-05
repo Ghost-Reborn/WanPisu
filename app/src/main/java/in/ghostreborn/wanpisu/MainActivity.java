@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         WanPisuConstants.kitsuEpisodes = new ArrayList<>();
         WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
 
+        new SaveUserAsync().execute();
+
     }
 
     @Override
@@ -33,6 +35,20 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    class SaveUserAsync extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return KitsuAPI.saveUserData();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.e("SAVE_DATA", s);
+        }
     }
 
 }

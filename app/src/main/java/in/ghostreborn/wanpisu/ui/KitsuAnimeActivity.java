@@ -2,6 +2,7 @@ package in.ghostreborn.wanpisu.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -60,6 +61,8 @@ public class KitsuAnimeActivity extends AppCompatActivity {
         }else {
             kitsu = WanPisuConstants.kitsus.get(Integer.parseInt(animeIndex));
         }
+
+        Log.e("ANIME_ID", kitsu.getAnimeID());
 
         String progress = kitsu.getProgress().equals("") ? "0/" : kitsu.getProgress() + "/";
 

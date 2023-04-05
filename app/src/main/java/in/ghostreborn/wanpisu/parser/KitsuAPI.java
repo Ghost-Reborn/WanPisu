@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.parser;
 
+import android.content.ContentProviderOperation;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -289,6 +291,44 @@ public class KitsuAPI {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static String saveUserData(){
+        String url = "https://kitsu.io/api/edge/library-entries/" + "93397596";
+
+        String accessToken = WanPisuConstants.preferences.getString(WanPisuConstants.KITSU_TOKEN, "");
+        OkHttpClient client = new OkHttpClient();
+        MediaType mediaType = MediaType.parse("application/vnd.api+json");
+
+        String requestBody = "{\n"
+                + "    \"data\": {\n"
+                + "        \"type\": \"libraryEntries\",\n"
+                + "        \"id\": \"" + 93397596 + "\",\n"
+                + "        \"attributes\": {\n"
+                + "            \"status\": \"" + "current" + "\"\n"
+                + "        }\n"
+                + "    }\n"
+                + "}";
+
+        RequestBody body = RequestBody.create(requestBody, mediaType);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .patch(body)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .addHeader("Content-Type", "application/vnd.api+json")
+                .addHeader("Accept", "application/vnd.api+json")
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "ERROR";
 
     }
 
