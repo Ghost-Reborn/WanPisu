@@ -8,17 +8,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.model.AnimeDown;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
 public class AnimeDownloaderAdapter extends RecyclerView.Adapter<AnimeDownloaderAdapter.ViewHolder>{
-
-    ArrayList<AnimeDown> animeDowns;
-    public AnimeDownloaderAdapter(ArrayList<AnimeDown> animeDowns){
-        this.animeDowns = animeDowns;
-    }
 
     @NonNull
     @Override
@@ -30,12 +23,12 @@ public class AnimeDownloaderAdapter extends RecyclerView.Adapter<AnimeDownloader
 
     @Override
     public void onBindViewHolder(@NonNull AnimeDownloaderAdapter.ViewHolder holder, int position) {
-        holder.animeDownloadTextView.setText(animeDowns.get(position).getAnimeName());
+        holder.animeDownloadTextView.setText(WanPisuConstants.animeNames.get(position).getAnimeName());
     }
 
     @Override
     public int getItemCount() {
-        return animeDowns.size();
+        return WanPisuConstants.animeNames.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

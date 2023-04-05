@@ -1,5 +1,6 @@
 package in.ghostreborn.wanpisu;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.SearchView;
 
@@ -10,31 +11,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.adapter.AnimeDownloaderAdapter;
-import in.ghostreborn.wanpisu.model.AnimeDown;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.model.Kitsu;
+import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class AnimeDownloaderActivity extends AppCompatActivity {
+
+    RecyclerView animeDownloadRecyclerView;
+    SearchView animeSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anime_downloader);
 
-        ArrayList<AnimeDown> animeDowns = new ArrayList<>();
-        animeDowns.add(new AnimeDown("One Piece"));
-        animeDowns.add(new AnimeDown("One Piece2"));
-        animeDowns.add(new AnimeDown("One Piece3"));
-        animeDowns.add(new AnimeDown("One Piece4"));
+        animeDownloadRecyclerView = findViewById(R.id.anime_downloader_recycler_view);
 
-        RecyclerView recyclerView = findViewById(R.id.anime_downloader_recycler_view);
-
-        SearchView animeSearchView = findViewById(R.id.anime_downloader_search_view);
+        animeSearchView = findViewById(R.id.anime_downloader_search_view);
         animeSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                AnimeDownloaderAdapter adapter = new AnimeDownloaderAdapter(animeDowns);
-                LinearLayoutManager manager = new LinearLayoutManager(AnimeDownloaderActivity.this);
-                recyclerView.setLayoutManager(manager);
-                recyclerView.setAdapter(adapter);
+                new AnimeDownloadTask().execute();
                 return true;
             }
 
@@ -45,4 +42,23 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
         });
 
     }
+
+    private class AnimeDownloadTask extends AsyncTask<Void, Void, ArrayList<Kitsu>> {
+
+        @Override
+        protected ArrayList<Kitsu> doInBackground(Void... voids) {
+            WanPisuConstants.animeNames = new ArrayList<>();
+            AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(animeSearchView.getQuery().toString());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Kitsu> kitsus) {
+            AnimeDownloaderAdapter adapter = new AnimeDownloaderAdapter();
+            LinearLayoutManager manager = new LinearLayoutManager(getBaseContext());
+            animeDownloadRecyclerView.setLayoutManager(manager);
+            animeDownloadRecyclerView.setAdapter(adapter);
+        }
+    }
+
 }
