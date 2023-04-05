@@ -2,10 +2,11 @@ package in.ghostreborn.wanpisu.model;
 
 public class Kitsu {
 
-    String animeID,anime, description,thumbnail, status, progress, totalEpisodes, rating;
+    String animeID,kitsuID,anime, description,thumbnail, status, progress, totalEpisodes, rating;
 
     public Kitsu(
             String animeID,
+            String kitsuID,
             String anime,
             String description,
             String thumbnail,
@@ -18,6 +19,7 @@ public class Kitsu {
         this.thumbnail = thumbnail;
         this.description = description;
         this.animeID = animeID;
+        this.kitsuID = kitsuID;
         this.status = status;
         this.progress = progress;
         this.totalEpisodes = totalEpisodes;
@@ -26,6 +28,10 @@ public class Kitsu {
 
     public String getAnime() {
         return anime;
+    }
+
+    public String getKitsuID() {
+        return kitsuID;
     }
 
     public String getThumbnail() {

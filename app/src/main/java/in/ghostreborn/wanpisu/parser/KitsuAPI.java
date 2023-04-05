@@ -1,8 +1,5 @@
 package in.ghostreborn.wanpisu.parser;
 
-import android.content.ContentProviderOperation;
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,6 +95,7 @@ public class KitsuAPI {
                 JSONObject attributes = includedObject
                         .getJSONObject("attributes");
                 String animeID = includedObject.getString("id");
+                String kitsuID = libraryObject.getString("id");
                 String anime = attributes.getString("canonicalTitle");
                 String description = attributes.getString("description");
                 String thumbnail = attributes.getJSONObject("posterImage")
@@ -110,6 +108,7 @@ public class KitsuAPI {
                 String rating = attributes.getString("averageRating");
                 WanPisuConstants.userKitsus.add(new Kitsu(
                         animeID,
+                        kitsuID,
                         anime,
                         description,
                         thumbnail,
@@ -196,6 +195,7 @@ public class KitsuAPI {
                 String rating = attributes.getString("averageRating");
                 WanPisuConstants.kitsus.add(new Kitsu(
                         animeID,
+                        "",
                         animeName,
                         description,
                         thumbnail,
@@ -243,6 +243,7 @@ public class KitsuAPI {
                 String rating = attributes.getString("averageRating");
                 WanPisuConstants.kitsus.add(new Kitsu(
                         animeID,
+                        "",
                         anime,
                         description,
                         thumbnail,
@@ -295,7 +296,7 @@ public class KitsuAPI {
 
     }
 
-    public static String saveUserData(String ANIME_MEDIA_ID,String ANIME_STATUS, String ANIME_PROGRESS){
+    public static boolean saveUserData(String ANIME_MEDIA_ID, String ANIME_STATUS, String ANIME_PROGRESS){
 
         String url = "https://kitsu.io/api/edge/library-entries/" + ANIME_MEDIA_ID;
 
@@ -327,15 +328,15 @@ public class KitsuAPI {
         try {
             Response response = client.newCall(request).execute();
             if (response.isSuccessful()){
-                Log.e("SAVE_DATA", "Saved anime data");
+                return true;
             }else {
-                Log.e("SAVE_DATA", response.body().string());
+                return false;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return "ERROR";
+        return false;
 
     }
 
