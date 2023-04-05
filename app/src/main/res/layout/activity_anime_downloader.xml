@@ -10,14 +10,15 @@
         android:id="@+id/anime_downloader_search_view"
         android:layout_width="409dp"
         android:layout_height="0dp"
+        android:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/anime_downloader_recycler_view"
-        android:layout_width="409dp"
-        android:layout_height="681dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
