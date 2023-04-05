@@ -6,4 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".AnimeDownloaderActivity">
 
+    <SearchView
+        android:id="@+id/anime_downloader_search_view"
+        android:layout_width="409dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/anime_downloader_recycler_view"
+        android:layout_width="409dp"
+        android:layout_height="681dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/anime_downloader_search_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
