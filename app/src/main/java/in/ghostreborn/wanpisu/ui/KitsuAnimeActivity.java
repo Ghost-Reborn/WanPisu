@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -93,6 +94,9 @@ public class KitsuAnimeActivity extends AppCompatActivity {
                     kitsuDetailProgressView.getText().toString()
             ).execute();
         });
+        if(!WanPisuConstants.isUserAnime){
+            kitsuDetailUpdateButton.setVisibility(View.GONE);
+        }
     }
 
     class KitsuAnimeUpdate extends AsyncTask<Void, Void, Boolean> {
