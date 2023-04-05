@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         WanPisuConstants.kitsus = new ArrayList<>();
         WanPisuConstants.kitsuEpisodes = new ArrayList<>();
         WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
+
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(view -> {
+            startActivity(new Intent(this, AnimeDownloaderActivity.class));
+        });
 
     }
 
