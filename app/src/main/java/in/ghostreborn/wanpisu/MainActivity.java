@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private void initializeVariables(){
         WanPisuConstants.kitsus = new ArrayList<>();
         WanPisuConstants.kitsuEpisodes = new ArrayList<>();
+        WanPisuConstants.animeDowns = new ArrayList<>();
         WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
     }
 

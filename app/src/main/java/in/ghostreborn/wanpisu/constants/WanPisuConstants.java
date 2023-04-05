@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.model.AnimeDown;
 import in.ghostreborn.wanpisu.model.Kitsu;
 import in.ghostreborn.wanpisu.model.KitsuEpisode;
 import in.ghostreborn.wanpisu.model.WanPisu;
@@ -40,6 +41,7 @@ public class WanPisuConstants {
     public static ArrayList<Kitsu> kitsus;
     public static ArrayList<Kitsu> userKitsus;
     public static ArrayList<KitsuEpisode> kitsuEpisodes;
+    public static ArrayList<AnimeDown> animeDowns;
 
     public static SharedPreferences preferences;
 

@@ -9,13 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import in.ghostreborn.wanpisu.adapter.AnimeDownloadAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.AnimeDown;
 import in.ghostreborn.wanpisu.parser.AllAnime;
@@ -23,9 +20,6 @@ import in.ghostreborn.wanpisu.parser.AllAnime;
 public class AnimeDownloaderActivity extends AppCompatActivity {
 
     EditText animeEpisodeEditText;
-    RecyclerView animeDownloadRecycler;
-    ArrayList<AnimeDown> animeDowns;
-    AnimeDownloadAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +28,6 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
 
         TextView animeName = findViewById(R.id.anime_download_text_view);
         TextView totalEpisodes = findViewById(R.id.anime_total_text_view);
-        animeDownloadRecycler = findViewById(R.id.anime_download_recycler);
         animeEpisodeEditText = findViewById(R.id.anime_episode_edit_text);
         animeName.setText(WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_NAME, "0"));
         totalEpisodes.setText(WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, "0"));
@@ -42,12 +35,6 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
         animeDownloadButton.setOnClickListener(view -> {
             new AnimeDownloadTask().execute();
         });
-
-        animeDowns = new ArrayList<>();
-        adapter = new AnimeDownloadAdapter(animeDowns);
-        LinearLayoutManager manager = new LinearLayoutManager(AnimeDownloaderActivity.this);
-        animeDownloadRecycler.setLayoutManager(manager);
-        animeDownloadRecycler.setAdapter(adapter);
 
     }
 
@@ -67,16 +54,16 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
             try {
                 String animeName = WanPisuConstants.preferences
                                 .getString(WanPisuConstants.ALL_ANIME_ANIME_NAME, "");
-                animeDowns.add(new AnimeDown(animeName, 0));
+                AnimeDown animeDown = new AnimeDown(animeName, 0);
+                WanPisuConstants.animeDowns.add(animeDown);
+
                 downloadManager.download(srvr, "/sdcard/file.mp4",new WanPisuDownloadManager.ProgressListener() {
                     @Override
                     public void onProgress(long bytesRead, long contentLength, boolean done) {
                         Handler handler = new Handler(Looper.getMainLooper());
                         handler.post(() -> {
                             double progress = ((double) bytesRead / contentLength) * 100;
-                            animeDowns.get(0).setProgress((int)progress);
-                            adapter = new AnimeDownloadAdapter(animeDowns);
-                            animeDownloadRecycler.setAdapter(adapter);
+                            WanPisuConstants.animeDowns.get(WanPisuConstants.animeDowns.indexOf(animeDown)).setProgress((int)progress);
                         });
                     }
                 });
