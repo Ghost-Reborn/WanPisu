@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeVariables(){
+        WanPisuConstants.wanPisuFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/WanPisu");
+        WanPisuConstants.wanPisuFolder.mkdirs();
         WanPisuConstants.kitsus = new ArrayList<>();
         WanPisuConstants.kitsuEpisodes = new ArrayList<>();
         WanPisuConstants.animeDowns = new ArrayList<>();

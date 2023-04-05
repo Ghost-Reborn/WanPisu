@@ -1,6 +1,7 @@
 package in.ghostreborn.wanpisu.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,10 +21,27 @@ public class WanPisuDownloaderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wan_pisu_downloader);
 
         wanPisuDownloaderRecycler = findViewById(R.id.wanpisu_downloader_recycler);
-        AnimeDownloadAdapter adapter = new AnimeDownloadAdapter(WanPisuConstants.animeDowns);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         wanPisuDownloaderRecycler.setLayoutManager(manager);
-        wanPisuDownloaderRecycler.setAdapter(adapter);
+
+        Handler mHandler = new Handler();
+        Runnable mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                AnimeDownloadAdapter adapter = new AnimeDownloadAdapter(WanPisuConstants.animeDowns);
+                wanPisuDownloaderRecycler.setAdapter(adapter);
+                // Schedule the task to run again in 1 second
+                mHandler.postDelayed(this, 1000);
+            }
+        };
+        mRunnable.run();
 
     }
 }

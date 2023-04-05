@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.ConnectionPool;
+import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -12,13 +15,23 @@ import okhttp3.ResponseBody;
 
 public class WanPisuDownloadManager {
 
-    private final OkHttpClient client = new OkHttpClient();
-
     public interface ProgressListener {
         void onProgress(long bytesRead, long contentLength, boolean done);
     }
 
     public void download(String url, String destPath, ProgressListener listener) throws IOException {
+
+        Dispatcher dispatcher = new Dispatcher();
+        dispatcher.setMaxRequests(5);
+        dispatcher.setMaxRequestsPerHost(3);
+
+        ConnectionPool connectionPool = new ConnectionPool(5, 30, TimeUnit.SECONDS);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .dispatcher(dispatcher)
+                .connectionPool(connectionPool)
+                .build();
+
         Request request = new Request.Builder()
                 .url(url)
                 .build();

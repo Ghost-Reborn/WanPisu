@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,8 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.manager.WanPisuDownloadManager;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.manager.WanPisuDownloadManager;
 import in.ghostreborn.wanpisu.model.AnimeDown;
 import in.ghostreborn.wanpisu.parser.AllAnime;
 
@@ -40,10 +41,10 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
 
     }
 
-    private class AnimeDownloadTask extends AsyncTask<Void, Void, String> {
+    private class AnimeDownloadTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected String doInBackground(Void... voids) {
+        protected Void doInBackground(Void... voids) {
             String episodes = animeEpisodeEditText.getText().toString();
             ArrayList<String> servers = AllAnime.getAnimeServer(WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""), episodes);
             String srvr = "";
@@ -56,27 +57,33 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
             try {
                 String animeName = WanPisuConstants.preferences
                                 .getString(WanPisuConstants.ALL_ANIME_ANIME_NAME, "");
-                AnimeDown animeDown = new AnimeDown(animeName, 0);
+                animeName = animeName + " - " + episodes;
+                AnimeDown animeDown = new AnimeDown(animeName, episodes, 0);
                 WanPisuConstants.animeDowns.add(animeDown);
 
-                downloadManager.download(srvr, "/sdcard/file.mp4",new WanPisuDownloadManager.ProgressListener() {
-                    @Override
-                    public void onProgress(long bytesRead, long contentLength, boolean done) {
-                        Handler handler = new Handler(Looper.getMainLooper());
-                        handler.post(() -> {
-                            double progress = ((double) bytesRead / contentLength) * 100;
-                            WanPisuConstants.animeDowns.get(WanPisuConstants.animeDowns.indexOf(animeDown)).setProgress((int)progress);
-                        });
-                    }
+                Log.e("WAN_PISU_INDEX", WanPisuConstants.animeDowns.indexOf(animeDown) + "");
+
+                String fileNameDestination = WanPisuConstants.wanPisuFolder.getAbsolutePath()
+                        + animeName
+                        + " - "
+                        + episodes
+                        + ".mp4";
+
+                downloadManager.download(srvr, fileNameDestination, (bytesRead, contentLength, done) -> {
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(() -> {
+                        double progress = ((double) bytesRead / contentLength) * 100;
+                        WanPisuConstants.animeDowns.get(WanPisuConstants.animeDowns.indexOf(animeDown)).setProgress((int)progress);
+                    });
                 });
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return "";
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String server) {
+        protected void onPostExecute(Void server) {
         }
     }
 

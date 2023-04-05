@@ -2,6 +2,7 @@ package in.ghostreborn.wanpisu.constants;
 
 import android.content.SharedPreferences;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.model.AnimeDown;
@@ -44,5 +45,7 @@ public class WanPisuConstants {
     public static ArrayList<AnimeDown> animeDowns;
 
     public static SharedPreferences preferences;
+
+    public static File wanPisuFolder;
 
 }
