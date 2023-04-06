@@ -4,9 +4,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -33,6 +36,8 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
         animeDownloadButton.setOnClickListener(view -> {
             new AnimeDownloadTask().execute();
         });
+        ImageView animeDownloadImageView = findViewById(R.id.anime_download_image_view);
+        Picasso.get().load(WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_THUMBNAIL, "")).into(animeDownloadImageView);
 
     }
 

@@ -37,6 +37,7 @@
                 android:layout_marginTop="8dp"
                 android:text="WATCH"
                 app:layout_constraintBottom_toBottomOf="@+id/kitsu_detail_image_view"
+                app:layout_constraintEnd_toStartOf="@+id/kitsu_detail_update_button"
                 app:layout_constraintStart_toStartOf="@+id/kitsu_detail_rating_view"
                 app:layout_constraintTop_toBottomOf="@+id/kitsu_detail_status_view"
                 app:layout_constraintVertical_bias="0.0" />
@@ -97,9 +98,8 @@
 
             <Button
                 android:id="@+id/kitsu_detail_update_button"
-                android:layout_width="wrap_content"
+                android:layout_width="93dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:text="UPDATE"
                 app:layout_constraintStart_toEndOf="@+id/kitsu_detail_watch_button"
                 app:layout_constraintTop_toTopOf="@+id/kitsu_detail_watch_button" />

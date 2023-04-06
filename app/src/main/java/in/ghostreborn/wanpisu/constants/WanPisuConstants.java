@@ -19,6 +19,7 @@ public class WanPisuConstants {
     public static final String ALL_ANIME_ANIME_EPISODE_NUMBER = "ALL_ANIME_ANIME_EPISODE_NUMBER";
     public static final String ALL_ANIME_ANIME_SERVER = "ALL_ANIME_ANIME_SERVER";
     public static final String ALL_ANIME_ANIME_NAME = "ALL_ANIME_ANIME_NAME";
+    public static final String ALL_ANIME_ANIME_THUMBNAIL = "ALL_ANIME_ANIME_THUMBNAIL";
 
     public static final String KITSU_LOGIN_FINISHED = "KITSU_LOGIN_FINISHED";
     public static final String KITSU_TOKEN = "KITSU_TOKEN";

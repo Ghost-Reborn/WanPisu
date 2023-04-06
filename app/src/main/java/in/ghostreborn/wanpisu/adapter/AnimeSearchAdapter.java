@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import in.ghostreborn.wanpisu.ui.AnimeDownloaderActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.ui.EpisodesSelectActivity;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
 
@@ -27,7 +27,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
 
     private static View.OnClickListener listener(int position){
         return view -> {
-            Intent intent = new Intent(context, AnimeDownloaderActivity.class);
+            Intent intent = new Intent(context, EpisodesSelectActivity.class);
             String animeID = WanPisuConstants.animeNames.get(position).getAnimeID();
             String animeName = WanPisuConstants.animeNames.get(position).getAnimeName();
             WanPisuConstants.preferences.edit()

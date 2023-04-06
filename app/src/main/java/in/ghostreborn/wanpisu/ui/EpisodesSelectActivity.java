@@ -1,10 +1,12 @@
 package in.ghostreborn.wanpisu.ui;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +29,10 @@ public class EpisodesSelectActivity extends AppCompatActivity {
 
         animeContainerView = findViewById(R.id.anime_episode_recycler_view);
         new KitsuEpisodeTask().execute();
+        ImageView animeDownloadView = findViewById(R.id.anime_download_view);
+        animeDownloadView.setOnClickListener(view -> {
+            startActivity(new Intent(EpisodesSelectActivity.this, AnimeDownloaderActivity.class));
+        });
 
     }
 

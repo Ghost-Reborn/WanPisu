@@ -79,6 +79,9 @@ public class KitsuAnimeActivity extends AppCompatActivity {
         kitsuDetailRatingView.setText(kitsu.getRating());
         kitsuDetailProgressView.setText(progress);
         kitsuDetailDescriptionView.setText(kitsu.getDescription());
+        WanPisuConstants.preferences.edit()
+                        .putString(WanPisuConstants.ALL_ANIME_ANIME_THUMBNAIL, kitsu.getThumbnail())
+                .apply();
         Picasso.get().load(kitsu.getThumbnail()).into(kitsuDetailImageView);
         kitsuDetailWatchButton.setOnClickListener(view -> {
             Intent watchIntent = new Intent(KitsuAnimeActivity.this, WanPisuActivity.class);
