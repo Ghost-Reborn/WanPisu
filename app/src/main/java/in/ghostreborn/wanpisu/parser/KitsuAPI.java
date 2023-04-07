@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.parser;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -258,10 +260,12 @@ public class KitsuAPI {
         }
     }
 
-    public static void getEpisodeDetails(){
+    public static void getEpisodeDetails(String PAGE_OFFSET){
         String URL = "https://kitsu.io/api/edge/anime/" +
                 WanPisuConstants.preferences.getString(WanPisuConstants.KITSU_ANIME_ID, "1") +
-                "/episodes?fields[episodes]=number,canonicalTitle,thumbnail&page[limit]=20";
+                "/episodes?fields[episodes]=number,canonicalTitle,thumbnail&page[limit]=20&page[offset]=" + PAGE_OFFSET;
+
+        Log.e("EPISODES_URL", "EPISODES_URL: " + URL);
 
         WanPisuConstants.kitsuEpisodes = new ArrayList<>();
 
@@ -282,12 +286,12 @@ public class KitsuAPI {
                         .getJSONObject("attributes");
                 String episodeNumber = attributes.getString("number");
                 String title = attributes.getString("canonicalTitle");
-                String thumbnail = attributes.getJSONObject("thumbnail")
-                                .getString("original");
+//                String thumbnail = attributes.getJSONObject("thumbnail")
+//                                .getString("original");
                 WanPisuConstants.kitsuEpisodes.add(new KitsuEpisode(
                         episodeNumber,
                         title,
-                        thumbnail
+                        "thumbnail"
                 ));
             }
         } catch (IOException | JSONException e) {
