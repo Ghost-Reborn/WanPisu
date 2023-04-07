@@ -44,6 +44,7 @@ public class WanPisuConstants {
     public static ArrayList<Kitsu> userKitsus;
     public static ArrayList<KitsuEpisode> kitsuEpisodes;
     public static ArrayList<AnimeDown> animeDowns;
+    public static ArrayList<String> animeServes;
 
     public static SharedPreferences preferences;
 

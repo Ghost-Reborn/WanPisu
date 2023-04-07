@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.manager.WanPisuDownloadManager;
 import in.ghostreborn.wanpisu.parser.HLSParser;
 
@@ -22,6 +23,7 @@ public class AnimeHLSSubAsync extends AsyncTask<Void, Void, ArrayList<String>> {
     @Override
     protected void onPostExecute(ArrayList<String> servers) {
         super.onPostExecute(servers);
+        WanPisuConstants.animeServes = servers;
         WanPisuDownloadManager.animeSubServer = servers.get(0);
     }
 }
