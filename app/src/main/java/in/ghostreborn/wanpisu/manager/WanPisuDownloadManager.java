@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
+import in.ghostreborn.wanpisu.async.AnimeHLSMainAsync;
 import okhttp3.ConnectionPool;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
@@ -17,6 +18,7 @@ import okhttp3.ResponseBody;
 
 public class WanPisuDownloadManager {
 
+    public static String animeSubServer = null;
     Dispatcher dispatcher;
     ConnectionPool connectionPool;
 
@@ -28,8 +30,17 @@ public class WanPisuDownloadManager {
 
         connectionPool = new ConnectionPool(5, 30, TimeUnit.SECONDS);
 
-        if (isHLSDownload(url)){
-            Log.e("TAG", "HLS: " + url);
+        if (isHLSDownload(url)) {
+            new AnimeHLSMainAsync(url).execute();
+            new Thread(() -> {
+                boolean shouldContinue =  true;
+                while (shouldContinue) {
+                    if (animeSubServer!=null) {
+                        Log.e("ANIME_TEST", "ANIME_SUB_SERVER: "+animeSubServer);
+                        shouldContinue = false;
+                    }
+                }
+            }).start();
             return;
         }
 
