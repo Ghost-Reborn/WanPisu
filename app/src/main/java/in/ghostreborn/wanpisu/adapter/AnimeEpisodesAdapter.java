@@ -39,8 +39,6 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        int correctPosition = position + 1;
-
         KitsuEpisode kitsuEpisode = WanPisuConstants.kitsuEpisodes.get(position);
         holder.episodeNumberTextView.setText(kitsuEpisode.getEpisodeNumber());
         holder.episodeTitleTextView.setText(kitsuEpisode.getTitle());
@@ -49,7 +47,7 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ServersSelectActivity.class);
             WanPisuConstants.preferences.edit()
-                            .putString(WanPisuConstants.ALL_ANIME_ANIME_EPISODE_NUMBER, String.valueOf(correctPosition))
+                            .putString(WanPisuConstants.ALL_ANIME_ANIME_EPISODE_NUMBER, kitsuEpisode.getEpisodeNumber())
                                     .apply();
             context.startActivity(intent);
         });
