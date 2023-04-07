@@ -20,7 +20,8 @@ import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class AnimeDownloaderActivity extends AppCompatActivity {
 
-    EditText animeEpisodeEditText;
+    EditText animeEpisodeStartEditText;
+    EditText animeEpisodeEndEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,8 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
 
         TextView animeName = findViewById(R.id.anime_download_text_view);
         TextView totalEpisodes = findViewById(R.id.anime_total_text_view);
-        animeEpisodeEditText = findViewById(R.id.anime_episode_edit_text);
+        animeEpisodeStartEditText = findViewById(R.id.anime_episode_start_edit_text);
+        animeEpisodeEndEditText = findViewById(R.id.anime_episode_end_edit_text);
         animeName.setText(WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_NAME, "0"));
         totalEpisodes.setText(WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, "0"));
         Button animeDownloadButton = findViewById(R.id.anime_download_button);
@@ -45,11 +47,11 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            String episodes = animeEpisodeEditText.getText().toString();
+            int startEpisode = Integer.parseInt(animeEpisodeStartEditText.getText().toString());
+            int endEpisode = Integer.parseInt(animeEpisodeEndEditText.getText().toString());
 
-            int totalEpisodesToDownload = Integer.parseInt(episodes);
-            for (int i=1; i<=totalEpisodesToDownload;i++){
-                ArrayList<String> servers = AllAnime.getAnimeServer(WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""), episodes);
+            for (int i=startEpisode; i<=endEpisode;i++){
+                ArrayList<String> servers = AllAnime.getAnimeServer(WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_ID, ""), String.valueOf(startEpisode));
                 String srvr = "";
                 for (String server : servers) {
                     if (server.contains("workfields")) {
@@ -59,7 +61,7 @@ public class AnimeDownloaderActivity extends AppCompatActivity {
                 String animeName = WanPisuConstants.preferences
                         .getString(WanPisuConstants.ALL_ANIME_ANIME_NAME, "")
                         + " - " + i;
-                AnimeDown animeDown = new AnimeDown(animeName, episodes, 0, srvr,false);
+                AnimeDown animeDown = new AnimeDown(animeName, startEpisode, 0, srvr,false);
                 WanPisuConstants.animeDowns.add(animeDown);
             }
 

@@ -29,25 +29,38 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/anime_episode_edit_text"
+        android:id="@+id/anime_episode_start_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:ems="1"
         android:inputType="number"
         android:text="0"
-        app:layout_constraintEnd_toStartOf="@+id/anime_total_text_view"
+        app:layout_constraintEnd_toStartOf="@+id/anime_episode_end_edit_text"
         app:layout_constraintStart_toEndOf="@+id/anime_download_image_view"
         app:layout_constraintTop_toBottomOf="@+id/anime_download_text_view" />
 
+    <EditText
+        android:id="@+id/anime_episode_end_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="1"
+        android:inputType="number"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/anime_episode_start_edit_text"
+        app:layout_constraintEnd_toStartOf="@+id/anime_total_text_view"
+        app:layout_constraintStart_toEndOf="@+id/anime_episode_start_edit_text"
+        app:layout_constraintTop_toTopOf="@+id/anime_episode_start_edit_text" />
+
     <TextView
         android:id="@+id/anime_total_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="0"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/anime_episode_edit_text"
+        app:layout_constraintBottom_toBottomOf="@+id/anime_episode_start_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/anime_episode_edit_text" />
+        app:layout_constraintStart_toEndOf="@+id/anime_episode_end_edit_text"
+        app:layout_constraintTop_toTopOf="@+id/anime_episode_start_edit_text" />
 
     <Button
         android:id="@+id/anime_download_button"
@@ -57,6 +70,6 @@
         android:text="Download"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/anime_download_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/anime_episode_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/anime_episode_start_edit_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

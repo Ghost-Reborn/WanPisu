@@ -3,14 +3,14 @@ package in.ghostreborn.wanpisu.model;
 public class AnimeDown {
 
     String animeName;
-    String episode;
+    int episode;
     int progress;
     String server;
     boolean isDownloadFinished;
 
     public AnimeDown(
             String animeName,
-            String episode,
+            int episode,
             int progress,
             String server,
             boolean isDownloadFinished
@@ -26,7 +26,7 @@ public class AnimeDown {
         return animeName;
     }
 
-    public String getEpisode() {
+    public int getEpisode() {
         return episode;
     }
 
