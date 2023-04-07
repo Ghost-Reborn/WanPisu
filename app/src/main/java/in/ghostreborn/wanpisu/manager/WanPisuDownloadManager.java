@@ -85,37 +85,7 @@ public class WanPisuDownloadManager {
 
             Response response = client.newCall(request).execute();
             if (response.body().string().contains("#EXT")) {
-                new AnimeHLSMainAsync(url).execute();
-                new Thread(() -> {
-                    boolean shouldContinue =  true;
-                    while (shouldContinue) {
-                        if (animeSubServer!=null) {
-                            int i=0;
-                            while (i< WanPisuConstants.animeServes.size()){
-                                WanPisuDownloadManager manager = new WanPisuDownloadManager();
-                                try {
-                                    manager.download(WanPisuConstants.animeServes.get(i), "/sdcard/file-" + i + ".mp4", new ProgressListener() {
-                                        @Override
-                                        public void onProgress(long bytesRead, long contentLength, boolean done) {
-                                            Log.e("DOWNLOADING HLS", "Downloaded: " + bytesRead + "\tTotal: " + contentLength);
-                                        }
-                                    });
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                i++;
-                            }
-                            shouldContinue = false;
-                        }else {
-                            Log.e("ANIME_TEST", "RETRYING");
-                        }
-                        try {
-                            Thread.sleep(200);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }).start();
+                downloadHLSStream(url);
                 return true;
             }
             return false;
@@ -126,6 +96,40 @@ public class WanPisuDownloadManager {
 
     public interface ProgressListener {
         void onProgress(long bytesRead, long contentLength, boolean done);
+    }
+
+    private void downloadHLSStream(String url){
+        new AnimeHLSMainAsync(url).execute();
+        new Thread(() -> {
+            boolean shouldContinue =  true;
+            while (shouldContinue) {
+                if (animeSubServer!=null) {
+                    int i=0;
+                    while (i< WanPisuConstants.animeServes.size()){
+                        WanPisuDownloadManager manager = new WanPisuDownloadManager();
+                        try {
+                            manager.download(WanPisuConstants.animeServes.get(i), "/sdcard/file-" + i + ".mp4", new ProgressListener() {
+                                @Override
+                                public void onProgress(long bytesRead, long contentLength, boolean done) {
+                                    Log.e("DOWNLOADING HLS", "Downloaded: " + bytesRead + "\tTotal: " + contentLength);
+                                }
+                            });
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        i++;
+                    }
+                    shouldContinue = false;
+                }else {
+                    Log.e("ANIME_TEST", "RETRYING");
+                }
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
     }
 
 }
