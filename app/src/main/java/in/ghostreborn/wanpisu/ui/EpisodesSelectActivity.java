@@ -31,6 +31,10 @@ public class EpisodesSelectActivity extends AppCompatActivity {
 
         animeEpisodesRecycler = findViewById(R.id.anime_episode_recycler_view);
         animeCategorizeRecycler = findViewById(R.id.episode_categorize_recycler_view);
+        AnimeCategorizeAdapter animeCategorizeAdapter = new AnimeCategorizeAdapter();
+        GridLayoutManager manager = new GridLayoutManager(animeCategorizeRecycler.getContext(), 1, GridLayoutManager.HORIZONTAL, false);
+        animeCategorizeRecycler.setLayoutManager(manager);
+        animeCategorizeRecycler.setAdapter(animeCategorizeAdapter);
         new KitsuEpisodeTask("0").execute();
         ImageView animeDownloadView = findViewById(R.id.anime_download_view);
         animeDownloadView.setOnClickListener(view -> {
@@ -63,12 +67,6 @@ public class EpisodesSelectActivity extends AppCompatActivity {
                             .getString(WanPisuConstants.ALL_ANIME_ANIME_ID, "")
             );
             animeEpisodesRecycler.setAdapter(adapter);
-            AnimeCategorizeAdapter animeCategorizeAdapter = new AnimeCategorizeAdapter(
-                    WanPisuConstants.preferences.getString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, "1")
-            );
-            GridLayoutManager manager = new GridLayoutManager(animeCategorizeRecycler.getContext(), 1, GridLayoutManager.HORIZONTAL, false);
-            animeCategorizeRecycler.setLayoutManager(manager);
-            animeCategorizeRecycler.setAdapter(animeCategorizeAdapter);
         }
     }
 

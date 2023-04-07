@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.ui.EpisodesSelectActivity;
@@ -25,16 +27,28 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         context = mContext;
     }
 
-    private static View.OnClickListener listener(int position){
+    private static View.OnClickListener listener(int position) {
         return view -> {
             Intent intent = new Intent(context, EpisodesSelectActivity.class);
             String animeID = WanPisuConstants.animeNames.get(position).getAnimeID();
             String animeName = WanPisuConstants.animeNames.get(position).getAnimeName();
             WanPisuConstants.preferences.edit()
-                            .putString(WanPisuConstants.ALL_ANIME_ANIME_ID, animeID)
-                            .putString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, String.valueOf(WanPisuConstants.animeNames.get(position).getTotalEpisodes()))
-                            .putString(WanPisuConstants.ALL_ANIME_ANIME_NAME, animeName)
+                    .putString(WanPisuConstants.ALL_ANIME_ANIME_ID, animeID)
+                    .putString(WanPisuConstants.ALL_ANIME_ANIME_EPISODES, String.valueOf(WanPisuConstants.animeNames.get(position).getTotalEpisodes()))
+                    .putString(WanPisuConstants.ALL_ANIME_ANIME_NAME, animeName)
                     .apply();
+            WanPisuConstants.animeOffsets = new ArrayList<>();
+            int last = WanPisuConstants.animeNames.get(position).getTotalEpisodes();
+            int lastest = (last % 20);
+            for (int j = 0; j <= last; j += 20) {
+                WanPisuConstants.animeOffsets.add(String.valueOf(j));
+            }
+            lastest = lastest + Integer.parseInt(
+                    WanPisuConstants.animeOffsets.get(
+                            WanPisuConstants.animeOffsets.size() - 1
+                    )
+            );
+            WanPisuConstants.animeOffsets.add(String.valueOf(lastest));
             context.startActivity(intent);
         };
     }

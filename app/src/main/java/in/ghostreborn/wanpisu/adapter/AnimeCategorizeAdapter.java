@@ -9,18 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.ui.EpisodesSelectActivity;
 
-public class AnimeCategorizeAdapter extends RecyclerView.Adapter<AnimeCategorizeAdapter.ViewHolder>{
-
-    int startEpisode = 1;
-    int endEpisode, total;
-    int OFFSET = 0;
-    public AnimeCategorizeAdapter(String endEpisode){
-        this.endEpisode = Integer.parseInt(endEpisode);
-        this.total = this.endEpisode / 20;
-    }
-
+public class AnimeCategorizeAdapter extends RecyclerView.Adapter<AnimeCategorizeAdapter.ViewHolder> {
 
     @NonNull
     @Override
@@ -32,18 +24,26 @@ public class AnimeCategorizeAdapter extends RecyclerView.Adapter<AnimeCategorize
 
     @Override
     public void onBindViewHolder(@NonNull AnimeCategorizeAdapter.ViewHolder holder, int position) {
-        holder.startEpisode.setText(String.valueOf(startEpisode));
-        holder.endEpisode.setText(String.valueOf(startEpisode + 19));
-        startEpisode = startEpisode + 20;
+        if (position != (WanPisuConstants.animeOffsets.size() - 2)) {
+            holder.startEpisode.setText(Integer.parseInt(WanPisuConstants.animeOffsets.get(position)) + 1 + "");
+            holder.endEpisode.setText(
+                    Integer.parseInt(WanPisuConstants.animeOffsets.get(position)) + 20 + ""
+            );
+        } else {
+            holder.startEpisode.setText(Integer.parseInt(WanPisuConstants.animeOffsets.get(position)) + 1 + "");
+            holder.endEpisode.setText(
+                    Integer.parseInt(WanPisuConstants.animeOffsets.get(position + 1)) + ""
+            );
+        }
+
         holder.itemView.setOnClickListener(view -> {
-            new EpisodesSelectActivity.KitsuEpisodeTask(String.valueOf(OFFSET)).execute();
+            new EpisodesSelectActivity.KitsuEpisodeTask(WanPisuConstants.animeOffsets.get(position)).execute();
         });
-        OFFSET += 20;
     }
 
     @Override
     public int getItemCount() {
-        return total;
+        return WanPisuConstants.animeOffsets.size() - 1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
