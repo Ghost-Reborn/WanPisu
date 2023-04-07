@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.manager;
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,17 +17,21 @@ import okhttp3.ResponseBody;
 
 public class WanPisuDownloadManager {
 
-    public interface ProgressListener {
-        void onProgress(long bytesRead, long contentLength, boolean done);
-    }
+    Dispatcher dispatcher;
+    ConnectionPool connectionPool;
 
     public void download(String url, String destPath, ProgressListener listener) throws IOException {
 
-        Dispatcher dispatcher = new Dispatcher();
+        dispatcher = new Dispatcher();
         dispatcher.setMaxRequests(5);
         dispatcher.setMaxRequestsPerHost(3);
 
-        ConnectionPool connectionPool = new ConnectionPool(5, 30, TimeUnit.SECONDS);
+        connectionPool = new ConnectionPool(5, 30, TimeUnit.SECONDS);
+
+        if (isHLSDownload(url)){
+            Log.e("TAG", "HLS: " + url);
+            return;
+        }
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .dispatcher(dispatcher)
@@ -66,6 +72,31 @@ public class WanPisuDownloadManager {
         }
 
         listener.onProgress(downloaded, contentLength, true);
+    }
+
+    private boolean isHLSDownload(String url) {
+        try {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .dispatcher(dispatcher)
+                    .connectionPool(connectionPool)
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            if (response.body().string().contains("#EXT")) {
+                return true;
+            }
+            return false;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public interface ProgressListener {
+        void onProgress(long bytesRead, long contentLength, boolean done);
     }
 
 }
