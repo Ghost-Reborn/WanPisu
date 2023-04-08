@@ -80,7 +80,7 @@ public class KitsuAPI {
     }
 
     public static ArrayList<Kitsu> getUserAnimeList(String TOKEN, String URL) {
-        try{
+        try {
             Request request = new Request.Builder()
                     .url(URL)
                     .addHeader("Authorization", "Bearer " + TOKEN)
@@ -104,7 +104,7 @@ public class KitsuAPI {
                         .getString("medium");
                 String status = libraryObject.getJSONObject("attributes")
                         .getString("status");
-                String progress =libraryObject.getJSONObject("attributes")
+                String progress = libraryObject.getJSONObject("attributes")
                         .getString("progress");
                 String totalEpisodes = attributes.getString("episodeCount");
                 String rating = attributes.getString("averageRating");
@@ -135,7 +135,7 @@ public class KitsuAPI {
         return WanPisuConstants.userKitsus;
     }
 
-    public static String getAnimeCastings(String TOKEN){
+    public static String getAnimeCastings(String TOKEN) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.parse("https://kitsu.io/api/edge/")
                 .newBuilder()
@@ -260,7 +260,7 @@ public class KitsuAPI {
         }
     }
 
-    public static void getEpisodeDetails(String PAGE_OFFSET){
+    public static void getEpisodeDetails(String PAGE_OFFSET) {
         String URL = "https://kitsu.io/api/edge/anime/" +
                 WanPisuConstants.preferences.getString(WanPisuConstants.KITSU_ANIME_ID, "1") +
                 "/episodes?fields[episodes]=number,canonicalTitle,thumbnail&page[limit]=20&page[offset]=" + PAGE_OFFSET;
@@ -286,12 +286,21 @@ public class KitsuAPI {
                         .getJSONObject("attributes");
                 String episodeNumber = attributes.getString("number");
                 String title = attributes.getString("canonicalTitle");
-//                String thumbnail = attributes.getJSONObject("thumbnail")
-//                                .getString("original");
+
+                String thumbnail;
+                if (attributes.has("thumbnail") && attributes.isNull("thumbnail")) {
+                    thumbnail = WanPisuConstants.preferences
+                            .getString(WanPisuConstants.ALL_ANIME_ANIME_THUMBNAIL, "");
+                } else {
+                    JSONObject thumbnailObject = attributes.getJSONObject("thumbnail");
+                    thumbnail = thumbnailObject
+                            .getString("original");
+                }
+
                 WanPisuConstants.kitsuEpisodes.add(new KitsuEpisode(
                         episodeNumber,
                         title,
-                        "thumbnail"
+                        thumbnail
                 ));
             }
         } catch (IOException | JSONException e) {
@@ -300,7 +309,7 @@ public class KitsuAPI {
 
     }
 
-    public static boolean saveUserData(String ANIME_MEDIA_ID, String ANIME_STATUS, String ANIME_PROGRESS){
+    public static boolean saveUserData(String ANIME_MEDIA_ID, String ANIME_STATUS, String ANIME_PROGRESS) {
 
         String url = "https://kitsu.io/api/edge/library-entries/" + ANIME_MEDIA_ID;
 
@@ -331,9 +340,9 @@ public class KitsuAPI {
 
         try {
             Response response = client.newCall(request).execute();
-            if (response.isSuccessful()){
+            if (response.isSuccessful()) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
         } catch (IOException e) {
