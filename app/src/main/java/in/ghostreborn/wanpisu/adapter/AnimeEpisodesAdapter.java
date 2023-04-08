@@ -2,6 +2,7 @@ package in.ghostreborn.wanpisu.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,12 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
         KitsuEpisode kitsuEpisode = WanPisuConstants.kitsuEpisodes.get(position);
         holder.episodeNumberTextView.setText(kitsuEpisode.getEpisodeNumber());
-        holder.episodeTitleTextView.setText(kitsuEpisode.getTitle());
+        if (kitsuEpisode.getTitle() != "null"){
+            holder.episodeTitleTextView.setText(kitsuEpisode.getTitle());
+        }else {
+            String episodeName = "Episode " + kitsuEpisode.getEpisodeNumber();
+            holder.episodeTitleTextView.setText(episodeName);
+        }
         Picasso.get().load(kitsuEpisode.getThumbnail())
                         .into(holder.episodeNumberImageView);
         holder.itemView.setOnClickListener(view -> {
