@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         getAnilistTokenFromIntentFilter();
 
         RecyclerView animeContainerView = findViewById(R.id.anime_container);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this);
-        animeContainerView.setLayoutManager(linearLayoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 3);
+        animeContainerView.setLayoutManager(gridLayoutManager);
 
         // Get latest anime updates
         Executor executor = Executors.newSingleThreadExecutor();
