@@ -55,7 +55,7 @@ public class AnilistCurrentFragment extends Fragment {
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
             ArrayList<Anilist> anilists = AnilistParser.getAnimeDetails(userName, ANIME_TYPE, TOKEN);
-            AnilistRecyclerAdapter adapter = new AnilistRecyclerAdapter(anilists);
+            AnilistRecyclerAdapter adapter = new AnilistRecyclerAdapter(anilists, getContext());
             getActivity().runOnUiThread(() -> {
                 anilistRecyclerView.setAdapter(adapter);
             });

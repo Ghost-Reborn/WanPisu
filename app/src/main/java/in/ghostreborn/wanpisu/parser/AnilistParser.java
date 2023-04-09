@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Anilist;
 
 public class AnilistParser {
@@ -81,11 +82,13 @@ public class AnilistParser {
 
     public static ArrayList<Anilist> getAnimeDetails(String userName, String animeStatus, String ACCESS_TOKEN) {
         ArrayList<Anilist> anilistParsers = new ArrayList<>();
+        WanPisuConstants.anilists = new ArrayList<>();
         String QUERY = "query{" +
                 "MediaListCollection(userName: \"" + userName + "\", type: ANIME, status: " + animeStatus + "){" +
                 "lists{" +
                 "entries{" +
                 "media{" +
+                "id " +
                 "idMal " +
                 "title{" +
                 "english" +
@@ -135,12 +138,14 @@ public class AnilistParser {
                     JSONObject mediaObject = entriesArray
                             .getJSONObject(i)
                             .getJSONObject("media");
+                    String id = mediaObject.getString("id");
                     String idMal = mediaObject.getString("idMal");
                     String title = mediaObject.getJSONObject("title")
                             .getString("english");
                     String imageUrl = mediaObject.getJSONObject("coverImage")
                             .getString("extraLarge");
-                    anilistParsers.add(new Anilist(title, imageUrl, idMal));
+                    anilistParsers.add(new Anilist(title, imageUrl, idMal, id));
+                    WanPisuConstants.anilists.add(new Anilist(title, imageUrl, idMal, id));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
