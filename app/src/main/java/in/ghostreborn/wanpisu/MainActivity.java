@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -35,10 +37,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getAnilistTokenFromIntentFilter();
+        setData();
 
         RecyclerView animeContainerView = findViewById(R.id.anime_container);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, 3);
         animeContainerView.setLayoutManager(gridLayoutManager);
+
+        ImageView settingsImageView = findViewById(R.id.settings_image_view);
+        settingsImageView.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+        });
 
         // Get latest anime updates
         Executor executor = Executors.newSingleThreadExecutor();
@@ -86,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, token);
             editor.apply();
         }
+    }
+
+    private void setData(){
+        WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
     }
 
 }
