@@ -34,6 +34,7 @@ public class AnilistRecyclerAdapter extends RecyclerView.Adapter<AnilistRecycler
     @Override
     public void onBindViewHolder(@NonNull AnilistRecyclerAdapter.ViewHolder holder, int position) {
         holder.anilistAnimeTextView.setText(anilists.get(position).getAnimeName());
+        holder.anilistAnimeMalTextView.setText(anilists.get(position).getMalID());
         Picasso.get().load(anilists.get(position).getAnimeImageUrl()).into(
                 holder.anilistImageView
         );
@@ -47,11 +48,13 @@ public class AnilistRecyclerAdapter extends RecyclerView.Adapter<AnilistRecycler
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView anilistAnimeTextView;
+        public TextView anilistAnimeMalTextView;
         public ImageView anilistImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             anilistAnimeTextView = itemView.findViewById(R.id.anilist_anime_text_view);
+            anilistAnimeMalTextView = itemView.findViewById(R.id.anilist_anime_mal_text_view);
             anilistImageView = itemView.findViewById(R.id.anilist_anime_image_view);
         }
     }

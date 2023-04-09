@@ -86,6 +86,7 @@ public class AnilistParser {
                 "lists{" +
                 "entries{" +
                 "media{" +
+                "idMal " +
                 "title{" +
                 "english" +
                 "}" +
@@ -134,11 +135,12 @@ public class AnilistParser {
                     JSONObject mediaObject = entriesArray
                             .getJSONObject(i)
                             .getJSONObject("media");
+                    String idMal = mediaObject.getString("idMal");
                     String title = mediaObject.getJSONObject("title")
                             .getString("english");
                     String imageUrl = mediaObject.getJSONObject("coverImage")
                             .getString("extraLarge");
-                    anilistParsers.add(new Anilist(title, imageUrl));
+                    anilistParsers.add(new Anilist(title, imageUrl, idMal));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
