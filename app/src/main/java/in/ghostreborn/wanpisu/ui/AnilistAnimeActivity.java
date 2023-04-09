@@ -1,4 +1,4 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,13 +14,12 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import in.ghostreborn.wanpisu.utils.GraphQlRequestBody;
+import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Anilist;
 import okhttp3.MediaType;

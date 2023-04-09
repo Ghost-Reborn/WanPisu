@@ -1,4 +1,4 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.utils;
 
 import com.google.gson.annotations.SerializedName;
 

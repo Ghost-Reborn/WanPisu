@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import in.ghostreborn.wanpisu.AnilistAnimeActivity;
+import in.ghostreborn.wanpisu.ui.AnilistAnimeActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Anilist;
