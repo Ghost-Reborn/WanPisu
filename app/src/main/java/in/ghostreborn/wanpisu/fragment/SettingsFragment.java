@@ -17,12 +17,6 @@ public class SettingsFragment extends PreferenceFragmentCompat
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         setPreferencesFromResource(R.xml.settings_preference, rootKey);
-
-        SwitchPreference enableDub = findPreference(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_DUB);
-        enableDub.setChecked(
-                WanPisuConstants.preferences.getBoolean(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_DUB, false)
-        );
-
     }
 
     @Override
@@ -43,10 +37,15 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_DUB)){
-            WanPisuConstants.preferences.edit()
-                    .putBoolean(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_DUB, sharedPreferences.getBoolean(key, false))
-                    .apply();
+        switch (key){
+            case WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_DUB:
+                WanPisuConstants.preferences.edit()
+                        .putBoolean(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_DUB, sharedPreferences.getBoolean(key, false))
+                        .apply();
+            case WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_UNKNOWN:
+                WanPisuConstants.preferences.edit()
+                        .putBoolean(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_UNKNOWN, sharedPreferences.getBoolean(key, false))
+                        .apply();
         }
     }
 }

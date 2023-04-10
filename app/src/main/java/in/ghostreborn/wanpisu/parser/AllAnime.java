@@ -21,8 +21,13 @@ import in.ghostreborn.wanpisu.ui.WanPisuActivity;
 
 public class AllAnime {
 
-    public static final String ALL_ANIME_QUERY_HEAD = "https://api.allanime.to/allanimeapi?variables={\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"";
     static boolean isDubEnabled = WanPisuConstants.preferences.getBoolean(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_DUB, false);
+    static boolean isUnknownEnabled = WanPisuConstants.preferences.getBoolean(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_UNKNOWN, false);
+    public static final String ALL_ANIME_QUERY_HEAD = "https://api.allanime.to/allanimeapi?variables={\"search\":{\"allowAdult\":" +
+            true +
+            ",\"allowUnknown\":" +
+            isUnknownEnabled +
+            ",\"query\":\"";
     public static String ALL_ANIME_QUERY_TAIL = "\"},\"limit\":40,\"page\":1,\"translationType\":\"" +
             (isDubEnabled ? "dub" : "sub") +
             "\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail,availableEpisodes}}}";

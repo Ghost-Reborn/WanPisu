@@ -11,6 +11,7 @@ public class WanPisuConstants {
 
     public static final String WAN_PISU_PREFERENCE = "WAN_PISU";
     public static final String WAN_PISU_PREFERENCE_ENABLE_DUB = "key_enable_sub_dub";
+    public static final String WAN_PISU_PREFERENCE_ENABLE_UNKNOWN = "key_enable_unknown";
     public static final String WAN_PISU_ANILIST_TOKEN = "WAN_PISU_ANILIST_TOKEN";
     public static final String ANILIST_USER_NAME = "ANILIST_USER_NAME";
 

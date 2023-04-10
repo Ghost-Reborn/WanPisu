@@ -4,4 +4,8 @@
     <SwitchPreference
         android:key="key_enable_sub_dub"
         android:title="Enable dubbed anime" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="key_enable_unknown"
+        android:title="Enable Unknown" />
 </PreferenceScreen>
