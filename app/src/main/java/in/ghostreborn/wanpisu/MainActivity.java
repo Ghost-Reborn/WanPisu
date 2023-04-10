@@ -5,14 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -23,8 +20,7 @@ import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.WanPisu;
 import in.ghostreborn.wanpisu.parser.AllAnime;
-import in.ghostreborn.wanpisu.ui.AnilistActivity;
-import in.ghostreborn.wanpisu.ui.WanPisuActivity;
+import in.ghostreborn.wanpisu.ui.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 

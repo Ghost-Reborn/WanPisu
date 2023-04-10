@@ -1,4 +1,4 @@
-package in.ghostreborn.wanpisu;
+package in.ghostreborn.wanpisu.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 
+import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.fragment.SettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {

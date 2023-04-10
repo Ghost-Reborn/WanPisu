@@ -15,7 +15,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import in.ghostreborn.wanpisu.ui.AnimeDetailsActivity;
+import in.ghostreborn.wanpisu.AnimeDetailsActivity;
+import in.ghostreborn.wanpisu.ui.AnimeEpisodesActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.model.WanPisu;
 
@@ -49,8 +50,6 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
     @Override
     public void onBindViewHolder(@NonNull AnimeSearchAdapter.ViewHolder holder, int position) {
 
-        String totalEpisodes = "Episodes: " + animeNames.get(position).getTotalEpisodes();
-
         holder.animeTextView.setText(animeNames.get(position).getAnimeName());
         Picasso.get().load(animeNames.get(position).getAnimeThumbnailUrl())
                 .into(holder.animeImageView);
@@ -66,7 +65,6 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
 
         public TextView animeTextView;
         public ImageView animeImageView;
-        public TextView totalEpisodesTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
