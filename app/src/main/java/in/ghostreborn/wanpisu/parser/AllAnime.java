@@ -30,7 +30,7 @@ public class AllAnime {
             ",\"query\":\"";
     public static String ALL_ANIME_QUERY_TAIL = "\"},\"limit\":40,\"page\":1,\"translationType\":\"" +
             (isDubEnabled ? "dub" : "sub") +
-            "\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail,availableEpisodes}}}";
+            "\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail,availableEpisodes,malId}}}";
     public static final String ALL_ANIME_SERVER_HEAD = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22";
     public static final String ALL_ANIME_SERVER_MIDDLE = "%22,%22translationType%22:%22" +
             (isDubEnabled ? "dub" : "sub") +
@@ -77,7 +77,7 @@ public class AllAnime {
                 ALL_ANIME_QUERY_HEAD + anime + ALL_ANIME_QUERY_TAIL
         );
 
-        ArrayList<WanPisu> animeDetailsArray = new ArrayList<>();
+        WanPisuConstants.wanPisus = new ArrayList<>();
         try {
             JSONArray edgesArray = new JSONObject(rawJson)
                     .getJSONObject("data")
@@ -86,6 +86,7 @@ public class AllAnime {
             for (int i = 0; i < edgesArray.length(); i++) {
                 JSONObject edges = edgesArray.getJSONObject(i);
                 String animeID = edges.getString("_id");
+                String malID = edges.getString("malId");
                 String animeName = edges.getString("name");
                 String animeThumbnailUrl = edges.getString("thumbnail");
                 String lastEpisode = edges.getJSONObject("availableEpisodes")
@@ -98,18 +99,19 @@ public class AllAnime {
                         url = "https://wp.youtube-anime.com/aln.youtube-anime.com/images/";
                     }
                 }
-                animeDetailsArray.add(new WanPisu(
+                WanPisuConstants.wanPisus.add(new WanPisu(
                         animeID,
                         animeName,
                         url + animeThumbnailUrl,
-                        Integer.parseInt(lastEpisode)
+                        Integer.parseInt(lastEpisode),
+                        malID
                 ));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return animeDetailsArray;
+        return WanPisuConstants.wanPisus;
 
     }
 

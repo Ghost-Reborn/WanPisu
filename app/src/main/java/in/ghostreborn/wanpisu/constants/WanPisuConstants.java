@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.model.Anilist;
+import in.ghostreborn.wanpisu.model.Jikan;
 import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class WanPisuConstants {
@@ -18,6 +19,8 @@ public class WanPisuConstants {
     public static SharedPreferences preferences;
 
     public static ArrayList<Anilist> anilists;
+    public static ArrayList<WanPisu> wanPisus;
+    public static ArrayList<Jikan> jikans;
     public static int ANIME_INDEX = 0;
 
     public static boolean isDubEnabled= false;

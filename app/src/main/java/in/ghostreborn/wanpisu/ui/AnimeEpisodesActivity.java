@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeEpisodesAdapter;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
 public class AnimeEpisodesActivity extends AppCompatActivity {
 
@@ -17,9 +18,10 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anime_episodes);
 
-        Intent intent = getIntent();
-        String animeID = intent.getStringExtra("ANIME_ID");
-        int episodes = intent.getIntExtra("ANIME_EPISODES", 0);
+        String animeID = WanPisuConstants.wanPisus.get(WanPisuConstants.ANIME_INDEX)
+                .getAnimeID();
+        int episodes = WanPisuConstants.wanPisus.get(WanPisuConstants.ANIME_INDEX)
+                .getTotalEpisodes();
 
         RecyclerView animeContainerView = findViewById(R.id.anime_episode_recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 5);

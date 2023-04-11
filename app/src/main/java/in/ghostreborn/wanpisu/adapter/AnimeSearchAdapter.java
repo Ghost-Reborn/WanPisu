@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.AnimeDetailsActivity;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.ui.AnimeEpisodesActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.model.WanPisu;
@@ -33,8 +34,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
     private static View.OnClickListener listener(int position){
         return view -> {
             Intent intent = new Intent(context, AnimeDetailsActivity.class);
-            intent.putExtra("ANIME_ID", animeNames.get(position).getAnimeID());
-            intent.putExtra("ANIME_EPISODES", animeNames.get(position).getTotalEpisodes());
+            WanPisuConstants.ANIME_INDEX = position;
             context.startActivity(intent);
         };
     }
