@@ -85,8 +85,9 @@ public class AllAnime {
                     .getJSONArray("edges");
             for (int i = 0; i < edgesArray.length(); i++) {
                 JSONObject edges = edgesArray.getJSONObject(i);
-                String animeID = edges.getString("_id");
                 String malID = edges.getString("malId");
+                if (malID.equals("null")) continue;
+                String animeID = edges.getString("_id");
                 String animeName = edges.getString("name");
                 String animeThumbnailUrl = edges.getString("thumbnail");
                 String lastEpisode = edges.getJSONObject("availableEpisodes")

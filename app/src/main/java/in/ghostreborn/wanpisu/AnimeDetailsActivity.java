@@ -67,9 +67,7 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             WanPisuConstants.jikans = new ArrayList<>();
             String malID = WanPisuConstants.wanPisus.get(WanPisuConstants.ANIME_INDEX).getMalID();
-            if (malID != "null") {
-                JikanParser.parseAnimeFull(malID);
-            }
+            JikanParser.parseAnimeFull(malID);
             return null;
         }
 
@@ -77,15 +75,14 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
 
-            if (WanPisuConstants.jikans.size() != 0) {
-                Picasso.get().load(WanPisuConstants.jikans.get(0).getAnimeThumbnail())
-                        .into(animeDetailsImageView);
-                animeDetailsTextView.setText(WanPisuConstants.jikans.get(0).getAnimeTitle());
-                animeDetailsSynopsis.setText(WanPisuConstants.jikans.get(0).getAnimeSynopsis());
-                animeDetailsWatchButton.setOnClickListener(view -> {
-                    startActivity(new Intent(AnimeDetailsActivity.this, AnimeEpisodesActivity.class));
-                });
-            }
+            Picasso.get().load(WanPisuConstants.jikans.get(0).getAnimeThumbnail())
+                    .into(animeDetailsImageView);
+            animeDetailsTextView.setText(WanPisuConstants.jikans.get(0).getAnimeTitle());
+            animeDetailsSynopsis.setText(WanPisuConstants.jikans.get(0).getAnimeSynopsis());
+            animeDetailsWatchButton.setOnClickListener(view -> {
+                startActivity(new Intent(AnimeDetailsActivity.this, AnimeEpisodesActivity.class));
+            });
+
 
         }
     }
