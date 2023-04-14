@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setData(){
         WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
-
     }
 
 }

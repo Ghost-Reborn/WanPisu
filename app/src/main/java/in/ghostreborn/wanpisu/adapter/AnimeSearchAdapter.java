@@ -35,6 +35,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         return view -> {
             Intent intent = new Intent(context, AnimeDetailsActivity.class);
             WanPisuConstants.ANIME_INDEX = position;
+            WanPisuConstants.ANIME_MAL_ID = Integer.parseInt(animeNames.get(position).getMalID());
             context.startActivity(intent);
         };
     }
