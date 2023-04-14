@@ -30,7 +30,7 @@ public class AllAnime {
             ",\"query\":\"";
     public static String ALL_ANIME_QUERY_TAIL = "\"},\"limit\":40,\"page\":1,\"translationType\":\"" +
             (isDubEnabled ? "dub" : "sub") +
-            "\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail,availableEpisodes,malId}}}";
+            "\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail,availableEpisodes,malId,englishName}}}";
     public static final String ALL_ANIME_SERVER_HEAD = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22";
     public static final String ALL_ANIME_SERVER_MIDDLE = "%22,%22translationType%22:%22" +
             (isDubEnabled ? "dub" : "sub") +
@@ -89,6 +89,10 @@ public class AllAnime {
                 if (malID.equals("null")) continue;
                 String animeID = edges.getString("_id");
                 String animeName = edges.getString("name");
+                String animeEnglishName = edges.getString("englishName");
+                if (!animeEnglishName.equals("null")){
+                    animeName = animeEnglishName;
+                }
                 String animeThumbnailUrl = edges.getString("thumbnail");
                 String lastEpisode = edges.getJSONObject("availableEpisodes")
                         .getString("sub");
