@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +62,7 @@ public class AnimeDetailsActivity extends AppCompatActivity {
 
         animeDetailsUpdateButton.setOnClickListener(v -> {
 
-            if (TOKEN == ""){
+            if (TOKEN == "") {
                 AnilistUtils.checkAnilist(AnimeDetailsActivity.this);
             }
 
@@ -104,13 +107,13 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         }
     }
 
-    class AnilistAsync extends AsyncTask<Void, Void, Void>{
+    class AnilistAsync extends AsyncTask<Void, Void, Void> {
 
         String id;
         String progress;
         String ACCESS_TOKEN;
 
-        public AnilistAsync(String id, String progress, String ACCESS_TOKEN){
+        public AnilistAsync(String id, String progress, String ACCESS_TOKEN) {
             this.id = id;
             this.progress = progress;
             this.ACCESS_TOKEN = ACCESS_TOKEN;
@@ -121,15 +124,17 @@ public class AnimeDetailsActivity extends AppCompatActivity {
             int animeId = Integer.parseInt(id); // The AniList ID of One Piece
             int newProgress = Integer.parseInt(progress); // The updated progress value
 
+            int anilistID = Integer.parseInt(getAnimeID(animeId));
             try {
-                String query = "mutation SaveMediaListEntry($mediaId: Int!, $progress: Int!) {\n"
+                String query = "mutation "
+                        + "SaveMediaListEntry($mediaId: Int!, $progress: Int!) {\n"
                         + "  SaveMediaListEntry(mediaId: $mediaId, progress: $progress) {\n"
                         + "    id\n"
                         + "    progress\n"
                         + "  }\n"
                         + "}";
                 Map<String, Object> variables = new HashMap<>();
-                variables.put("mediaId", animeId);
+                variables.put("mediaId", anilistID);
                 variables.put("progress", newProgress);
                 String requestBody = new Gson().toJson(new GraphQlRequestBody(query, variables));
 
@@ -147,6 +152,29 @@ public class AnimeDetailsActivity extends AppCompatActivity {
             }
             return null;
         }
-    }
 
+        private String getAnimeID(int malID) {
+            OkHttpClient client = new OkHttpClient();
+            String query = "{\"query\":\"query { Media (idMal: " +
+                    malID +
+                    ", type: ANIME) { id } }\"}";
+            Request request = new Request.Builder()
+                    .url("https://graphql.anilist.co")
+                    .post(RequestBody.create(MediaType.parse("application/json"), query))
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                String responseBody = response.body().string();
+                JSONObject data = new JSONObject(responseBody);
+                return data
+                        .getJSONObject("data")
+                        .getJSONObject("Media")
+                        .getString("id");
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
+
+    }
 }
