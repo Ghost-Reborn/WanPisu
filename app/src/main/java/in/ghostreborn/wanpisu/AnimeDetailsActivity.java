@@ -66,11 +66,7 @@ public class AnimeDetailsActivity extends AppCompatActivity {
                 AnilistUtils.checkAnilist(AnimeDetailsActivity.this);
             }
 
-            new AnilistAsync(
-                    String.valueOf(WanPisuConstants.ANIME_MAL_ID),
-                    animeDetailsUpdateEditText.getText().toString(),
-                    TOKEN
-            ).execute();
+            new AnilistAsync().execute();
         });
 
     }
@@ -109,72 +105,16 @@ public class AnimeDetailsActivity extends AppCompatActivity {
 
     class AnilistAsync extends AsyncTask<Void, Void, Void> {
 
-        String id;
-        String progress;
-        String ACCESS_TOKEN;
-
-        public AnilistAsync(String id, String progress, String ACCESS_TOKEN) {
-            this.id = id;
-            this.progress = progress;
-            this.ACCESS_TOKEN = ACCESS_TOKEN;
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            int animeId = Integer.parseInt(id); // The AniList ID of One Piece
-            int newProgress = Integer.parseInt(progress); // The updated progress value
-
-            int anilistID = Integer.parseInt(getAnimeID(animeId));
-            try {
-                String query = "mutation "
-                        + "SaveMediaListEntry($mediaId: Int!, $progress: Int!) {\n"
-                        + "  SaveMediaListEntry(mediaId: $mediaId, progress: $progress) {\n"
-                        + "    id\n"
-                        + "    progress\n"
-                        + "  }\n"
-                        + "}";
-                Map<String, Object> variables = new HashMap<>();
-                variables.put("mediaId", anilistID);
-                variables.put("progress", newProgress);
-                String requestBody = new Gson().toJson(new GraphQlRequestBody(query, variables));
-
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url("https://graphql.anilist.co")
-                        .header("Authorization", "Bearer " + ACCESS_TOKEN)
-                        .post(RequestBody.create(MediaType.parse("application/json"), requestBody))
-                        .build();
-
-                Response response = client.newCall(request).execute();
-                Log.e("TAG", response.body().string());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String malID = String.valueOf(WanPisuConstants.ANIME_MAL_ID);
+            String progress = animeDetailsUpdateEditText.getText().toString();
+            String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
+            AnilistUtils.saveAnimeProgress(malID, progress, TOKEN);
             return null;
         }
 
-        private String getAnimeID(int malID) {
-            OkHttpClient client = new OkHttpClient();
-            String query = "{\"query\":\"query { Media (idMal: " +
-                    malID +
-                    ", type: ANIME) { id } }\"}";
-            Request request = new Request.Builder()
-                    .url("https://graphql.anilist.co")
-                    .post(RequestBody.create(MediaType.parse("application/json"), query))
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                String responseBody = response.body().string();
-                JSONObject data = new JSONObject(responseBody);
-                return data
-                        .getJSONObject("data")
-                        .getJSONObject("Media")
-                        .getString("id");
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-            return "";
-        }
 
     }
 }
