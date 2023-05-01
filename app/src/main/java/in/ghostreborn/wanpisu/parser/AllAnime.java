@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.parser;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -15,29 +17,31 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.MainActivity;
+import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.model.Anilist;
 import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class AllAnime {
 
+    public static final String ALL_ANIME_SERVER_HEAD = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22";
+    public static final String ALL_ANIME_SERVER_TAIL = "%22}&query=query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}";
+    public static final String ALL_ANIME_BLOG_HEAD = "https://blog.allanime.pro/apivtwo/clock.json?";
+    public static boolean isHLS = false;
     static boolean isDubEnabled = WanPisuConstants.preferences.getBoolean(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_DUB, false);
+    public static String ALL_ANIME_QUERY_TAIL = "\"},\"limit\":40,\"page\":1,\"translationType\":\"" +
+            (isDubEnabled ? "dub" : "sub") +
+            "\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail,availableEpisodes,malId,englishName}}}";
+    public static final String ALL_ANIME_SERVER_MIDDLE = "%22,%22translationType%22:%22" +
+            (isDubEnabled ? "dub" : "sub") +
+            "%22,%22episodeString%22:%22";
     static boolean isUnknownEnabled = WanPisuConstants.preferences.getBoolean(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_UNKNOWN, false);
     public static final String ALL_ANIME_QUERY_HEAD = "https://api.allanime.to/allanimeapi?variables={\"search\":{\"allowAdult\":" +
             true +
             ",\"allowUnknown\":" +
             isUnknownEnabled +
             ",\"query\":\"";
-    public static String ALL_ANIME_QUERY_TAIL = "\"},\"limit\":40,\"page\":1,\"translationType\":\"" +
-            (isDubEnabled ? "dub" : "sub") +
-            "\",\"countryOrigin\":\"ALL\"}&query=query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,thumbnail,availableEpisodes,malId,englishName}}}";
-    public static final String ALL_ANIME_SERVER_HEAD = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22";
-    public static final String ALL_ANIME_SERVER_MIDDLE = "%22,%22translationType%22:%22" +
-            (isDubEnabled ? "dub" : "sub") +
-            "%22,%22episodeString%22:%22";
-    public static final String ALL_ANIME_SERVER_TAIL = "%22}&query=query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}";
-    public static final String ALL_ANIME_BLOG_HEAD = "https://blog.allanime.pro/apivtwo/clock.json?";
-
-    public static boolean isHLS = false;
 
     private static String connectAndGetJsonSearchData(String url) {
 
@@ -89,7 +93,7 @@ public class AllAnime {
                 String animeID = edges.getString("_id");
                 String animeName = edges.getString("name");
                 String animeEnglishName = edges.getString("englishName");
-                if (!animeEnglishName.equals("null")){
+                if (!animeEnglishName.equals("null")) {
                     animeName = animeEnglishName;
                 }
                 String animeThumbnailUrl = edges.getString("thumbnail");
@@ -158,4 +162,53 @@ public class AllAnime {
 
     }
 
+    public static ArrayList<WanPisu> getUsersAnime(Context context) {
+        WanPisuConstants.wanPisus = new ArrayList<>();
+        String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
+        ArrayList<Anilist> anilists = AnilistParser
+                .getAnimeDetails(
+                        AnilistParser.getAnilistUserDetails(TOKEN),
+                        WanPisuConstants.ANIME_CURRENT,
+                        TOKEN
+                );
+        String allAnimeAnimeID = "";
+        String totalEpisodes = "0";
+        for (int i = 0; i < anilists.size(); i++) {
+            Anilist anilist = anilists.get(i);
+            String baseJSONText = connectAndGetJsonSearchData(
+                    ALL_ANIME_QUERY_HEAD
+                            + anilist.getAnimeName()
+                            + ALL_ANIME_QUERY_TAIL
+            );
+            try {
+                JSONArray edgesArray = new JSONObject(baseJSONText)
+                        .getJSONObject("data")
+                        .getJSONObject("shows")
+                        .getJSONArray("edges");
+
+                String anilistMalID = anilists.get(i).getMalID().trim();
+                for (int j = 0; j < edgesArray.length(); j++) {
+                    JSONObject edges = edgesArray.getJSONObject(j);
+                    String malID = edges.getString("malId").trim();
+                    if (malID.equals(anilistMalID)){
+                        allAnimeAnimeID = edges.getString("_id");
+                        JSONObject availableEpisodes = edges.getJSONObject("availableEpisodes");
+                        totalEpisodes = availableEpisodes.getString("sub");
+                        break;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            WanPisuConstants.wanPisus.add(new WanPisu(
+                    allAnimeAnimeID,
+                    anilist.getAnimeName(),
+                    anilist.getAnimeImageUrl(),
+                    Integer.parseInt(totalEpisodes),
+                    anilists.get(i).getMalID()
+            ));
+        }
+
+        return WanPisuConstants.wanPisus;
+    }
 }

@@ -28,7 +28,7 @@ import in.ghostreborn.wanpisu.ui.SettingsActivity;
 public class MainActivity extends AppCompatActivity {
 
     public static ArrayList<WanPisu> animeDetailsArray;
-    AnimeSearchAdapter adapter;
+    public static AnimeSearchAdapter adapter;
     ConstraintLayout allAnimeConstraintLayout;
     FragmentContainerView anilistAnimeContainerView;
 
@@ -55,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
         // Get latest anime updates
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("");
-            adapter = new AnimeSearchAdapter(MainActivity.this,animeDetailsArray);
+            WanPisuConstants.wanPisus = new ArrayList<>();
+            AllAnime.getUsersAnime(MainActivity.this);
+            adapter = new AnimeSearchAdapter(MainActivity.this,WanPisuConstants.wanPisus);
             runOnUiThread(() -> animeContainerView.setAdapter(adapter));
         };
         executor.execute(task);
