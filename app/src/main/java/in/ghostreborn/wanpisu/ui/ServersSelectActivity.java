@@ -12,11 +12,14 @@ import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeServersAdapter;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.AllAnime;
+import in.ghostreborn.wanpisu.utils.AnilistUtils;
 
 public class ServersSelectActivity extends AppCompatActivity {
 
     public static RecyclerView animeServerSelectRecyclerView;
+    int episodeNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +28,7 @@ public class ServersSelectActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String animeID = intent.getStringExtra("ANIME_ID");
-        int episodeNumber = intent.getIntExtra("ANIME_EPISODE_NUMBER", 1);
+        episodeNumber = intent.getIntExtra("ANIME_EPISODE_NUMBER", 1);
 
         animeServerSelectRecyclerView = findViewById(R.id.anime_server_select_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -48,6 +51,10 @@ public class ServersSelectActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<String> doInBackground(String... strings) {
+            String malID = String.valueOf(WanPisuConstants.ANIME_MAL_ID);
+            String progress = String.valueOf(episodeNumber);
+            String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
+            AnilistUtils.saveAnimeProgress(malID, progress, TOKEN);
             return AllAnime.getAnimeServer(animeID, episodeNumber);
         }
 
