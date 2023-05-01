@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public static AnimeSearchAdapter adapter;
     ConstraintLayout allAnimeConstraintLayout;
     FragmentContainerView anilistAnimeContainerView;
+    ProgressBar allAnimeProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         allAnimeConstraintLayout = findViewById(R.id.all_anime_constraint_layout);
         anilistAnimeContainerView = findViewById(R.id.anilist_login_fragment_container);
+        allAnimeProgressBar = findViewById(R.id.all_anime_progress_bar);
 
         getAnilistTokenFromIntentFilter();
         setData();
@@ -58,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
             WanPisuConstants.wanPisus = new ArrayList<>();
             AllAnime.getUsersAnime(MainActivity.this);
             adapter = new AnimeSearchAdapter(MainActivity.this,WanPisuConstants.wanPisus);
-            runOnUiThread(() -> animeContainerView.setAdapter(adapter));
+            runOnUiThread(() -> {
+                allAnimeProgressBar.setVisibility(View.GONE);
+                animeContainerView.setAdapter(adapter);
+            });
         };
         executor.execute(task);
 
