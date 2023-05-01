@@ -25,7 +25,6 @@ public class WanPisuConstants {
     public static int ANIME_MAL_ID = 0;
 
     public static boolean isDubEnabled= false;
-    public static boolean isLogged = false;
 
     // Anime status constants
     public static final String ANIME_CURRENT = "CURRENT";

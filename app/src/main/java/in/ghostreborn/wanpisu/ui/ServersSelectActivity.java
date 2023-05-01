@@ -1,12 +1,12 @@
 package in.ghostreborn.wanpisu.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -51,12 +51,11 @@ public class ServersSelectActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<String> doInBackground(String... strings) {
-            if (WanPisuConstants.isLogged){
-                String malID = String.valueOf(WanPisuConstants.ANIME_MAL_ID);
-                String progress = String.valueOf(episodeNumber);
-                String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
-                AnilistUtils.saveAnimeProgress(malID, progress, TOKEN);
-            }
+            String malID = String.valueOf(WanPisuConstants.ANIME_MAL_ID);
+            String progress = String.valueOf(episodeNumber);
+            String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
+            AnilistUtils.saveAnimeProgress(malID, progress, TOKEN);
+
             return AllAnime.getAnimeServer(animeID, episodeNumber);
         }
 

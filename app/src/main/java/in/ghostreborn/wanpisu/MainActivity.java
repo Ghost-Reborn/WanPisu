@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
         if (TOKEN != ""){
             anilistAnimeContainerView.setVisibility(View.GONE);
-            WanPisuConstants.isLogged = true;
         }else {
             allAnimeConstraintLayout.setVisibility(View.GONE);
         }
