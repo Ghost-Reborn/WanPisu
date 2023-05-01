@@ -94,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void setData(){
         WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
+        String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
+        if (TOKEN != ""){
+            WanPisuConstants.isLogged = true;
+        }
     }
 
 }
