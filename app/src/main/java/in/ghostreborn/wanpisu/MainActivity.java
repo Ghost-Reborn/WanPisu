@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,11 +29,16 @@ public class MainActivity extends AppCompatActivity {
 
     public static ArrayList<WanPisu> animeDetailsArray;
     AnimeSearchAdapter adapter;
+    ConstraintLayout allAnimeConstraintLayout;
+    FragmentContainerView anilistAnimeContainerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        allAnimeConstraintLayout = findViewById(R.id.all_anime_constraint_layout);
+        anilistAnimeContainerView = findViewById(R.id.anilist_login_fragment_container);
 
         getAnilistTokenFromIntentFilter();
         setData();
@@ -96,7 +104,10 @@ public class MainActivity extends AppCompatActivity {
         WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
         String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
         if (TOKEN != ""){
+            anilistAnimeContainerView.setVisibility(View.GONE);
             WanPisuConstants.isLogged = true;
+        }else {
+            allAnimeConstraintLayout.setVisibility(View.GONE);
         }
     }
 
