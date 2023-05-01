@@ -51,10 +51,12 @@ public class ServersSelectActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<String> doInBackground(String... strings) {
-            String malID = String.valueOf(WanPisuConstants.ANIME_MAL_ID);
-            String progress = String.valueOf(episodeNumber);
-            String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
-            AnilistUtils.saveAnimeProgress(malID, progress, TOKEN);
+            if (WanPisuConstants.isLogged){
+                String malID = String.valueOf(WanPisuConstants.ANIME_MAL_ID);
+                String progress = String.valueOf(episodeNumber);
+                String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
+                AnilistUtils.saveAnimeProgress(malID, progress, TOKEN);
+            }
             return AllAnime.getAnimeServer(animeID, episodeNumber);
         }
 

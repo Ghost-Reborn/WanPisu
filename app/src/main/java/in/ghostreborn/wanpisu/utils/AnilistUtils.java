@@ -32,8 +32,10 @@ public class AnilistUtils {
         if (!preferences.contains(WanPisuConstants.WAN_PISU_ANILIST_TOKEN)){
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(AnilistParser.ANILIST_TOKEN_URL));
             context.startActivity(intent);
+            WanPisuConstants.isLogged = false;
         }else {
             String TOKEN = preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
+            WanPisuConstants.isLogged = true;
             checkAnilistUser(context, TOKEN);
         }
     }
