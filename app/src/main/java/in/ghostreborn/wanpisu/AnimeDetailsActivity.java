@@ -41,8 +41,6 @@ public class AnimeDetailsActivity extends AppCompatActivity {
     static TextView animeDetailsSynopsis;
     static TextView animeDetailsPrequel;
     static TextView animeDetailsSequel;
-    static EditText animeDetailsUpdateEditText;
-    static Button animeDetailsUpdateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,20 +53,6 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         animeDetailsSequel = findViewById(R.id.anime_details_sequel);
         animeDetailsWatchButton = findViewById(R.id.anime_details_watch_button);
         animeDetailsSynopsis = findViewById(R.id.anime_details_synopsis);
-        animeDetailsUpdateEditText = findViewById(R.id.anime_details_update_edit_text);
-        animeDetailsUpdateButton = findViewById(R.id.anime_details_update_button);
-
-        String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
-
-        animeDetailsUpdateButton.setOnClickListener(v -> {
-
-            if (TOKEN == "") {
-                AnilistUtils.checkAnilist(AnimeDetailsActivity.this);
-            }
-
-            new AnilistAsync().execute();
-        });
-
     }
 
     @Override
@@ -101,20 +85,5 @@ public class AnimeDetailsActivity extends AppCompatActivity {
 
 
         }
-    }
-
-    class AnilistAsync extends AsyncTask<Void, Void, Void> {
-
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            String malID = String.valueOf(WanPisuConstants.ANIME_MAL_ID);
-            String progress = animeDetailsUpdateEditText.getText().toString();
-            String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
-            AnilistUtils.saveAnimeProgress(malID, progress, TOKEN);
-            return null;
-        }
-
-
     }
 }

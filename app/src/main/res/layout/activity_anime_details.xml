@@ -6,29 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".AnimeDetailsActivity">
 
-    <EditText
-        android:id="@+id/anime_details_update_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="3"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/anilist_anime_details_update_button"
-        app:layout_constraintStart_toEndOf="@+id/anime_details_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/anime_details_text_view" />
-
-    <Button
-        android:id="@+id/anime_details_update_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="UPDATE"
-        app:layout_constraintBottom_toBottomOf="@+id/anime_details_update_edit_text"
-        app:layout_constraintEnd_toStartOf="@+id/anime_details_watch_button"
-        app:layout_constraintStart_toEndOf="@+id/anime_details_update_edit_text"
-        app:layout_constraintTop_toTopOf="@+id/anime_details_update_edit_text" />
-
     <TextView
         android:id="@+id/anime_details_text_view"
         android:layout_width="0dp"
@@ -53,12 +30,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Watch"
-        app:layout_constraintBottom_toBottomOf="@+id/anime_details_update_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/anime_details_update_button"
-        app:layout_constraintTop_toTopOf="@+id/anime_details_update_button" />
+        app:layout_constraintStart_toEndOf="@+id/anime_details_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/anime_details_text_view" />
 
     <TextView
         android:id="@+id/anime_details_synopsis"
