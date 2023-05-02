@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.ui.ServersSelectActivity;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
@@ -39,6 +40,7 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
         int correctPosition = position + 1;
 
         holder.episodeNumberTextView.setText(String.valueOf(correctPosition));
+        holder.episodeTitleTextView.setText(WanPisuConstants.jikanEpisodes.get(position).getEpisodeTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,16 +54,18 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
     @Override
     public int getItemCount() {
-        return episodes;
+        return WanPisuConstants.jikanEpisodes.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView episodeNumberTextView;
+        public TextView episodeTitleTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             episodeNumberTextView = itemView.findViewById(R.id.episode_number_text_view);
+            episodeTitleTextView = itemView.findViewById(R.id.episode_title_text_view);
         }
     }
 

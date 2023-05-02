@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.model.Anilist;
 import in.ghostreborn.wanpisu.model.Jikan;
+import in.ghostreborn.wanpisu.model.JikanEpisodes;
 import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class WanPisuConstants {
@@ -21,6 +22,7 @@ public class WanPisuConstants {
     public static ArrayList<Anilist> anilists;
     public static ArrayList<WanPisu> wanPisus;
     public static ArrayList<Jikan> jikans;
+    public static ArrayList<JikanEpisodes> jikanEpisodes;
     public static int ANIME_INDEX = 0;
     public static int ANIME_MAL_ID = 0;
 
