@@ -67,11 +67,12 @@ public class JikanParser {
         }
     }
 
-    public static void parseAnimeEpisodes(String malID){
+    public static void parseAnimeEpisodes(String malID, String page){
         WanPisuConstants.jikanEpisodes = new ArrayList<>();
         String url = "https://api.jikan.moe/v4/anime/" +
                 malID +
-                "/episodes";
+                "/episodes?page=" +
+                page;
 
         StringBuilder result = new StringBuilder();
         try {

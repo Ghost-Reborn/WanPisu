@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.ui.AnimeEpisodesActivity;
+import in.ghostreborn.wanpisu.ui.AnimeEpisodesAsync;
 
 public class AnimeEpisodeGroupAdapter extends RecyclerView.Adapter<AnimeEpisodeGroupAdapter.ViewHolder> {
 
@@ -49,6 +51,11 @@ public class AnimeEpisodeGroupAdapter extends RecyclerView.Adapter<AnimeEpisodeG
             );
         }
         currentGroup += 100;
+
+        holder.itemView.setOnClickListener(v -> {
+            new AnimeEpisodesAsync(String.valueOf(position + 1), holder.itemView.getContext()).execute();
+        });
+
     }
 
     @Override
