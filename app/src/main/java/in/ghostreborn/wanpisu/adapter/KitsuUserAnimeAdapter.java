@@ -44,7 +44,7 @@ public class KitsuUserAnimeAdapter extends RecyclerView.Adapter<KitsuUserAnimeAd
             Intent intent = new Intent(context, KitsuAnimeActivity.class);
             WanPisuConstants.isUserAnime = true;
             WanPisuConstants.preferences.edit()
-                    .putString(WanPisuConstants.KITSU_ANIME_ID, WanPisuConstants.userKitsus.get(position).getAnimeID())
+                    .putString(WanPisuConstants.KITSU_ANIME_ID, kitsus.get(position).getAnimeID())
                     .putString(WanPisuConstants.KITSU_ANIME_INDEX, String.valueOf(position))
                     .apply();
             context.startActivity(intent);

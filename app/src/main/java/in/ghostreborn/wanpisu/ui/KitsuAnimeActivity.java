@@ -64,7 +64,7 @@ public class KitsuAnimeActivity extends AppCompatActivity {
     private void setData() {
         Kitsu kitsu;
         if (WanPisuConstants.isUserAnime) {
-            kitsu = WanPisuConstants.userKitsus.get(Integer.parseInt(animeIndex));
+            kitsu = WanPisuConstants.userCurrentKitsus.get(Integer.parseInt(animeIndex));
         } else {
             kitsu = WanPisuConstants.kitsus.get(Integer.parseInt(animeIndex));
         }

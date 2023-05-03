@@ -67,14 +67,14 @@ public class KitsuUserAnimeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(ArrayList<Kitsu> kitsus) {
-            ArrayList<Kitsu> currentAnimeKitsus = new ArrayList<>();
+            WanPisuConstants.userCurrentKitsus = new ArrayList<>();
             for (int i = 0; i < kitsus.size(); i++) {
                 String status = kitsus.get(i).getStatus();
                 if (status.equals(WanPisuConstants.KITSU_PROGRESS_CURRENT)){
-                    currentAnimeKitsus.add(kitsus.get(i));
+                    WanPisuConstants.userCurrentKitsus.add(kitsus.get(i));
                 }
             }
-            KitsuUserAnimeAdapter adapter = new KitsuUserAnimeAdapter(currentAnimeKitsus);
+            KitsuUserAnimeAdapter adapter = new KitsuUserAnimeAdapter(WanPisuConstants.userCurrentKitsus);
             GridLayoutManager manager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
             kitsuUserAnimeRecycler.setLayoutManager(manager);
             kitsuUserAnimeRecycler.setAdapter(adapter);
