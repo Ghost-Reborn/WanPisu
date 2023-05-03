@@ -27,6 +27,8 @@ public class WanPisuConstants {
     public static int ANIME_INDEX = 0;
     public static int ANIME_MAL_ID = 0;
 
+    public static String animeImageURL = "";
+
     public static boolean isDubEnabled= false;
 
     // Anime status constants

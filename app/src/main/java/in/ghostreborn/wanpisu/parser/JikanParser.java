@@ -103,7 +103,8 @@ public class JikanParser {
             for (int i = 0; i < episodesArray.length(); i++) {
                 JSONObject episode = episodesArray.getJSONObject(i);
                 String episodeName = episode.getString("title");
-                WanPisuConstants.jikanEpisodes.add(new JikanEpisodes(episodeName));
+                String episodeNumber = episode.getString("mal_id");
+                WanPisuConstants.jikanEpisodes.add(new JikanEpisodes(episodeName, episodeNumber));
             }
         } catch (JSONException e) {
             e.printStackTrace();

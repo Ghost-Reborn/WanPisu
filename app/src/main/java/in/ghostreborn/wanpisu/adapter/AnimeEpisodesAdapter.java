@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
@@ -39,16 +42,15 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
         int correctPosition = position + 1;
 
-        holder.episodeNumberTextView.setText(String.valueOf(correctPosition));
+        holder.episodeNumberTextView.setText(WanPisuConstants.jikanEpisodes.get(position).getEpisodeNumber());
         holder.episodeTitleTextView.setText(WanPisuConstants.jikanEpisodes.get(position).getEpisodeTitle());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ServersSelectActivity.class);
-                intent.putExtra("ANIME_EPISODE_NUMBER", correctPosition);
-                intent.putExtra("ANIME_ID", animeID);
-                context.startActivity(intent);
-            }
+        Picasso.get().load(WanPisuConstants.animeImageURL).into(holder.episodeImageView);
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ServersSelectActivity.class);
+            intent.putExtra("ANIME_EPISODE_NUMBER", correctPosition);
+            intent.putExtra("ANIME_ID", animeID);
+            context.startActivity(intent);
         });
     }
 
@@ -61,11 +63,13 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
         public TextView episodeNumberTextView;
         public TextView episodeTitleTextView;
+        public ImageView episodeImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             episodeNumberTextView = itemView.findViewById(R.id.episode_number_text_view);
             episodeTitleTextView = itemView.findViewById(R.id.episode_title_text_view);
+            episodeImageView = itemView.findViewById(R.id.episode_image_view);
         }
     }
 

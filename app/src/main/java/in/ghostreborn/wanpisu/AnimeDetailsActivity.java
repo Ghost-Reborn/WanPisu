@@ -77,6 +77,7 @@ public class AnimeDetailsActivity extends AppCompatActivity {
 
             Picasso.get().load(WanPisuConstants.jikans.get(0).getAnimeThumbnail())
                     .into(animeDetailsImageView);
+            WanPisuConstants.animeImageURL = WanPisuConstants.jikans.get(0).getAnimeThumbnail();
             animeDetailsTextView.setText(WanPisuConstants.jikans.get(0).getAnimeTitle());
             animeDetailsSynopsis.setText(WanPisuConstants.jikans.get(0).getAnimeSynopsis());
             animeDetailsWatchButton.setOnClickListener(view -> {
