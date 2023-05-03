@@ -5,6 +5,7 @@ import static in.ghostreborn.wanpisu.constants.WanPisuConstants.preferences;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,14 @@ public class KitsuUserAnimeFragment extends Fragment {
 
         @Override
         protected void onPostExecute(ArrayList<Kitsu> kitsus) {
-            KitsuUserAnimeAdapter adapter = new KitsuUserAnimeAdapter();
+            ArrayList<Kitsu> currentAnimeKitsus = new ArrayList<>();
+            for (int i = 0; i < kitsus.size(); i++) {
+                String status = kitsus.get(i).getStatus();
+                if (status.equals(WanPisuConstants.KITSU_PROGRESS_CURRENT)){
+                    currentAnimeKitsus.add(kitsus.get(i));
+                }
+            }
+            KitsuUserAnimeAdapter adapter = new KitsuUserAnimeAdapter(currentAnimeKitsus);
             GridLayoutManager manager = new GridLayoutManager(getContext(), 1, GridLayoutManager.HORIZONTAL, false);
             kitsuUserAnimeRecycler.setLayoutManager(manager);
             kitsuUserAnimeRecycler.setAdapter(adapter);

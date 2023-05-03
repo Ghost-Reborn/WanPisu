@@ -23,7 +23,7 @@ import okhttp3.Response;
 public class KitsuAPI {
 
     public static final String KITSU_API_BASE = "https://kitsu.io/api/edge/users/";
-    public static final String KITSU_API_TAIL = "/library-entries?include=anime";
+    public static final String KITSU_API_TAIL = "/library-entries?include=anime&page[limit]=100";
     private static final String TAG = "KitsuApi";
     private static final String AUTH_ENDPOINT = "https://kitsu.io/api/oauth/token";
     private static final String KITSU_SEARCH_API_BASE = "https://kitsu.io/api/edge/anime?filter[text]=";
