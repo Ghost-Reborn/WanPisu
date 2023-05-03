@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.ui.ServersSelectActivity;
+import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
 
@@ -47,7 +47,7 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
         Picasso.get().load(WanPisuConstants.animeImageURL).into(holder.episodeImageView);
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, ServersSelectActivity.class);
+            Intent intent = new Intent(context, ExoPlayerActivity.class);
             intent.putExtra("ANIME_EPISODE_NUMBER", correctPosition);
             intent.putExtra("ANIME_ID", animeID);
             context.startActivity(intent);

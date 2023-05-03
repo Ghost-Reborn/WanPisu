@@ -21,9 +21,6 @@
             android:name=".ui.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.ServersSelectActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.ExoPlayerActivity"
             android:exported="false"
             android:screenOrientation="landscape" />
