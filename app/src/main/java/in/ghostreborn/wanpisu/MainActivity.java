@@ -56,10 +56,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Get latest anime updates
+        // TODO uncomment below code after everything is
+        //  fixed it is used to get anilist
+        //  Anilist server may block if called multiple times during testing
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
             WanPisuConstants.wanPisus = new ArrayList<>();
-            AllAnime.getUsersAnime(MainActivity.this);
+//            AllAnime.getUsersAnime(MainActivity.this);
             adapter = new AnimeSearchAdapter(MainActivity.this,WanPisuConstants.wanPisus);
             runOnUiThread(() -> {
                 allAnimeProgressBar.setVisibility(View.GONE);

@@ -176,10 +176,6 @@ public class AllAnime {
             return servers;
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (ProtocolException e) {
-            throw new RuntimeException(e);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
