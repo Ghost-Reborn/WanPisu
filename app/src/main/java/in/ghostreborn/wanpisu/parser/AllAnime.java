@@ -2,6 +2,7 @@ package in.ghostreborn.wanpisu.parser;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -14,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -22,6 +24,9 @@ import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Anilist;
 import in.ghostreborn.wanpisu.model.WanPisu;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class AllAnime {
 
@@ -69,6 +74,25 @@ public class AllAnime {
         return result.toString();
     }
 
+    private static String getAllAnimeJSON(String animeName) {
+        OkHttpClient client = new OkHttpClient();
+
+        String baseUrl = "https://api.allanime.day/api";
+        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"" + animeName + "\"},\"limit\":40,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}") + "&query=" + Uri.encode("query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,englishName,availableEpisodes,__typename,malId,thumbnail,lastEpisodeInfo,lastEpisodeDate,season,airedStart,episodeDuration,episodeCount,lastUpdateEnd}}}");
+
+        Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "NULL";
+
+    }
+
     /**
      * JSON array with `edges` provides anime details
      *
@@ -76,9 +100,7 @@ public class AllAnime {
      */
     public static ArrayList<WanPisu> parseAnimeIDAnimeNameAnimeThumbnail(String anime) {
 
-        String rawJson = connectAndGetJsonSearchData(
-                ALL_ANIME_QUERY_HEAD + anime + ALL_ANIME_QUERY_TAIL
-        );
+        String rawJson = getAllAnimeJSON(anime);
 
         WanPisuConstants.wanPisus = new ArrayList<>();
         try {
@@ -124,42 +146,97 @@ public class AllAnime {
     }
 
     public static ArrayList<String> getAnimeServer(String animeID, String episodeNumber) {
-        String apiUrl = ALL_ANIME_SERVER_HEAD + animeID + ALL_ANIME_SERVER_MIDDLE + episodeNumber + ALL_ANIME_SERVER_TAIL;
+        String serverURL = "https://embed.ssbcontent.site/apivtwo/clock.json?id=" + decryptAllAnime(animeID);
+        Log.e("TAG", serverURL);
+
         ArrayList<String> servers = new ArrayList<>();
         String apiClock = "";
         try {
-            JSONObject baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
-            JSONArray sourceURLs = baseJSON.
-                    getJSONObject("data")
-                    .getJSONObject("episode")
-                    .getJSONArray("sourceUrls");
-            for (int i = 0; i < sourceURLs.length(); i++) {
-                String server = sourceURLs.getJSONObject(i).getString("sourceUrl");
-                if (server.contains("apivtwo")) {
-                    apiClock = server;
-                    continue;
-                }
-                servers.add(server);
+
+            URL url = new URL(serverURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
             }
-            apiUrl = ALL_ANIME_BLOG_HEAD + apiClock.substring(15);
-            Log.e("ALLANIME", apiUrl);
-            baseJSON = new JSONObject(connectAndGetJsonSearchData(apiUrl));
-            JSONArray links = baseJSON.getJSONArray("links");
-            for (int i = 0; i < links.length(); i++) {
-                JSONObject linkObject = links.getJSONObject(i);
-                String server = linkObject.getString("link");
-                if (linkObject.has("mp4")) {
-                    isHLS = !linkObject.getBoolean("mp4");
-                }
+
+            JSONObject baseJSON = new JSONObject(String.valueOf(response));
+            Log.e("TAG", baseJSON.toString());
+            JSONArray sourceURLs = baseJSON.
+                    getJSONArray("links");
+            for (int i = 0; i < sourceURLs.length(); i++) {
+                String server = sourceURLs.getJSONObject(i).getString("link");
                 servers.add(server);
             }
             return servers;
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (ProtocolException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return servers;
 
+    }
+
+    private static String decryptAllAnime(String showID) {
+
+        // Connect and get encrypted url
+
+        OkHttpClient client = new OkHttpClient();
+
+        String baseUrl = "https://api.allanime.day/api";
+        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"showId\":\"" + showID + "\",\"translationType\":\"sub\",\"episodeString\":\"1\"}") + "&query=" + Uri.encode("query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}");
+
+        Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            String rawJSON = response.body().string();
+            JSONObject jsonObject = new JSONObject(rawJSON);
+            JSONArray sourceURLs = jsonObject.getJSONObject("data").getJSONObject("episode").getJSONArray("sourceUrls");
+
+            for (int i = 0; i < sourceURLs.length(); i++) {
+                String decrypted = decryptAllAnimeServer(sourceURLs.getJSONObject(i).getString("sourceUrl").substring(2));
+                if (decrypted.contains("apivtwo")) {
+                    decrypted = decrypted.substring(18);
+                    Log.e("TAG", "Decrypted: " + decrypted);
+                    return decrypted;
+                }
+            }
+
+            return "NULL";
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "NULL";
+
+    }
+
+    private static String decryptAllAnimeServer(String decrypt) {
+        StringBuilder decryptedString = new StringBuilder();
+
+        for (int i = 0; i < decrypt.length(); i += 2) {
+            String hex = decrypt.substring(i, i + 2);
+            int dec = Integer.parseInt(hex, 16);
+            int xor = dec ^ 56;
+            String oct = String.format("%03o", xor);
+            char decryptedChar = (char) Integer.parseInt(oct, 8);
+            decryptedString.append(decryptedChar);
+        }
+
+        return decryptedString.toString();
     }
 
     public static ArrayList<WanPisu> getUsersAnime(Context context) {

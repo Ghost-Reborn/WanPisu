@@ -39,4 +39,5 @@ public class WanPisuConstants {
     public static final String ANIME_PAUSED = "PAUSED";
     public static final String ANIME_REPEATING = "REPEATING";
 
+    public static boolean isHLS = false;
 }
