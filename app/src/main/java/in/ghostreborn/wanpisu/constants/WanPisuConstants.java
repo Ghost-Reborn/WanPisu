@@ -16,6 +16,7 @@ public class WanPisuConstants {
     public static final String WAN_PISU_PREFERENCE_ENABLE_UNKNOWN = "key_enable_unknown";
     public static final String WAN_PISU_ANILIST_TOKEN = "WAN_PISU_ANILIST_TOKEN";
     public static final String ANILIST_USER_NAME = "ANILIST_USER_NAME";
+    public static int ALL_ANIME_EPISODE_ADD = 0;
 
     public static SharedPreferences preferences;
 

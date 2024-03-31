@@ -146,7 +146,7 @@ public class AllAnime {
     }
 
     public static ArrayList<String> getAnimeServer(String animeID, String episodeNumber) {
-        String serverURL = "https://embed.ssbcontent.site/apivtwo/clock.json?id=" + decryptAllAnime(animeID);
+        String serverURL = "https://embed.ssbcontent.site/apivtwo/clock.json?id=" + decryptAllAnime(animeID, episodeNumber);
         Log.e("TAG", serverURL);
 
         ArrayList<String> servers = new ArrayList<>();
@@ -184,14 +184,16 @@ public class AllAnime {
 
     }
 
-    private static String decryptAllAnime(String showID) {
+    private static String decryptAllAnime(String showID, String episodeNumber) {
 
         // Connect and get encrypted url
 
         OkHttpClient client = new OkHttpClient();
 
         String baseUrl = "https://api.allanime.day/api";
-        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"showId\":\"" + showID + "\",\"translationType\":\"sub\",\"episodeString\":\"1\"}") + "&query=" + Uri.encode("query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}");
+        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"showId\":\"" + showID + "\",\"translationType\":\"sub\",\"episodeString\":\"" +
+                episodeNumber +
+                "\"}") + "&query=" + Uri.encode("query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}");
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
 

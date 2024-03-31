@@ -27,6 +27,7 @@ public class AnimeEpisodeGroupAdapter extends RecyclerView.Adapter<AnimeEpisodeG
         holder.episodeGroupTextView.setText(WanPisuConstants.animeEpisodes.get(position));
 
         holder.itemView.setOnClickListener(v -> {
+            WanPisuConstants.ALL_ANIME_EPISODE_ADD = position * 100;
             new AnimeEpisodesAsync(String.valueOf(position + 1), holder.itemView.getContext()).execute();
         });
 
