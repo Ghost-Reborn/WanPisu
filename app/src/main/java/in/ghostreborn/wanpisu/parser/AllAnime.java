@@ -1,6 +1,5 @@
 package in.ghostreborn.wanpisu.parser;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -15,12 +14,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import in.ghostreborn.wanpisu.MainActivity;
-import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Anilist;
 import in.ghostreborn.wanpisu.model.WanPisu;
@@ -33,7 +29,6 @@ public class AllAnime {
     public static final String ALL_ANIME_SERVER_HEAD = "https://api.allanime.to/allanimeapi?variables={%22showId%22:%22";
     public static final String ALL_ANIME_SERVER_TAIL = "%22}&query=query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){episodeString,sourceUrls}}";
     public static final String ALL_ANIME_BLOG_HEAD = "https://blog.allanime.pro/apivtwo/clock.json?";
-    public static boolean isHLS = false;
     static boolean isDubEnabled = WanPisuConstants.preferences.getBoolean(WanPisuConstants.WAN_PISU_PREFERENCE_ENABLE_DUB, false);
     public static String ALL_ANIME_QUERY_TAIL = "\"},\"limit\":40,\"page\":1,\"translationType\":\"" +
             (isDubEnabled ? "dub" : "sub") +
@@ -166,13 +161,19 @@ public class AllAnime {
             }
 
             JSONObject baseJSON = new JSONObject(String.valueOf(response));
-            Log.e("TAG", baseJSON.toString());
             JSONArray sourceURLs = baseJSON.
                     getJSONArray("links");
-            for (int i = 0; i < sourceURLs.length(); i++) {
-                String server = sourceURLs.getJSONObject(i).getString("link");
-                servers.add(server);
+            JSONObject linkObject = sourceURLs.getJSONObject(0);
+            String server = linkObject.getString("link");
+            servers.add(server);
+
+            if (linkObject.has("mp4")) {
+                WanPisuConstants.isHLS = !linkObject.getBoolean("mp4");
+            } else {
+                // TODO check HLS key exists in response
+                WanPisuConstants.isHLS = true;
             }
+
             return servers;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -265,7 +266,7 @@ public class AllAnime {
                 for (int j = 0; j < edgesArray.length(); j++) {
                     JSONObject edges = edgesArray.getJSONObject(j);
                     String malID = edges.getString("malId").trim();
-                    if (malID.equals(anilistMalID)){
+                    if (malID.equals(anilistMalID)) {
                         allAnimeAnimeID = edges.getString("_id");
                         JSONObject availableEpisodes = edges.getJSONObject("availableEpisodes");
                         totalEpisodes = availableEpisodes.getString("sub");

@@ -51,7 +51,7 @@ public class ExoPlayerActivity extends AppCompatActivity {
     private static void createMediaSource(String url, Context context) {
 
         simpleExoPlayer.seekTo(0);
-        boolean isHLS = AllAnime.isHLS;
+        boolean isHLS = WanPisuConstants.isHLS;
         if (!isHLS) {
             DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
                     context,

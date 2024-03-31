@@ -28,6 +28,8 @@ public class WanPisuConstants {
     public static int ANIME_INDEX = 0;
     public static int ANIME_MAL_ID = 0;
 
+    public static boolean isHLS = false;
+
     public static String animeImageURL = "";
 
     public static boolean isDubEnabled= false;
@@ -39,6 +41,4 @@ public class WanPisuConstants {
     public static final String ANIME_DROPPED = "DROPPED";
     public static final String ANIME_PAUSED = "PAUSED";
     public static final String ANIME_REPEATING = "REPEATING";
-
-    public static boolean isHLS = false;
 }
