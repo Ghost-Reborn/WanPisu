@@ -51,8 +51,4 @@ public class AnilistLoginFragment extends Fragment {
         return view;
     }
 
-    private void getAnilistAnimes(View view){
-
-    }
-
 }
