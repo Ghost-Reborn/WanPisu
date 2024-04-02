@@ -39,7 +39,7 @@ public class AnilistLoginFragment extends Fragment {
             Executor executor = Executors.newSingleThreadExecutor();
             Runnable task = () -> {
                 WanPisuConstants.wanPisus = new ArrayList<>();
-                AllAnime.getUsersAnime(requireContext());
+                AllAnime.getUsersAnime();
                 AnimeSearchAdapter adapter = new AnimeSearchAdapter(requireContext(),WanPisuConstants.wanPisus);
                 requireActivity().runOnUiThread(() -> {
                     animeRecyclerView.setAdapter(adapter);
