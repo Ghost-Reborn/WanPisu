@@ -4,66 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.WanPisuActivity">
+    tools:context=".MainActivity" >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/all_anime_constraint_layout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/all_anime_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ProgressBar
-            android:id="@+id/all_anime_progress_bar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/settings_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/searchView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/searchView"
-            app:layout_constraintTop_toTopOf="@+id/searchView"
-            app:srcCompat="@drawable/icons8_automatic_50" />
-
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:iconifiedByDefault="false"
-            android:queryHint="Search"
-            app:layout_constraintEnd_toStartOf="@+id/settings_image_view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/anime_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/anilist_login_fragment_container"
-        android:name="in.ghostreborn.wanpisu.fragment.AnilistLoginFragment"
-        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_anilist_login" />
+        app:layout_constraintTop_toBottomOf="@+id/anime_search_view" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_background"
+        app:itemIconTint="@drawable/bottom_nav_item_color"
+        app:itemTextColor="@drawable/bottom_nav_item_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu"
+        />
+
+    <SearchView
+        android:id="@+id/anime_search_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:iconifiedByDefault="false"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
