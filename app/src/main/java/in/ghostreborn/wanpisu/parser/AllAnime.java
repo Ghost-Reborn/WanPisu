@@ -245,46 +245,20 @@ public class AllAnime {
     public static ArrayList<WanPisu> getUsersAnime(Context context) {
         WanPisuConstants.wanPisus = new ArrayList<>();
         String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
+        String userName = WanPisuConstants.preferences.getString(WanPisuConstants.ANILIST_USER_NAME, "");
         ArrayList<Anilist> anilists = AnilistParser
                 .getAnimeDetails(
-                        AnilistParser.getAnilistUserDetails(TOKEN),
+                        userName,
                         WanPisuConstants.ANIME_CURRENT,
                         TOKEN
                 );
-        String allAnimeAnimeID = "";
-        String totalEpisodes = "0";
         for (int i = 0; i < anilists.size(); i++) {
             Anilist anilist = anilists.get(i);
-            String baseJSONText = connectAndGetJsonSearchData(
-                    ALL_ANIME_QUERY_HEAD
-                            + anilist.getAnimeName()
-                            + ALL_ANIME_QUERY_TAIL
-            );
-            try {
-                JSONArray edgesArray = new JSONObject(baseJSONText)
-                        .getJSONObject("data")
-                        .getJSONObject("shows")
-                        .getJSONArray("edges");
-
-                String anilistMalID = anilists.get(i).getMalID().trim();
-                for (int j = 0; j < edgesArray.length(); j++) {
-                    JSONObject edges = edgesArray.getJSONObject(j);
-                    String malID = edges.getString("malId").trim();
-                    if (malID.equals(anilistMalID)) {
-                        allAnimeAnimeID = edges.getString("_id");
-                        JSONObject availableEpisodes = edges.getJSONObject("availableEpisodes");
-                        totalEpisodes = availableEpisodes.getString("sub");
-                        break;
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
             WanPisuConstants.wanPisus.add(new WanPisu(
-                    allAnimeAnimeID,
+                    "",
                     anilist.getAnimeName(),
                     anilist.getAnimeImageUrl(),
-                    Integer.parseInt(totalEpisodes),
+                    0,
                     anilists.get(i).getMalID()
             ));
         }

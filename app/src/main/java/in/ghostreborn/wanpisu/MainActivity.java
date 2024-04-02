@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         menuItem.setChecked(true);
 
         getAnilistTokenFromIntentFilter();
+        setData();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -70,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
             editor.putString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, token);
             editor.apply();
         }
+    }
+
+    private void setData(){
+        WanPisuConstants.preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, MODE_PRIVATE);
     }
 
 }
