@@ -28,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.menu_home:
                     return true;
+                case R.id.menu_user:
+                    return true;
+                case R.id.menu_settings:
+                    return true;
             }
             return false;
         });
