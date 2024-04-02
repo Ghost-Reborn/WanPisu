@@ -30,7 +30,7 @@
         app:menu="@menu/bottom_navigation_menu"
         />
 
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/anime_search_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
