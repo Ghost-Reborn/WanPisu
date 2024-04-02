@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -28,18 +27,19 @@ import okhttp3.Response;
 
 public class AnilistUtils {
 
-    public static void checkAnilist(Context context){
+    public static boolean checkAnilist(Context context){
         SharedPreferences preferences = context.getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, Context.MODE_PRIVATE);
         if (!preferences.contains(WanPisuConstants.WAN_PISU_ANILIST_TOKEN)){
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(AnilistParser.ANILIST_TOKEN_URL));
             context.startActivity(intent);
         }else {
             String TOKEN = preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
-            checkAnilistUser(context, TOKEN);
+             return checkAnilistUser(context, TOKEN);
         }
+        return false;
     }
 
-    private static void checkAnilistUser(Context context, String TOKEN){
+    private static boolean checkAnilistUser(Context context, String TOKEN){
         SharedPreferences preferences = context.getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, Context.MODE_PRIVATE);
         if (!preferences.contains(WanPisuConstants.ANILIST_USER_NAME)){
             Executor executor = Executors.newSingleThreadExecutor();
@@ -51,9 +51,9 @@ public class AnilistUtils {
             };
             executor.execute(task);
         }else {
-            String userName = preferences.getString(WanPisuConstants.ANILIST_USER_NAME, "None");
-            Toast.makeText(context, userName, Toast.LENGTH_SHORT).show();
+            return true;
         }
+        return false;
     }
 
     public static void saveAnimeProgress(String id, String progress, String ACCESS_TOKEN){
