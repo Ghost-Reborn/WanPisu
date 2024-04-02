@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -49,6 +50,9 @@ public class AnilistUtils {
                         .apply();
             };
             executor.execute(task);
+        }else {
+            String userName = preferences.getString(WanPisuConstants.ANILIST_USER_NAME, "None");
+            Toast.makeText(context, userName, Toast.LENGTH_SHORT).show();
         }
     }
 

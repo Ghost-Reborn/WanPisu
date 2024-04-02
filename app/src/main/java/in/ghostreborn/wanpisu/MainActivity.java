@@ -1,5 +1,9 @@
 package in.ghostreborn.wanpisu;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.fragment.AnilistLoginFragment;
 import in.ghostreborn.wanpisu.fragment.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,16 +32,21 @@ public class MainActivity extends AppCompatActivity {
         MenuItem menuItem = menu.findItem(R.id.menu_home);
         menuItem.setChecked(true);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        getAnilistTokenFromIntentFilter();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.menu_home:
                     Fragment homeFragment = new HomeFragment();
-                    transaction.replace(R.id.main_fragment_container, homeFragment);
-                    transaction.commit();
+                    FragmentTransaction homeTransaction = getSupportFragmentManager().beginTransaction();
+                    homeTransaction.replace(R.id.main_fragment_container, homeFragment);
+                    homeTransaction.commit();
                     return true;
                 case R.id.menu_user:
+                    Fragment userFragment = new AnilistLoginFragment();
+                    FragmentTransaction userTransaction = getSupportFragmentManager().beginTransaction();
+                    userTransaction.replace(R.id.main_fragment_container, userFragment);
+                    userTransaction.commit();
                     return true;
                 case R.id.menu_settings:
                     return true;
@@ -43,6 +54,22 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+    }
+
+    private void getAnilistTokenFromIntentFilter(){
+        SharedPreferences preferences = getSharedPreferences(WanPisuConstants.WAN_PISU_PREFERENCE, Context.MODE_PRIVATE);
+        Intent urlIntent = getIntent();
+        Uri data = urlIntent.getData();
+        if (data != null){
+            String url = data.toString();
+            String token = url.substring(
+                    url.indexOf("token=") + 6,
+                    url.indexOf("&token_type")
+            );
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, token);
+            editor.apply();
+        }
     }
 
 }
