@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.AnimeDetailsActivity;
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
@@ -29,9 +30,10 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         context = mContext;
     }
 
-    private static View.OnClickListener listener(){
+    private static View.OnClickListener listener(int position){
         return view -> {
             Intent intent = new Intent(context, AnimeDetailsActivity.class);
+            WanPisuConstants.animeImageURL = animeNames.get(position).getAnimeThumbnailUrl();
             context.startActivity(intent);
         };
     }
@@ -50,7 +52,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         holder.animeTextView.setText(animeNames.get(position).getAnimeName());
         Picasso.get().load(animeNames.get(position).getAnimeThumbnailUrl())
                 .into(holder.animeImageView);
-        holder.itemView.setOnClickListener(listener());
+        holder.itemView.setOnClickListener(listener(position));
     }
 
     @Override
