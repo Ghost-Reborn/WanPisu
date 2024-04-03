@@ -69,7 +69,7 @@ public class AllAnime {
                         .getJSONArray("sub");
                 ArrayList<String> episodesArray = new ArrayList<>();
                 for (int j = 0; j < availableEpisodesArray.length(); j++) {
-                    episodesArray.add(availableEpisodesArray.getString(i));
+                    episodesArray.add(availableEpisodesArray.getString(j));
                 }
                 WanPisuConstants.wanPisus.add(new WanPisu(
                         animeID,
