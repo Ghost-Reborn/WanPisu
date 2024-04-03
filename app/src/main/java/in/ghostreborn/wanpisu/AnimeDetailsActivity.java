@@ -58,33 +58,33 @@ public class AnimeDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new AnimeDetailsAsync().execute();
+//        new AnimeDetailsAsync().execute();
     }
 
-    class AnimeDetailsAsync extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            WanPisuConstants.jikans = new ArrayList<>();
-            String malID = WanPisuConstants.wanPisus.get(WanPisuConstants.ANIME_INDEX).getMalID();
-            JikanParser.parseAnimeFull(malID);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
-
-            Picasso.get().load(WanPisuConstants.jikans.get(0).getAnimeThumbnail())
-                    .into(animeDetailsImageView);
-            WanPisuConstants.animeImageURL = WanPisuConstants.jikans.get(0).getAnimeThumbnail();
-            animeDetailsTextView.setText(WanPisuConstants.jikans.get(0).getAnimeTitle());
-            animeDetailsSynopsis.setText(WanPisuConstants.jikans.get(0).getAnimeSynopsis());
-            animeDetailsWatchButton.setOnClickListener(view -> {
-                startActivity(new Intent(AnimeDetailsActivity.this, AnimeEpisodesActivity.class));
-            });
-
-
-        }
-    }
+//    class AnimeDetailsAsync extends AsyncTask<Void, Void, Void> {
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            WanPisuConstants.jikans = new ArrayList<>();
+//            String malID = WanPisuConstants.wanPisus.get(WanPisuConstants.ANIME_INDEX).getMalID();
+//            JikanParser.parseAnimeFull(malID);
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void unused) {
+//            super.onPostExecute(unused);
+//
+//            Picasso.get().load(WanPisuConstants.jikans.get(0).getAnimeThumbnail())
+//                    .into(animeDetailsImageView);
+//            WanPisuConstants.animeImageURL = WanPisuConstants.jikans.get(0).getAnimeThumbnail();
+//            animeDetailsTextView.setText(WanPisuConstants.jikans.get(0).getAnimeTitle());
+//            animeDetailsSynopsis.setText(WanPisuConstants.jikans.get(0).getAnimeSynopsis());
+//            animeDetailsWatchButton.setOnClickListener(view -> {
+//                startActivity(new Intent(AnimeDetailsActivity.this, AnimeEpisodesActivity.class));
+//            });
+//
+//
+//        }
+//    }
 }

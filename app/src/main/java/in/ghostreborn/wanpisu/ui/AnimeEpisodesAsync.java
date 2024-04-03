@@ -32,8 +32,8 @@ public class AnimeEpisodesAsync extends AsyncTask<Void, Void, Void> {
 
         String animeID = WanPisuConstants.wanPisus.get(WanPisuConstants.ANIME_INDEX)
                 .getAnimeID();
-        int episodes = WanPisuConstants.wanPisus.get(WanPisuConstants.ANIME_INDEX)
-                .getTotalEpisodes();
+        // TODO fix this
+        int episodes = 1;
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         AnimeEpisodesActivity.animeContainerView.setLayoutManager(linearLayoutManager);

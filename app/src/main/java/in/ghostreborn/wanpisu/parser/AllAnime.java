@@ -9,10 +9,8 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -35,14 +33,21 @@ public class AllAnime {
         OkHttpClient client = new OkHttpClient();
 
         String baseUrl = "https://api.allanime.day/api";
-        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"" + anime + "\"},\"limit\":40,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}") + "&query=" + Uri.encode("query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{_id,name,englishName,availableEpisodes,__typename,malId,thumbnail,lastEpisodeInfo,lastEpisodeDate,season,airedStart,episodeDuration,episodeCount,lastUpdateEnd}}}");
+        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"" + anime + "\"},\"limit\":39,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}") + "&query=" + Uri.encode("query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{" +
+                "_id," +
+                "name," +
+                "malId," +
+                "thumbnail," +
+                "availableEpisodesDetail" +
+                "}}}");
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
         String rawJson = "NULL";
 
         try {
             Response response = client.newCall(request).execute();
-            rawJson =  response.body().string();
+            rawJson = response.body().string();
+            Log.e("TAG", rawJson);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,31 +61,22 @@ public class AllAnime {
                     .getJSONArray("edges");
             for (int i = 0; i < edgesArray.length(); i++) {
                 JSONObject edges = edgesArray.getJSONObject(i);
-                String malID = edges.getString("malId");
-                if (malID.equals("null")) continue;
                 String animeID = edges.getString("_id");
+                String malID = edges.getString("malId");
                 String animeName = edges.getString("name");
-                String animeEnglishName = edges.getString("englishName");
-                if (!animeEnglishName.equals("null")) {
-                    animeName = animeEnglishName;
-                }
                 String animeThumbnailUrl = edges.getString("thumbnail");
-                String lastEpisode = edges.getJSONObject("availableEpisodes")
-                        .getString("sub");
-                String url = "";
-                if (animeThumbnailUrl.contains("__Show__")) {
-                    if (animeThumbnailUrl.contains("images"))
-                        url = "https://wp.youtube-anime.com/aln.youtube-anime.com/";
-                    else {
-                        url = "https://wp.youtube-anime.com/aln.youtube-anime.com/images/";
-                    }
+                JSONArray availableEpisodesArray = edges.getJSONObject("availableEpisodesDetail")
+                        .getJSONArray("sub");
+                ArrayList<String> episodesArray = new ArrayList<>();
+                for (int j = 0; j < availableEpisodesArray.length(); j++) {
+                    episodesArray.add(availableEpisodesArray.getString(i));
                 }
                 WanPisuConstants.wanPisus.add(new WanPisu(
                         animeID,
                         animeName,
-                        url + animeThumbnailUrl,
-                        Integer.parseInt(lastEpisode),
-                        malID
+                        animeThumbnailUrl,
+                        malID,
+                        episodesArray
                 ));
             }
         } catch (JSONException e) {
@@ -96,7 +92,6 @@ public class AllAnime {
         Log.e("TAG", serverURL);
 
         ArrayList<String> servers = new ArrayList<>();
-        String apiClock = "";
         try {
 
             URL url = new URL(serverURL);
@@ -189,6 +184,7 @@ public class AllAnime {
         return decryptedString.toString();
     }
 
+    // TODO get anilist data only, later get AllAnime ID
     public static void getUsersAnime() {
         WanPisuConstants.wanPisus = new ArrayList<>();
         String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
@@ -205,8 +201,8 @@ public class AllAnime {
                     "",
                     anilist.getAnimeName(),
                     anilist.getAnimeImageUrl(),
-                    0,
-                    anilists.get(i).getMalID()
+                    anilists.get(i).getMalID(),
+                    null
             ));
         }
 

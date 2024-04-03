@@ -1,19 +1,27 @@
 package in.ghostreborn.wanpisu.model;
 
+import java.util.ArrayList;
+
 public class WanPisu {
 
     private final String animeID;
     private final String animeName;
     private final String animeThumbnailUrl;
-    private final int totalEpisodes;
     private final String malID;
+    private final ArrayList<String> availableEpisodes;
 
-    public WanPisu(String animeID, String animeName, String animeThumbnailUrl, int totalEpisodes, String malID) {
+    public WanPisu(
+            String animeID,
+            String animeName,
+            String animeThumbnailUrl,
+            String malID,
+            ArrayList<String> availableEpisodes
+    ) {
         this.animeID = animeID;
         this.animeName = animeName;
         this.animeThumbnailUrl = animeThumbnailUrl;
-        this.totalEpisodes = totalEpisodes;
         this.malID = malID;
+        this.availableEpisodes = availableEpisodes;
     }
 
     public String getAnimeID() {
@@ -28,11 +36,11 @@ public class WanPisu {
         return animeThumbnailUrl;
     }
 
-    public int getTotalEpisodes() {
-        return totalEpisodes;
-    }
-
     public String getMalID() {
         return malID;
+    }
+
+    public ArrayList<String> getAvailableEpisodes() {
+        return availableEpisodes;
     }
 }

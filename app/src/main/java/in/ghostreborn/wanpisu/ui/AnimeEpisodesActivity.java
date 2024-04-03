@@ -33,31 +33,11 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
 
     }
 
+    // TODO get total episodes in availableEpisodesDetail AllAnime API
     private void setArrayList() {
         WanPisuConstants.animeEpisodes = new ArrayList<>();
-        int totalEpisodes = WanPisuConstants.wanPisus.get(WanPisuConstants.ANIME_INDEX)
-                .getTotalEpisodes();
-        int pages;
-        int start = 0;
-        if (totalEpisodes % 100 == 0) {
-            pages = totalEpisodes / 100;
-        } else {
-            pages = (totalEpisodes / 100) + 1;
-        }
-
-        for (int i = 0; i < pages; i++) {
-            if (i<pages-1){
-                WanPisuConstants.animeEpisodes.add(
-                        (start + 1) + " - " + (start + 100)
-                );
-            }else {
-                WanPisuConstants.animeEpisodes.add(
-                        (start + 1) + " - " + totalEpisodes
-                );
-            }
-            start += 100;
-        }
-
+        int totalEpisodes = 100;
+        WanPisuConstants.animeEpisodes.add("1");
     }
 
 }
