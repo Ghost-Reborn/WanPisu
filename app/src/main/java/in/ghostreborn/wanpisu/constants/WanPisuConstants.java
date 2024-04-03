@@ -22,6 +22,9 @@ public class WanPisuConstants {
 
     public static ArrayList<Anilist> anilists;
     public static ArrayList<WanPisu> wanPisus;
+
+    public static WanPisu wanPisu;
+
     public static ArrayList<Jikan> jikans;
     public static ArrayList<JikanEpisodes> jikanEpisodes;
     public static ArrayList<String> animeEpisodes;

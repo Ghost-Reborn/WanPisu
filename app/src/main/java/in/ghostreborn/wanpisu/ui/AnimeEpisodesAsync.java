@@ -35,10 +35,10 @@ public class AnimeEpisodesAsync extends AsyncTask<Void, Void, Void> {
         // TODO fix this
         int episodes = 1;
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        AnimeEpisodesActivity.animeContainerView.setLayoutManager(linearLayoutManager);
-        AnimeEpisodesAdapter adapter = new AnimeEpisodesAdapter(episodes, context, animeID);
-        AnimeEpisodesActivity.animeContainerView.setAdapter(adapter);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+//        AnimeEpisodesActivity.animeContainerView.setLayoutManager(linearLayoutManager);
+//        AnimeEpisodesAdapter adapter = new AnimeEpisodesAdapter(episodes, context, animeID);
+//        AnimeEpisodesActivity.animeContainerView.setAdapter(adapter);
 
 
     }
