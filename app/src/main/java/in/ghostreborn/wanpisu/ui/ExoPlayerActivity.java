@@ -76,11 +76,10 @@ public class ExoPlayerActivity extends AppCompatActivity {
 
         exoPlayerProgressBar = findViewById(R.id.exoplayer_progress_bar);
 
-        Intent intent = getIntent();
-        String animeID = intent.getStringExtra("ANIME_ID");
-        int episodeNumber = intent.getIntExtra("ANIME_EPISODE_NUMBER", 1);
-
-        AnimeAsync animeAsync = new AnimeAsync(animeID, String.valueOf(episodeNumber));
+        AnimeAsync animeAsync = new AnimeAsync(
+                WanPisuConstants.ALL_ANIME_ID,
+                WanPisuConstants.ALL_ANIME_EPISODE_NUMBER
+        );
         animeAsync.execute();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -111,7 +110,7 @@ public class ExoPlayerActivity extends AppCompatActivity {
             String malID = String.valueOf(WanPisuConstants.ANIME_MAL_ID);
             String progress = String.valueOf(episodeNumber);
             String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
-            AnilistUtils.saveAnimeProgress(malID, progress, TOKEN);
+//            AnilistUtils.saveAnimeProgress(malID, progress, TOKEN);
 
             return AllAnime.getAnimeServer(animeID, episodeNumber);
         }

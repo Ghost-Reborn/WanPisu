@@ -121,10 +121,8 @@ public class AllAnime {
             }
 
             return servers;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (JSONException | IOException e) {
+            Log.e("TAG", String.format("%s", e.getMessage()));
         }
 
         return servers;
@@ -147,6 +145,7 @@ public class AllAnime {
         try {
             Response response = client.newCall(request).execute();
             String rawJSON = response.body().string();
+            Log.e("TAG", rawJSON);
             JSONObject jsonObject = new JSONObject(rawJSON);
             JSONArray sourceURLs = jsonObject.getJSONObject("data").getJSONObject("episode").getJSONArray("sourceUrls");
 

@@ -44,4 +44,7 @@ public class WanPisuConstants {
     public static final String ANIME_DROPPED = "DROPPED";
     public static final String ANIME_PAUSED = "PAUSED";
     public static final String ANIME_REPEATING = "REPEATING";
+
+    public static String ALL_ANIME_ID = "";
+    public static String ALL_ANIME_EPISODE_NUMBER = "";
 }

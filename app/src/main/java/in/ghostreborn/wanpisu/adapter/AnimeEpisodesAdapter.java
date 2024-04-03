@@ -46,6 +46,7 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ExoPlayerActivity.class);
+            WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = episodes.get(position);
             context.startActivity(intent);
         });
     }
