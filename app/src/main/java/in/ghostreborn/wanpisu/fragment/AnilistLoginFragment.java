@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import in.ghostreborn.wanpisu.MainActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
@@ -35,12 +34,12 @@ public class AnilistLoginFragment extends Fragment {
             anilistLoginButton.setOnClickListener(v -> {
                 AnilistUtils.checkAnilist(requireContext());
             });
-        }else {
+        } else {
             Executor executor = Executors.newSingleThreadExecutor();
             Runnable task = () -> {
                 WanPisuConstants.wanPisus = new ArrayList<>();
                 AllAnime.getUsersAnime();
-                AnimeSearchAdapter adapter = new AnimeSearchAdapter(requireContext(),WanPisuConstants.wanPisus);
+                AnimeSearchAdapter adapter = new AnimeSearchAdapter(requireContext(), WanPisuConstants.wanPisus);
                 requireActivity().runOnUiThread(() -> {
                     animeRecyclerView.setAdapter(adapter);
                     anilistLoginButton.setVisibility(View.GONE);

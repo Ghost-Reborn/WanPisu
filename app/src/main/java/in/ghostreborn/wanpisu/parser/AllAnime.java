@@ -44,12 +44,13 @@ public class AllAnime {
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
         String rawJson = "NULL";
 
-        try {
-            Response response = client.newCall(request).execute();
-            rawJson = response.body().string();
+        try(Response response = client.newCall(request).execute()) {
+            if (response.body() != null) {
+                rawJson = response.body().string();
+            }
             Log.e("TAG", rawJson);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("TAG", e.getCause() + "");
         }
 
 
@@ -87,7 +88,7 @@ public class AllAnime {
                 ));
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("TAG", e.getCause() + "");
         }
 
         return WanPisuConstants.wanPisus;
@@ -126,7 +127,7 @@ public class AllAnime {
                 WanPisuConstants.isHLS = true;
             }
 
-            Log.e("TAG", "HLS KEY: " + linkObject.toString());
+            Log.e("TAG", "HLS KEY: " + linkObject);
 
             return servers;
         } catch (JSONException | IOException e) {
@@ -150,26 +151,28 @@ public class AllAnime {
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
 
-        try {
-            Response response = client.newCall(request).execute();
-            String rawJSON = response.body().string();
-            Log.e("TAG", rawJSON);
-            JSONObject jsonObject = new JSONObject(rawJSON);
-            JSONArray sourceURLs = jsonObject.getJSONObject("data").getJSONObject("episode").getJSONArray("sourceUrls");
+        try(Response response = client.newCall(request).execute()) {
+            String rawJSON;
+            if (response.body() != null) {
+                rawJSON = response.body().string();
+                Log.e("TAG", rawJSON);
+                JSONObject jsonObject = new JSONObject(rawJSON);
+                JSONArray sourceURLs = jsonObject.getJSONObject("data").getJSONObject("episode").getJSONArray("sourceUrls");
 
-            for (int i = 0; i < sourceURLs.length(); i++) {
-                String decrypted = decryptAllAnimeServer(sourceURLs.getJSONObject(i).getString("sourceUrl").substring(2));
-                if (decrypted.contains("apivtwo")) {
-                    decrypted = decrypted.substring(18);
-                    Log.e("TAG", "Decrypted: " + decrypted);
-                    return decrypted;
+                for (int i = 0; i < sourceURLs.length(); i++) {
+                    String decrypted = decryptAllAnimeServer(sourceURLs.getJSONObject(i).getString("sourceUrl").substring(2));
+                    if (decrypted.contains("apivtwo")) {
+                        decrypted = decrypted.substring(18);
+                        Log.e("TAG", "Decrypted: " + decrypted);
+                        return decrypted;
+                    }
                 }
             }
 
             return "NULL";
 
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
+            Log.e("TAG", e.getCause() + "");
         }
 
         return "NULL";

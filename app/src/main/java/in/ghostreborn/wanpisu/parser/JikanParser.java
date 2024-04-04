@@ -45,7 +45,7 @@ public class JikanParser {
         } catch (MalformedURLException e) {
             Log.e("TAG", "Unable to parse URL");
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("TAG", e.getCause() + "");
         }
 
         try {
@@ -63,7 +63,7 @@ public class JikanParser {
                     synopsis
             ));
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("TAG", e.getCause() + "");
         }
     }
 
@@ -92,7 +92,7 @@ public class JikanParser {
         } catch (MalformedURLException e) {
             Log.e("TAG", "Unable to parse URL");
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("TAG", e.getCause() + "");
         }
 
         try {
@@ -107,7 +107,7 @@ public class JikanParser {
                 WanPisuConstants.jikanEpisodes.add(new JikanEpisodes(episodeName, episodeNumber));
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("TAG", e.getCause() + "");
         }
     }
 

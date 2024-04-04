@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.parser;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,8 +17,6 @@ import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Anilist;
 
 public class AnilistParser {
-
-    public static final String LOG_TAG = "WAN_PISU";
 
     // Token URLs
     public static final String CLIENT_ID = "11820";
@@ -59,7 +59,7 @@ public class AnilistParser {
             return getUserName(response.toString());
 
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
+            Log.e("TAG", e.getCause() + "");
         }
 
         return "";
@@ -75,7 +75,7 @@ public class AnilistParser {
             return viewerObject.getString("name");
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e("TAG", e.getCause() + "");
         }
         return "";
     }
@@ -148,11 +148,11 @@ public class AnilistParser {
                     WanPisuConstants.anilists.add(new Anilist(title, imageUrl, idMal, id));
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                Log.e("TAG", e.getCause() + "");
             }
 
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
+            Log.e("TAG", e.getCause() + "");
         }
 
         return anilistParsers;

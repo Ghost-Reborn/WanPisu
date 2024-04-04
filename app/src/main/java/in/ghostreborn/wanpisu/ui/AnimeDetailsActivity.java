@@ -1,12 +1,12 @@
 package in.ghostreborn.wanpisu.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
@@ -15,12 +15,12 @@ import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
 public class AnimeDetailsActivity extends AppCompatActivity {
 
-    static TextView animeDetailsTextView;
-    static ImageView animeDetailsImageView;
-    static Button animeDetailsWatchButton;
-    static TextView animeDetailsSynopsis;
-    static TextView animeDetailsPrequel;
-    static TextView animeDetailsSequel;
+    TextView animeDetailsTextView;
+    ImageView animeDetailsImageView;
+    Button animeDetailsWatchButton;
+    TextView animeDetailsSynopsis;
+    TextView animeDetailsPrequel;
+    TextView animeDetailsSequel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
