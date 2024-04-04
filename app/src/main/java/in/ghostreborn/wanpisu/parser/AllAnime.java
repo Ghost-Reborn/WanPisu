@@ -67,10 +67,17 @@ public class AllAnime {
                 String animeThumbnailUrl = edges.getString("thumbnail");
                 JSONArray availableEpisodesArray = edges.getJSONObject("availableEpisodesDetail")
                         .getJSONArray("sub");
-                ArrayList<String> episodesArray = new ArrayList<>();
+                ArrayList<String> tempArray = new ArrayList<>();
                 for (int j = 0; j < availableEpisodesArray.length(); j++) {
-                    episodesArray.add(availableEpisodesArray.getString(j));
+                    tempArray.add(availableEpisodesArray.getString(j));
                 }
+
+                // Reverse episodes array for Ascending order
+                ArrayList<String> episodesArray = new ArrayList<>();
+                for (int j = tempArray.size() - 1; j >= 0; j--) {
+                    episodesArray.add(tempArray.get(j));
+                }
+
                 WanPisuConstants.wanPisus.add(new WanPisu(
                         animeID,
                         animeName,
