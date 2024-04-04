@@ -48,7 +48,6 @@ public class AllAnime {
             if (response.body() != null) {
                 rawJson = response.body().string();
             }
-            Log.e("TAG", rawJson);
         } catch (IOException e) {
             Log.e("TAG", e.getCause() + "");
         }
