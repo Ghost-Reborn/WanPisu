@@ -19,6 +19,7 @@ import in.ghostreborn.wanpisu.ui.AnimeDetailsActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.WanPisu;
+import in.ghostreborn.wanpisu.ui.AnimeEpisodesActivity;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
 
@@ -32,7 +33,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
 
     private static View.OnClickListener listener(int position){
         return view -> {
-            Intent intent = new Intent(context, AnimeDetailsActivity.class);
+            Intent intent = new Intent(context, AnimeEpisodesActivity.class);
             WanPisuConstants.animeImageURL = animeNames.get(position).getAnimeThumbnailUrl();
             WanPisuConstants.wanPisu = animeNames.get(position);
             WanPisuConstants.ALL_ANIME_ID = animeNames.get(position).getAnimeID();
