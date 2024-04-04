@@ -15,7 +15,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import in.ghostreborn.wanpisu.ui.AnimeDetailsActivity;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.WanPisu;
@@ -24,21 +23,11 @@ import in.ghostreborn.wanpisu.ui.AnimeEpisodesActivity;
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
 
     private static ArrayList<WanPisu> animeNames;
-    private static Context context;
+    Context context;
 
-    public AnimeSearchAdapter(Context mContext,ArrayList<WanPisu> mAnimeNames) {
+    public AnimeSearchAdapter(Context mContext, ArrayList<WanPisu> mAnimeNames) {
         animeNames = mAnimeNames;
         context = mContext;
-    }
-
-    private static View.OnClickListener listener(int position){
-        return view -> {
-            Intent intent = new Intent(context, AnimeEpisodesActivity.class);
-            WanPisuConstants.animeImageURL = animeNames.get(position).getAnimeThumbnailUrl();
-            WanPisuConstants.wanPisu = animeNames.get(position);
-            WanPisuConstants.ALL_ANIME_ID = animeNames.get(position).getAnimeID();
-            context.startActivity(intent);
-        };
     }
 
     @NonNull
@@ -55,7 +44,13 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         holder.animeTextView.setText(animeNames.get(position).getAnimeName());
         Picasso.get().load(animeNames.get(position).getAnimeThumbnailUrl())
                 .into(holder.animeImageView);
-        holder.itemView.setOnClickListener(listener(position));
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, AnimeEpisodesActivity.class);
+            WanPisuConstants.animeImageURL = animeNames.get(position).getAnimeThumbnailUrl();
+            WanPisuConstants.wanPisu = animeNames.get(position);
+            WanPisuConstants.ALL_ANIME_ID = animeNames.get(position).getAnimeID();
+            context.startActivity(intent);
+        });
     }
 
     @Override

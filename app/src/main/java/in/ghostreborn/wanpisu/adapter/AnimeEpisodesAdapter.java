@@ -41,7 +41,7 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         holder.episodeNumberTextView.setText(episodes.get(position));
-        holder.episodeTitleTextView.setText("Episode " + episodes.get(position));
+        holder.episodeTitleTextView.setText(String.format("Episode %s", episodes.get(position)));
         Picasso.get().load(WanPisuConstants.wanPisu.getAnimeThumbnailUrl()).into(holder.episodeImageView);
 
         holder.itemView.setOnClickListener(view -> {
