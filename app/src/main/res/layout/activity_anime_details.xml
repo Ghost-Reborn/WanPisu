@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AnimeDetailsActivity">
+    tools:context=".ui.AnimeDetailsActivity">
 
     <TextView
         android:id="@+id/anime_details_text_view"
