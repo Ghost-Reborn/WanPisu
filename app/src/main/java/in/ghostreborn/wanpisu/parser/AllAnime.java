@@ -116,9 +116,10 @@ public class AllAnime {
             if (linkObject.has("mp4")) {
                 WanPisuConstants.isHLS = !linkObject.getBoolean("mp4");
             } else {
-                // TODO check HLS key exists in response
                 WanPisuConstants.isHLS = true;
             }
+
+            Log.e("TAG", "HLS KEY: " + linkObject.toString());
 
             return servers;
         } catch (JSONException | IOException e) {
@@ -183,7 +184,7 @@ public class AllAnime {
         return decryptedString.toString();
     }
 
-    // TODO get anilist data only, later get AllAnime ID
+    // TODO Store Anilist Data locally
     public static void getUsersAnime() {
         WanPisuConstants.wanPisus = new ArrayList<>();
         String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
