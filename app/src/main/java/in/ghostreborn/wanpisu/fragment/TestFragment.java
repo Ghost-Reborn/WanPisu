@@ -14,10 +14,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
-import in.ghostreborn.wanpisu.model.WanPisu;
-import in.ghostreborn.wanpisu.parser.AllAnime;
-import in.ghostreborn.wanpisu.parser.MangaTest;
+import in.ghostreborn.wanpisu.model.AllManga;
+import in.ghostreborn.wanpisu.model.Manga;
+import in.ghostreborn.wanpisu.parser.MangaParser;
 
 public class TestFragment extends Fragment {
 
@@ -29,8 +28,15 @@ public class TestFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            String test = MangaTest.testManga("One Piece");
-            requireActivity().runOnUiThread(() -> testText.setText(test));
+            ArrayList<AllManga> allMangas = MangaParser.searchManga("One Piece");
+            requireActivity().runOnUiThread(() -> {
+                for (int i=0; i< allMangas.size(); i++){
+                    AllManga allManga = allMangas.get(i);
+                    testText.append("\n\nName: " + allManga.getName());
+                    testText.append("\nID: " + allManga.getId());
+                    testText.append("\nThumbnail: " + allManga.getThumbnail());
+                }
+            });
         };
         executor.execute(task);
 
