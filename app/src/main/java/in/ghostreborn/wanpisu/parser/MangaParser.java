@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.AllManga;
 import in.ghostreborn.wanpisu.model.Manga;
 import okhttp3.OkHttpClient;
@@ -38,9 +39,9 @@ public class MangaParser {
 
     public static String testManga(String mangaName) {
 
-        /**
-         * Source Names
-         * YoutubeAnime - https://ytimgf.youtube-anime.com/
+        /*
+          Source Names
+          YoutubeAnime - https://ytimgf.youtube-anime.com/
          */
 
         OkHttpClient client = new OkHttpClient();
@@ -72,7 +73,7 @@ public class MangaParser {
 
     }
 
-    public static ArrayList<AllManga> searchManga(String mangaName) {
+    public static void searchManga(String mangaName) {
         // For searching
         String baseUrl = "https://api.allanime.day/api";
         String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"search\":{\"query\":\""
@@ -84,7 +85,7 @@ public class MangaParser {
                 "}}}");
 
         String rawJSON = connectAndGetJSON(queryUrl);
-        ArrayList<AllManga> allMangas = new ArrayList<>();
+        WanPisuConstants.allMangas = new ArrayList<>();
         try {
             JSONObject rawObject = new JSONObject(rawJSON);
             JSONArray edgesArray = rawObject
@@ -98,14 +99,12 @@ public class MangaParser {
                 String id = edges.getString("_id");
                 String thumbnail = "https://wp.youtube-anime.com/aln.youtube-anime.com/" +
                         edges.getString("thumbnail");
-                allMangas.add(new AllManga(name, id, thumbnail));
+                WanPisuConstants.allMangas.add(new AllManga(name, id, thumbnail));
             }
 
         } catch (JSONException e) {
             Log.e("TAG", e.getCause() + "");
         }
-
-        return allMangas;
 
     }
 

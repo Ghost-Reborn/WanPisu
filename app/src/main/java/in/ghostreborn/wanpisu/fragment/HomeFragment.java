@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        RecyclerView animeContainerView = view.findViewById(R.id.home_container);
+        RecyclerView animeContainerView = view.findViewById(R.id.manga_container);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
         animeContainerView.setLayoutManager(gridLayoutManager);
 
@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
         executor.execute(task);
 
         // Search anime
-        SearchView animeSearchView = view.findViewById(R.id.anime_search_view);
+        SearchView animeSearchView = view.findViewById(R.id.manga_search_view);
         animeSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

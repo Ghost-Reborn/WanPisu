@@ -7,18 +7,18 @@
     tools:context=".fragment.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/home_container"
+        android:id="@+id/manga_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/anime_search_view"
+        app:layout_constraintTop_toBottomOf="@+id/manga_search_view"
         app:layout_constraintVertical_bias="0.0" />
 
     <SearchView
-        android:id="@+id/anime_search_view"
+        android:id="@+id/manga_search_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:iconifiedByDefault="false"
