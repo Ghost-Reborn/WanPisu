@@ -23,10 +23,8 @@ import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<String> episodes;
-    public AnimeEpisodesAdapter (Context context, ArrayList<String> episodes){
+    public AnimeEpisodesAdapter (Context context){
         this.context = context;
-        this.episodes = episodes;
     }
 
     @NonNull
@@ -40,20 +38,28 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.episodeNumberTextView.setText(episodes.get(position));
-        holder.episodeTitleTextView.setText(String.format("Episode %s", episodes.get(position)));
+        ArrayList<String> episodes = WanPisuConstants.wanPisu.getAvailableEpisodes();
+
+        String episodeText = Integer.parseInt(episodes.get(position)) + WanPisuConstants.ALL_ANIME_EPISODE_ADD + "";
+
+        holder.episodeNumberTextView.setText(episodeText);
+        holder.episodeTitleTextView.setText(String.format("Episode %s", episodeText));
         Picasso.get().load(WanPisuConstants.wanPisu.getAnimeThumbnailUrl()).into(holder.episodeImageView);
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ExoPlayerActivity.class);
-            WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = episodes.get(position);
+            WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = episodeText;
             context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return WanPisuConstants.wanPisu.getAvailableEpisodes().size();
+        if ((WanPisuConstants.ALL_ANIME_EPISODE_ADD + 100) < WanPisuConstants.wanPisu.getAvailableEpisodes().size()){
+            return 100;
+        }else {
+            return WanPisuConstants.wanPisu.getAvailableEpisodes().size() % 100;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
