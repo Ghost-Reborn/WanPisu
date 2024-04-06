@@ -38,7 +38,6 @@ public class MangaParser {
     }
 
     public static String testManga(String mangaName) {
-
         /*
           Source Names
           YoutubeAnime - https://ytimgf.youtube-anime.com/
