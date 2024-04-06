@@ -9,9 +9,15 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/menu_home"
-        android:icon="@drawable/home"
-        android:title="@string/home"
+        android:id="@+id/menu_anime"
+        android:icon="@drawable/clapperboard"
+        android:title="@string/anime"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_manga"
+        android:icon="@drawable/open_book"
+        android:title="@string/manga"
         app:showAsAction="ifRoom"/>
 
     <item

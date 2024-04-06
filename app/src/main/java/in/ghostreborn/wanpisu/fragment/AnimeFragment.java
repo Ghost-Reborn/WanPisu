@@ -19,12 +19,12 @@ import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.model.WanPisu;
 import in.ghostreborn.wanpisu.parser.AllAnime;
 
-public class HomeFragment extends Fragment {
+public class AnimeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_anime, container, false);
         RecyclerView animeContainerView = view.findViewById(R.id.manga_container);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
         animeContainerView.setLayoutManager(gridLayoutManager);
