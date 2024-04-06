@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.AllManga;
+import in.ghostreborn.wanpisu.ui.MangaActivity;
 
 public class MangaSearchAdapter extends RecyclerView.Adapter<MangaSearchAdapter.ViewHolder> {
 
@@ -34,6 +37,14 @@ public class MangaSearchAdapter extends RecyclerView.Adapter<MangaSearchAdapter.
         holder.mangaTextView.setText(allManga.getName());
         Picasso.get().load(allManga.getThumbnail())
                 .into(holder.mangaImageView);
+        Context context = holder.itemView.getContext();
+        holder.itemView.setOnClickListener(v -> {
+            WanPisuConstants.MANGA_ID = allManga.getId();
+            context.startActivity(new Intent(
+                    context,
+                    MangaActivity.class
+            ));
+        });
     }
 
     @Override
