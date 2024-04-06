@@ -7,16 +7,49 @@
     android:layout_height="match_parent"
     tools:context=".ui.MangaActivity">
 
-    <ImageView
-        android:id="@+id/manga_image_view"
+    <com.otaliastudios.zoom.ZoomLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scrollbars="vertical|horizontal"
+        app:alignment="center"
+        app:animationDuration="280"
+        app:flingEnabled="true"
+        app:hasClickableChildren="false"
+        app:horizontalPanEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/next_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher" />
+        app:maxZoom="2.5"
+        app:maxZoomType="zoom"
+        app:minZoom="0.7"
+        app:minZoomType="zoom"
+        app:oneFingerScrollEnabled="true"
+        app:overPinchable="true"
+        app:overScrollHorizontal="true"
+        app:overScrollVertical="true"
+        app:scrollEnabled="true"
+        app:threeFingersScrollEnabled="true"
+        app:transformation="centerInside"
+        app:transformationGravity="auto"
+        app:twoFingersScrollEnabled="true"
+        app:verticalPanEnabled="true"
+        app:zoomEnabled="true">
+
+        <ImageView
+            android:id="@+id/manga_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="matrix"
+            app:layout_constraintBottom_toTopOf="@+id/next_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher" />
+
+    </com.otaliastudios.zoom.ZoomLayout>
 
     <Button
         android:id="@+id/next_button"
