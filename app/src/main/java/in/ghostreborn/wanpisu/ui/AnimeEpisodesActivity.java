@@ -39,7 +39,7 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
         if(size %100 == 0){
             return size / 100;
         }else {
-            return (int)Math.floor(size / 100) + 1;
+            return (int) (double) (size / 100) + 1;
         }
     }
 
