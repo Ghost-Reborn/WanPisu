@@ -20,6 +20,8 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anime_episodes);
 
+        WanPisuConstants.ALL_ANIME_EPISODE_ADD = 0;
+
         RecyclerView animeContainerView = findViewById(R.id.anime_episode_recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         animeContainerView.setLayoutManager(manager);
