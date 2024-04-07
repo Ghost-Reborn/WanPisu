@@ -96,7 +96,6 @@ public class AllAnime {
 
     public static ArrayList<String> getAnimeServer(String animeID, String episodeNumber) {
         String serverURL = "https://embed.ssbcontent.site/apivtwo/clock.json?id=" + decryptAllAnime(animeID, episodeNumber);
-        Log.e("TAG", serverURL);
 
         ArrayList<String> servers = new ArrayList<>();
         try {
@@ -126,8 +125,6 @@ public class AllAnime {
                 WanPisuConstants.isHLS = true;
             }
 
-            Log.e("TAG", "HLS KEY: " + linkObject);
-
             return servers;
         } catch (JSONException | IOException e) {
             Log.e("TAG", String.format("%s", e.getMessage()));
@@ -154,7 +151,6 @@ public class AllAnime {
             String rawJSON;
             if (response.body() != null) {
                 rawJSON = response.body().string();
-                Log.e("TAG", rawJSON);
                 JSONObject jsonObject = new JSONObject(rawJSON);
                 JSONArray sourceURLs = jsonObject.getJSONObject("data").getJSONObject("episode").getJSONArray("sourceUrls");
 
@@ -162,7 +158,6 @@ public class AllAnime {
                     String decrypted = decryptAllAnimeServer(sourceURLs.getJSONObject(i).getString("sourceUrl").substring(2));
                     if (decrypted.contains("apivtwo")) {
                         decrypted = decrypted.substring(18);
-                        Log.e("TAG", "Decrypted: " + decrypted);
                         return decrypted;
                     }
                 }

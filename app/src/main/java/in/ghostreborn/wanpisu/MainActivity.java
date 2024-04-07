@@ -21,11 +21,12 @@ import in.ghostreborn.wanpisu.fragment.MangaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    // TODO group anime episodes by 100 and show them as pages
     // TODO Fix anilist user anime section
     // TODO Fix login button showing even though it is already logged in
     // TODO Show episode titles using jikan
     // TODO Show a way to add anime to anilist with malID
+    // TODO show multiple servers
+    // TODO fix playback of modern ts files
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

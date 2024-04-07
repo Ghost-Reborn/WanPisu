@@ -17,13 +17,13 @@ import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.model.WanPisu;
 import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
 
     Context context;
-    public AnimeEpisodesAdapter (Context context){
+
+    public AnimeEpisodesAdapter(Context context) {
         this.context = context;
     }
 
@@ -55,9 +55,13 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
     @Override
     public int getItemCount() {
-        if ((WanPisuConstants.ALL_ANIME_EPISODE_ADD + 100) < WanPisuConstants.wanPisu.getAvailableEpisodes().size()){
+        if ((WanPisuConstants.ALL_ANIME_EPISODE_ADD + 100) < WanPisuConstants.wanPisu.getAvailableEpisodes().size()) {
             return 100;
-        }else {
+        } else {
+            int start = Integer.parseInt(WanPisuConstants.wanPisu.getAvailableEpisodes().get(0));
+            if (start == 0) {
+                return (WanPisuConstants.wanPisu.getAvailableEpisodes().size() % 100) - 1;
+            }
             return WanPisuConstants.wanPisu.getAvailableEpisodes().size() % 100;
         }
     }
