@@ -21,7 +21,7 @@ import in.ghostreborn.wanpisu.fragment.MangaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    // TODO find a way to search AllAnime ID though malID, anilist always has malID
+    // TODO Reduce loading time of anilist fragment or show a progress
     // TODO store anilist locally and show a button to refresh it
     // TODO Store AllAnime ID when anilist fragment doesn't have one
     // TODO Fix login button showing even though it is already logged in
