@@ -21,7 +21,6 @@ import in.ghostreborn.wanpisu.fragment.MangaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    // TODO Reduce loading time of anilist fragment or show a progress
     // TODO store anilist locally and show a button to refresh it
     // TODO Store AllAnime ID when anilist fragment doesn't have one
     // TODO Fix login button showing even though it is already logged in
@@ -29,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     // TODO Show a way to add anime to anilist with malID
     // TODO show multiple servers
     // TODO fix playback of modern ts files
+    // TODO show selection of manga chapters
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
