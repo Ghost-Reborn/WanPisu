@@ -48,7 +48,7 @@ public class AnilistLoginFragment extends Fragment {
                                 WanPisuConstants.ANIME_CURRENT,
                                 TOKEN
                         );
-                AnilistAdapter adapter = new AnilistAdapter(requireContext(), animeRecyclerView, getActivity());
+                AnilistAdapter adapter = new AnilistAdapter(requireContext(), getActivity());
                 requireActivity().runOnUiThread(() -> {
                     animeRecyclerView.setAdapter(adapter);
                     anilistLoginButton.setVisibility(View.GONE);

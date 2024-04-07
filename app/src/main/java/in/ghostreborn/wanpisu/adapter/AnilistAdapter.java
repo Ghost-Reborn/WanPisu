@@ -29,12 +29,10 @@ import in.ghostreborn.wanpisu.ui.AnimeEpisodesActivity;
 public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHolder> {
 
     Context context;
-    RecyclerView animeRecyclerView;
     Activity activity;
 
-    public AnilistAdapter(Context mContext, RecyclerView animeRecyclerView, Activity activity) {
+    public AnilistAdapter(Context mContext, Activity activity) {
         context = mContext;
-        this.animeRecyclerView = animeRecyclerView;
         this.activity = activity;
     }
 
@@ -60,12 +58,12 @@ public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHold
             }else {
                 Executor executor = Executors.newSingleThreadExecutor();
                 Runnable task = () -> {
-                    ArrayList<WanPisu> animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(
-                            anilist.getAnimeName()
-                    );
-                    AnimeSearchAdapter adapter = new AnimeSearchAdapter(holder.itemView.getContext(), animeDetailsArray);
+                    String allAnimeID = AllAnime.getAllAnimeID(anilist.getAnimeName(), anilist.getMalID());
                     activity.runOnUiThread(() -> {
-                        animeRecyclerView.setAdapter(adapter);
+                        WanPisuConstants.animeImageURL = anilist.getAnimeImageUrl();
+                        WanPisuConstants.ALL_ANIME_ID = allAnimeID;
+                        Intent intent = new Intent(context, AnimeEpisodesActivity.class);
+                        context.startActivity(intent);
                     });
                 };
                 executor.execute(task);

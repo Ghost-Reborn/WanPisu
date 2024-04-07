@@ -9,14 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
-import in.ghostreborn.wanpisu.model.WanPisu;
-import in.ghostreborn.wanpisu.parser.AllAnime;
 import in.ghostreborn.wanpisu.parser.TestParser;
 
 public class TestFragment extends Fragment {
@@ -31,7 +27,7 @@ public class TestFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            String test = TestParser.parseAnimeIDAnimeNameAnimeThumbnail("");
+            String test = TestParser.getAllAnimeID("One Piece", "21");
             requireActivity().runOnUiThread(() -> {
                 testText.setText(test);
             });
