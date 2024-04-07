@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO store anilist locally and show a button to refresh it
     // TODO Store AllAnime ID when anilist fragment doesn't have one
-    // TODO Fix login button showing even though it is already logged in
     // TODO Show episode titles using jikan
     // TODO Show a way to add anime to anilist with malID
     // TODO show multiple servers
