@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,6 +29,7 @@ public class AnilistLoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_anilist_login, container, false);
         Button anilistLoginButton = view.findViewById(R.id.anilist_login_button);
         RecyclerView animeRecyclerView = view.findViewById(R.id.anilist_recycler);
+        ProgressBar anilistProgressBar = view.findViewById(R.id.anilist_progress_bar);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
         animeRecyclerView.setLayoutManager(gridLayoutManager);
         if (!AnilistUtils.checkAnilist(requireContext())) {
@@ -46,7 +48,7 @@ public class AnilistLoginFragment extends Fragment {
                         WanPisuConstants.ANIME_CURRENT,
                         TOKEN
                 );
-                AnilistAdapter adapter = new AnilistAdapter(requireContext(), getActivity());
+                AnilistAdapter adapter = new AnilistAdapter(requireContext(), getActivity(), anilistProgressBar);
                 requireActivity().runOnUiThread(() -> {
                     animeRecyclerView.setAdapter(adapter);
                     anilistLoginButton.setVisibility(View.GONE);

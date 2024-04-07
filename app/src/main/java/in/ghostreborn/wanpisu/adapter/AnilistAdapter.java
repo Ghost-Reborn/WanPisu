@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,26 +15,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Anilist;
-import in.ghostreborn.wanpisu.model.WanPisu;
 import in.ghostreborn.wanpisu.parser.AllAnime;
-import in.ghostreborn.wanpisu.parser.AnilistParser;
 import in.ghostreborn.wanpisu.ui.AnimeEpisodesActivity;
 
 public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHolder> {
 
     Context context;
     Activity activity;
+    ProgressBar anilistProgressBar;
 
-    public AnilistAdapter(Context mContext, Activity activity) {
+    public AnilistAdapter(Context mContext, Activity activity, ProgressBar anilistProgressBar) {
         context = mContext;
         this.activity = activity;
+        this.anilistProgressBar = anilistProgressBar;
     }
 
     @NonNull
@@ -56,12 +56,14 @@ public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHold
                 Intent intent = new Intent(context, AnimeEpisodesActivity.class);
                 context.startActivity(intent);
             }else {
+                anilistProgressBar.setVisibility(View.VISIBLE);
                 Executor executor = Executors.newSingleThreadExecutor();
                 Runnable task = () -> {
                     String allAnimeID = AllAnime.getAllAnimeID(anilist.getAnimeName(), anilist.getMalID());
                     activity.runOnUiThread(() -> {
                         WanPisuConstants.animeImageURL = anilist.getAnimeImageUrl();
                         WanPisuConstants.ALL_ANIME_ID = allAnimeID;
+                        anilistProgressBar.setVisibility(View.GONE);
                         Intent intent = new Intent(context, AnimeEpisodesActivity.class);
                         context.startActivity(intent);
                     });
