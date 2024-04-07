@@ -16,10 +16,7 @@ import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnilistAdapter;
-import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.model.Anilist;
-import in.ghostreborn.wanpisu.parser.AllAnime;
 import in.ghostreborn.wanpisu.parser.AnilistParser;
 import in.ghostreborn.wanpisu.utils.AnilistUtils;
 
@@ -34,6 +31,7 @@ public class AnilistLoginFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
         animeRecyclerView.setLayoutManager(gridLayoutManager);
         if (!AnilistUtils.checkAnilist(requireContext())) {
+            anilistLoginButton.setVisibility(View.VISIBLE);
             anilistLoginButton.setOnClickListener(v -> {
                 AnilistUtils.checkAnilist(requireContext());
             });
@@ -44,10 +42,10 @@ public class AnilistLoginFragment extends Fragment {
                 String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
                 String userName = WanPisuConstants.preferences.getString(WanPisuConstants.ANILIST_USER_NAME, "");
                 AnilistParser.getAnimeDetails(
-                                userName,
-                                WanPisuConstants.ANIME_CURRENT,
-                                TOKEN
-                        );
+                        userName,
+                        WanPisuConstants.ANIME_CURRENT,
+                        TOKEN
+                );
                 AnilistAdapter adapter = new AnilistAdapter(requireContext(), getActivity());
                 requireActivity().runOnUiThread(() -> {
                     animeRecyclerView.setAdapter(adapter);
