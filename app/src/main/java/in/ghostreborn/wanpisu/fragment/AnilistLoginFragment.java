@@ -15,9 +15,12 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.adapter.AnilistAdapter;
 import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.model.Anilist;
 import in.ghostreborn.wanpisu.parser.AllAnime;
+import in.ghostreborn.wanpisu.parser.AnilistParser;
 import in.ghostreborn.wanpisu.utils.AnilistUtils;
 
 public class AnilistLoginFragment extends Fragment {
@@ -38,8 +41,14 @@ public class AnilistLoginFragment extends Fragment {
             Executor executor = Executors.newSingleThreadExecutor();
             Runnable task = () -> {
                 WanPisuConstants.wanPisus = new ArrayList<>();
-                AllAnime.getUsersAnime();
-                AnimeSearchAdapter adapter = new AnimeSearchAdapter(requireContext(), WanPisuConstants.wanPisus);
+                String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
+                String userName = WanPisuConstants.preferences.getString(WanPisuConstants.ANILIST_USER_NAME, "");
+                AnilistParser.getAnimeDetails(
+                                userName,
+                                WanPisuConstants.ANIME_CURRENT,
+                                TOKEN
+                        );
+                AnilistAdapter adapter = new AnilistAdapter(requireContext(), animeRecyclerView, getActivity());
                 requireActivity().runOnUiThread(() -> {
                     animeRecyclerView.setAdapter(adapter);
                     anilistLoginButton.setVisibility(View.GONE);

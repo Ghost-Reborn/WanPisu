@@ -193,19 +193,19 @@ public class AllAnime {
         WanPisuConstants.wanPisus = new ArrayList<>();
         String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
         String userName = WanPisuConstants.preferences.getString(WanPisuConstants.ANILIST_USER_NAME, "");
-        ArrayList<Anilist> anilists = AnilistParser
+        AnilistParser
                 .getAnimeDetails(
                         userName,
                         WanPisuConstants.ANIME_CURRENT,
                         TOKEN
                 );
-        for (int i = 0; i < anilists.size(); i++) {
-            Anilist anilist = anilists.get(i);
+        for (int i = 0; i < WanPisuConstants.anilists.size(); i++) {
+            Anilist anilist = WanPisuConstants.anilists.get(i);
             WanPisuConstants.wanPisus.add(new WanPisu(
                     "",
                     anilist.getAnimeName(),
                     anilist.getAnimeImageUrl(),
-                    anilists.get(i).getMalID(),
+                    WanPisuConstants.anilists.get(i).getMalID(),
                     null
             ));
         }

@@ -6,12 +6,20 @@ public class Anilist {
     String animeImageUrl;
     String malID;
     String anilistID;
+    String allAnimeID;
 
-    public Anilist(String animeName, String animeImageUrl, String malID, String anilistID){
+    public Anilist(
+            String animeName,
+            String animeImageUrl,
+            String malID,
+            String anilistID,
+            String allAnimeID
+    ){
         this.animeName = animeName;
         this.animeImageUrl = animeImageUrl;
         this.malID = malID;
         this.anilistID = anilistID;
+        this.allAnimeID = allAnimeID;
     }
 
     public String getAnimeImageUrl() {
@@ -28,5 +36,9 @@ public class Anilist {
 
     public String getAnilistID() {
         return anilistID;
+    }
+
+    public String getAllAnimeID() {
+        return allAnimeID;
     }
 }

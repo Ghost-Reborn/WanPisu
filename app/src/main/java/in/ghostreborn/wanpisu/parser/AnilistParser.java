@@ -80,8 +80,7 @@ public class AnilistParser {
         return "";
     }
 
-    public static ArrayList<Anilist> getAnimeDetails(String userName, String animeStatus, String ACCESS_TOKEN) {
-        ArrayList<Anilist> anilistParsers = new ArrayList<>();
+    public static void getAnimeDetails(String userName, String animeStatus, String ACCESS_TOKEN) {
         WanPisuConstants.anilists = new ArrayList<>();
         String QUERY = "query{" +
                 "MediaListCollection(userName: \"" + userName + "\", type: ANIME, status: " + animeStatus + "){" +
@@ -131,7 +130,7 @@ public class AnilistParser {
                         .getJSONObject("data")
                         .getJSONObject("MediaListCollection")
                         .getJSONArray("lists");
-                if (listArray.length() == 0){return anilistParsers;}
+                if (listArray.length() == 0){return;}
                 JSONArray entriesArray = listArray.getJSONObject(0)
                         .getJSONArray("entries");
                 for (int i = 0; i < entriesArray.length(); i++) {
@@ -144,8 +143,15 @@ public class AnilistParser {
                             .getString("english");
                     String imageUrl = mediaObject.getJSONObject("coverImage")
                             .getString("extraLarge");
-                    anilistParsers.add(new Anilist(title, imageUrl, idMal, id));
-                    WanPisuConstants.anilists.add(new Anilist(title, imageUrl, idMal, id));
+                    WanPisuConstants.anilists.add(
+                            new Anilist(
+                                    title,
+                                    imageUrl,
+                                    idMal,
+                                    id,
+                                    ""
+                            )
+                    );
                 }
             } catch (JSONException e) {
                 Log.e("TAG", e.getCause() + "");
@@ -154,8 +160,6 @@ public class AnilistParser {
         } catch (IOException | JSONException e) {
             Log.e("TAG", e.getCause() + "");
         }
-
-        return anilistParsers;
 
     }
 
