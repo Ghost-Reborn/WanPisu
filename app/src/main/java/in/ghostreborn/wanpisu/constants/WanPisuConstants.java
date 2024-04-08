@@ -48,6 +48,14 @@ public class WanPisuConstants {
     public static final String ANIME_PAUSED = "PAUSED";
     public static final String ANIME_REPEATING = "REPEATING";
 
+    // Database
+    public static final String TABLE_NAME = "anilist";
+    public static final String COLUMN_ANIME_ANILIST_ID = "anime_anilist_id";
+    public static final String COLUMN_ALL_ANIME_ID = "all_anime_id";
+    public static final String COLUMN_ANIME_MAL_ID = "anime_mal_id";
+    public static final String COLUMN_ANIME_NAME = "anime_name";
+    public static final String COLUMN_ANIME_IMAGE_URL = "anime_image_url";
+
     public static String ALL_ANIME_ID = "";
     public static String ALL_ANIME_EPISODE_NUMBER = "";
     public static String MANGA_ID = "";
