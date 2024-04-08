@@ -1,8 +1,11 @@
 package in.ghostreborn.wanpisu.adapter;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,7 @@ import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.database.AnilistDatabaseHelper;
 import in.ghostreborn.wanpisu.model.Anilist;
 import in.ghostreborn.wanpisu.parser.AllAnime;
 import in.ghostreborn.wanpisu.ui.AnimeEpisodesActivity;
@@ -61,6 +65,7 @@ public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHold
                 Runnable task = () -> {
                     String allAnimeID = AllAnime.getAllAnimeID(anilist.getAnimeName(), anilist.getMalID());
                     activity.runOnUiThread(() -> {
+                        saveAllAnimeID(context,position,allAnimeID,anilist.getMalID());
                         WanPisuConstants.animeImageURL = anilist.getAnimeImageUrl();
                         WanPisuConstants.ALL_ANIME_ID = allAnimeID;
                         anilistProgressBar.setVisibility(View.GONE);
@@ -89,4 +94,14 @@ public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHold
             animeImageView = itemView.findViewById(R.id.anime_image_view);
         }
     }
+
+    private void saveAllAnimeID(Context context, int pos, String allAnimeID, String malID){
+        AnilistDatabaseHelper helper = new AnilistDatabaseHelper(context);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(WanPisuConstants.COLUMN_ALL_ANIME_ID, allAnimeID);
+        long test = db.update(WanPisuConstants.TABLE_NAME, contentValues, WanPisuConstants.COLUMN_ANIME_MAL_ID + "=?", new String[]{malID});
+        Log.e("TAG", "Updated at: " + test);
+    }
+
 }

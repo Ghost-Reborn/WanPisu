@@ -149,7 +149,8 @@ public class AnilistParser {
                                     imageUrl,
                                     idMal,
                                     id,
-                                    ""
+                                    "",
+
                             )
                     );
                 }

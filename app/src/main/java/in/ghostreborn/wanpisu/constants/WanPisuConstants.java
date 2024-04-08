@@ -55,6 +55,7 @@ public class WanPisuConstants {
     public static final String COLUMN_ANIME_MAL_ID = "anime_mal_id";
     public static final String COLUMN_ANIME_NAME = "anime_name";
     public static final String COLUMN_ANIME_IMAGE_URL = "anime_image_url";
+    public static final String COLUMN_ANIME_AVAILABLE_EPISODES = "anime_available_episodes";
 
     public static String ALL_ANIME_ID = "";
     public static String ALL_ANIME_EPISODE_NUMBER = "";

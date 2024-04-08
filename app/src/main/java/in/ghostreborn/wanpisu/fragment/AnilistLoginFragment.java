@@ -2,6 +2,7 @@ package in.ghostreborn.wanpisu.fragment;
 
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ALL_ANIME_ID;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ANIME_ANILIST_ID;
+import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ANIME_AVAILABLE_EPISODES;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ANIME_IMAGE_URL;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ANIME_MAL_ID;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ANIME_NAME;
@@ -22,6 +23,8 @@ import android.widget.ProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
@@ -94,6 +97,7 @@ public class AnilistLoginFragment extends Fragment {
             contentValues.put(COLUMN_ANIME_MAL_ID, anilist.getMalID());
             contentValues.put(COLUMN_ANIME_NAME, anilist.getAnimeName());
             contentValues.put(COLUMN_ANIME_IMAGE_URL, anilist.getAnimeImageUrl());
+            contentValues.put(COLUMN_ANIME_AVAILABLE_EPISODES, anilist.getEpisodesString());
             long test = db.insert(TABLE_NAME, null, contentValues);
             Log.e("TAG", "Anime inserted at: " + test);
         }
@@ -116,12 +120,15 @@ public class AnilistLoginFragment extends Fragment {
                 String malID = cursor.getString(2);
                 String animeName = cursor.getString(3);
                 String animeImageURL = cursor.getString(4);
+                String availableEpisodes = cursor.getString(5);
+                // TODO scrape available episodes from string
                 WanPisuConstants.anilists.add(new Anilist(
                         animeName,
                         animeImageURL,
                         malID,
                         anilistID,
-                        allAnimeID
+                        allAnimeID,
+                        availableEpisodes
                 ));
             } while (cursor.moveToNext());
         }

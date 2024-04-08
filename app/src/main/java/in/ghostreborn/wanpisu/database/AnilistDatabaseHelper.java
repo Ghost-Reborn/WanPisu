@@ -2,6 +2,7 @@ package in.ghostreborn.wanpisu.database;
 
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ALL_ANIME_ID;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ANIME_ANILIST_ID;
+import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ANIME_AVAILABLE_EPISODES;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ANIME_IMAGE_URL;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ANIME_MAL_ID;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.COLUMN_ANIME_NAME;
@@ -23,7 +24,8 @@ public class AnilistDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_ALL_ANIME_ID + " TEXT," +
             COLUMN_ANIME_MAL_ID + " TEXT," +
             COLUMN_ANIME_NAME + " TEXT," +
-            COLUMN_ANIME_IMAGE_URL + " TEXT" +
+            COLUMN_ANIME_IMAGE_URL + " TEXT," +
+            COLUMN_ANIME_AVAILABLE_EPISODES + " TEXT" +
             ")";
 
     public AnilistDatabaseHelper(Context context) {

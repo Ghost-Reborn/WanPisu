@@ -34,14 +34,11 @@ public class AnimeGroupAdapter extends RecyclerView.Adapter<AnimeGroupAdapter.Vi
     public void onBindViewHolder(@NonNull AnimeGroupAdapter.ViewHolder holder, int position) {
         String episode = (position + 1) + "";
         holder.animeEpisodeGroupTextView.setText(episode);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WanPisuConstants.ALL_ANIME_EPISODE_ADD = holder.getAdapterPosition() * 100;
-                LinearLayoutManager manager = new LinearLayoutManager(holder.itemView.getContext());
-                recyclerView.setLayoutManager(manager);
-                recyclerView.setAdapter(new AnimeEpisodesAdapter(holder.itemView.getContext()));
-            }
+        holder.itemView.setOnClickListener(v -> {
+            WanPisuConstants.ALL_ANIME_EPISODE_ADD = holder.getAdapterPosition() * 100;
+            LinearLayoutManager manager = new LinearLayoutManager(holder.itemView.getContext());
+            recyclerView.setLayoutManager(manager);
+            recyclerView.setAdapter(new AnimeEpisodesAdapter(holder.itemView.getContext()));
         });
     }
 
