@@ -21,7 +21,9 @@ import in.ghostreborn.wanpisu.fragment.MangaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    // TODO store anilist locally and show a button to refresh it
+    // TODO do major refactor of code
+
+    // TODO show a button to refresh Anilist from server
     // TODO Store AllAnime ID when anilist fragment doesn't have one
     // TODO Show episode titles using jikan
     // TODO Show a way to add anime to anilist with malID
