@@ -144,6 +144,8 @@ public class AnilistParser {
                     String imageUrl = mediaObject.getJSONObject("coverImage")
                             .getString("extraLarge");
                     String allAnimeID = AllAnime.getAllAnimeID(title, idMal);
+
+
                     String availableEpisodes = AllAnime.getAvailableEpisodes(
                             title,
                             allAnimeID
