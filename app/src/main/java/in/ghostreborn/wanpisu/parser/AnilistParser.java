@@ -143,14 +143,19 @@ public class AnilistParser {
                             .getString("english");
                     String imageUrl = mediaObject.getJSONObject("coverImage")
                             .getString("extraLarge");
+                    String allAnimeID = AllAnime.getAllAnimeID(title, idMal);
+                    String availableEpisodes = AllAnime.getAvailableEpisodes(
+                            title,
+                            allAnimeID
+                    );
                     WanPisuConstants.anilists.add(
                             new Anilist(
                                     title,
                                     imageUrl,
                                     idMal,
                                     id,
-                                    "",
-
+                                    allAnimeID,
+                                    availableEpisodes
                             )
                     );
                 }

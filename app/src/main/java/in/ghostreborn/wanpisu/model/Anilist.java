@@ -1,7 +1,5 @@
 package in.ghostreborn.wanpisu.model;
 
-import java.util.ArrayList;
-
 public class Anilist {
 
     String animeName;

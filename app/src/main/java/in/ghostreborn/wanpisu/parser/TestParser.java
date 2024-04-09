@@ -15,14 +15,14 @@ import okhttp3.Response;
 
 public class TestParser {
 
-    public static String getAllAnimeID(String anime, String malID) {
+    public static String getAllAnimeID(String anime, String allAnimeID) {
 
         OkHttpClient client = new OkHttpClient();
 
         String baseUrl = "https://api.allanime.day/api";
         String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"" + anime + "\"},\"limit\":39,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}") + "&query=" + Uri.encode("query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{" +
                 "_id," +
-                "malId" +
+                "availableEpisodesDetail" +
                 "}}}");
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
@@ -37,21 +37,18 @@ public class TestParser {
         }
 
         try {
-            JSONObject rawObject = new JSONObject(rawJson);
-            JSONArray edgesArray = rawObject
+            JSONArray edgesArray = new JSONObject(rawJson)
                     .getJSONObject("data")
                     .getJSONObject("shows")
                     .getJSONArray("edges");
-
             for (int i = 0; i < edgesArray.length(); i++) {
-                JSONObject edge = edgesArray.getJSONObject(i);
-                String malId = edge.getString("malId");
-                if (malId.equals(malID)){
-                    return edge.getString("_id");
+                JSONObject edges = edgesArray.getJSONObject(i);
+                String animeID = edges.getString("_id");
+                if (animeID.equals(allAnimeID)){
+                    return edges.getJSONObject("availableEpisodesDetail")
+                            .getString("sub");
                 }
             }
-
-            return edgesArray.toString();
         } catch (JSONException e) {
             Log.e("TAG", e.getCause() + "");
         }
