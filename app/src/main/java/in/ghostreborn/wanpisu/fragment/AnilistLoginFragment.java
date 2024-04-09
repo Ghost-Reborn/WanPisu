@@ -121,6 +121,7 @@ public class AnilistLoginFragment extends Fragment {
                 String animeName = cursor.getString(3);
                 String animeImageURL = cursor.getString(4);
                 String availableEpisodes = cursor.getString(5);
+
                 // TODO scrape available episodes from string
                 WanPisuConstants.anilists.add(new Anilist(
                         animeName,

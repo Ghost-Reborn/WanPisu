@@ -56,7 +56,9 @@ public class AnilistAdapter extends RecyclerView.Adapter<AnilistAdapter.ViewHold
         Picasso.get().load(anilist.getAnimeImageUrl())
                 .into(holder.animeImageView);
         holder.itemView.setOnClickListener(v -> {
+            WanPisuConstants.isAnilist = true;
             if (!anilist.getAllAnimeID().isEmpty()){
+                WanPisuConstants.ALL_ANIME_ID = anilist.getAllAnimeID();
                 Intent intent = new Intent(context, AnimeEpisodesActivity.class);
                 context.startActivity(intent);
             }else {

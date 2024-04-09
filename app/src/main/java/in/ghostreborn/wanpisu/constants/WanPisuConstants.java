@@ -60,4 +60,7 @@ public class WanPisuConstants {
     public static String ALL_ANIME_ID = "";
     public static String ALL_ANIME_EPISODE_NUMBER = "";
     public static String MANGA_ID = "";
+
+    public static boolean isAnilist = false;
+
 }
