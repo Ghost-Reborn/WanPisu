@@ -15,7 +15,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.model.Anilist;
 import in.ghostreborn.wanpisu.model.WanPisu;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -186,30 +185,6 @@ public class AllAnime {
         }
 
         return decryptedString.toString();
-    }
-
-    // TODO Store Anilist Data locally
-    public static void getUsersAnime() {
-        WanPisuConstants.wanPisus = new ArrayList<>();
-        String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
-        String userName = WanPisuConstants.preferences.getString(WanPisuConstants.ANILIST_USER_NAME, "");
-        AnilistParser
-                .getAnimeDetails(
-                        userName,
-                        WanPisuConstants.ANIME_CURRENT,
-                        TOKEN
-                );
-        for (int i = 0; i < WanPisuConstants.anilists.size(); i++) {
-            Anilist anilist = WanPisuConstants.anilists.get(i);
-            WanPisuConstants.wanPisus.add(new WanPisu(
-                    "",
-                    anilist.getAnimeName(),
-                    anilist.getAnimeImageUrl(),
-                    WanPisuConstants.anilists.get(i).getMalID(),
-                    null
-            ));
-        }
-
     }
 
     public static String getAllAnimeID(String anime, String malID) {

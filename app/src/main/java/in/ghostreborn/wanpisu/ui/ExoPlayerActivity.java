@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.AllAnime;
-import in.ghostreborn.wanpisu.utils.AnilistUtils;
 
 public class ExoPlayerActivity extends AppCompatActivity {
 
@@ -109,8 +108,6 @@ public class ExoPlayerActivity extends AppCompatActivity {
         protected ArrayList<String> doInBackground(String... strings) {
             String malID = String.valueOf(WanPisuConstants.ANIME_MAL_ID);
             String progress = String.valueOf(episodeNumber);
-            String TOKEN = WanPisuConstants.preferences.getString(WanPisuConstants.WAN_PISU_ANILIST_TOKEN, "");
-//            AnilistUtils.saveAnimeProgress(malID, progress, TOKEN);
 
             return AllAnime.getAnimeServer(animeID, episodeNumber);
         }

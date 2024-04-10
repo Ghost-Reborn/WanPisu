@@ -45,7 +45,6 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         Picasso.get().load(animeNames.get(position).getAnimeThumbnailUrl())
                 .into(holder.animeImageView);
         holder.itemView.setOnClickListener(v -> {
-            WanPisuConstants.isAnilist = false;
             Intent intent = new Intent(context, AnimeEpisodesActivity.class);
             WanPisuConstants.animeImageURL = animeNames.get(position).getAnimeThumbnailUrl();
             WanPisuConstants.wanPisu = animeNames.get(position);
