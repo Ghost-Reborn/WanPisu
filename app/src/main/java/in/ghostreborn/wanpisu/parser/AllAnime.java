@@ -22,7 +22,7 @@ import okhttp3.Response;
 
 public class AllAnime {
 
-    public static String parseByAllAnimeID(String allAnimeID){
+    public static String parseByAllAnimeID(String allAnimeID) {
         OkHttpClient client = new OkHttpClient();
 
         String baseUrl = "https://api.allanime.day/api";
@@ -47,9 +47,13 @@ public class AllAnime {
     }
 
     /**
-     * If `anime` is null, returns recently updated anime
+     * anime - name of anime
+     * If not provided, returns recently updated anime
      */
-    public static String getAnimeIDs(String anime){
+    public static String getAnimeIDs(String anime) {
+
+        WanPisuConstants.animeIDs = new ArrayList<>();
+
         OkHttpClient client = new OkHttpClient();
         String baseUrl = "https://api.allanime.day/api";
         String queryUrl = baseUrl + "?variables=" +
@@ -64,6 +68,20 @@ public class AllAnime {
                 rawJson = response.body().string();
             }
         } catch (IOException e) {
+            Log.e("TAG", e.getCause() + "");
+        }
+
+        try {
+            JSONArray edgesArray = new JSONObject(rawJson)
+                    .getJSONObject("data")
+                    .getJSONObject("shows")
+                    .getJSONArray("edges");
+            for (int i=0; i<edgesArray.length(); i++){
+                JSONObject edge = edgesArray.getJSONObject(i);
+                String id = edge.getString("_id");
+                WanPisuConstants.animeIDs.add(id);
+            }
+        } catch (JSONException e) {
             Log.e("TAG", e.getCause() + "");
         }
 

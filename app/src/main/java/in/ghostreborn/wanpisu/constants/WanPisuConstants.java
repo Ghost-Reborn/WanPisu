@@ -10,5 +10,5 @@ import in.ghostreborn.wanpisu.model.JikanEpisodes;
 import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class WanPisuConstants {
-
+    public static ArrayList<String> animeIDs;
 }
