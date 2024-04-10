@@ -21,6 +21,8 @@ import in.ghostreborn.wanpisu.fragment.MangaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    // TODO Created a way to get details of anime through allAnime ID, USE IT!
+    // TODO instead of using anilist, store AllAnime ID and show it in user's section
     // TODO fix One Piece 1100 episode playing differently
     // TODO show a button to refresh Anilist from server
     // TODO Store AllAnime ID when anilist fragment doesn't have one
