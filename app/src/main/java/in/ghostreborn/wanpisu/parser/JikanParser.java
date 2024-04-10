@@ -22,7 +22,6 @@ import in.ghostreborn.wanpisu.model.JikanEpisodes;
 public class JikanParser {
 
     public static void parseAnimeFull(String malID){
-        WanPisuConstants.jikans = new ArrayList<>();
         String url = "https://api.jikan.moe/v4/anime/" +
                 malID +
                 "/full";
@@ -57,18 +56,13 @@ public class JikanParser {
                     .getJSONObject("jpg")
                     .getString("image_url");
             String synopsis = dataObject.getString("synopsis");
-            WanPisuConstants.jikans.add(new Jikan(
-                    title,
-                    thumbnail,
-                    synopsis
-            ));
+
         } catch (JSONException e) {
             Log.e("TAG", e.getCause() + "");
         }
     }
 
     public static void parseAnimeEpisodes(String malID, String page){
-        WanPisuConstants.jikanEpisodes = new ArrayList<>();
         String url = "https://api.jikan.moe/v4/anime/" +
                 malID +
                 "/episodes?page=" +
@@ -104,7 +98,6 @@ public class JikanParser {
                 JSONObject episode = episodesArray.getJSONObject(i);
                 String episodeName = episode.getString("title");
                 String episodeNumber = episode.getString("mal_id");
-                WanPisuConstants.jikanEpisodes.add(new JikanEpisodes(episodeName, episodeNumber));
             }
         } catch (JSONException e) {
             Log.e("TAG", e.getCause() + "");

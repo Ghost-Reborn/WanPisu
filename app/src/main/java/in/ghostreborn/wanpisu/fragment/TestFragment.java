@@ -13,6 +13,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.parser.AllAnime;
 import in.ghostreborn.wanpisu.parser.TestParser;
 
 public class TestFragment extends Fragment {
@@ -27,7 +28,7 @@ public class TestFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            String test = TestParser.getAllAnimeID("One Piece", "ReooPAxPMsHM4KPMY");
+            String test = AllAnime.getAnimeIDs("One Piece");
             requireActivity().runOnUiThread(() -> {
                 testText.setText(test);
             });

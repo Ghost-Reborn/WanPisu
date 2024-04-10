@@ -11,33 +11,4 @@ import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class WanPisuConstants {
 
-    public static final String WAN_PISU_PREFERENCE = "WAN_PISU";
-    public static final String WAN_PISU_PREFERENCE_ENABLE_DUB = "key_enable_sub_dub";
-    public static final String WAN_PISU_PREFERENCE_ENABLE_UNKNOWN = "key_enable_unknown";
-    public static int ALL_ANIME_EPISODE_ADD = 0;
-
-    public static SharedPreferences preferences;
-
-    public static ArrayList<WanPisu> wanPisus;
-    public static ArrayList<AllManga> allMangas;
-
-    public static WanPisu wanPisu;
-
-    public static ArrayList<Jikan> jikans;
-    public static ArrayList<JikanEpisodes> jikanEpisodes;
-    public static ArrayList<String> animeEpisodes;
-    public static int ANIME_INDEX = 0;
-    public static int ANIME_MAL_ID = 0;
-
-    public static boolean isHLS = false;
-
-    public static String animeImageURL = "";
-
-    public static boolean isDubEnabled= false;
-
-    public static String ALL_ANIME_ID = "";
-    public static String ALL_ANIME_EPISODE_NUMBER = "";
-    public static String MANGA_ID = "";
-
-
 }

@@ -22,23 +22,14 @@ import okhttp3.Response;
 
 public class AllAnime {
 
-    /**
-     * JSON array with `edges` provides anime details
-     *
-     * @return ArrayList<WanPisu>
-     */
-    public static ArrayList<WanPisu> parseAnimeIDAnimeNameAnimeThumbnail(String anime) {
-
+    public static String parseByAllAnimeID(String allAnimeID){
         OkHttpClient client = new OkHttpClient();
 
         String baseUrl = "https://api.allanime.day/api";
-        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"" + anime + "\"},\"limit\":39,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}") + "&query=" + Uri.encode("query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{" +
+        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"_id\":\"DdTHXmTjwHji2aApQ\"}") + "&query=" + Uri.encode("query($_id:String!){show(_id:$_id){" +
                 "_id," +
-                "name," +
-                "malId," +
-                "thumbnail," +
                 "availableEpisodesDetail" +
-                "}}}");
+                "}}");
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
         String rawJson = "NULL";
@@ -51,46 +42,32 @@ public class AllAnime {
             Log.e("TAG", e.getCause() + "");
         }
 
+        return rawJson;
 
-        WanPisuConstants.wanPisus = new ArrayList<>();
-        try {
-            JSONArray edgesArray = new JSONObject(rawJson)
-                    .getJSONObject("data")
-                    .getJSONObject("shows")
-                    .getJSONArray("edges");
-            for (int i = 0; i < edgesArray.length(); i++) {
-                JSONObject edges = edgesArray.getJSONObject(i);
-                String animeID = edges.getString("_id");
-                String malID = edges.getString("malId");
-                String animeName = edges.getString("name");
-                String animeThumbnailUrl = edges.getString("thumbnail");
-                JSONArray availableEpisodesArray = edges.getJSONObject("availableEpisodesDetail")
-                        .getJSONArray("sub");
-                ArrayList<String> tempArray = new ArrayList<>();
-                for (int j = 0; j < availableEpisodesArray.length(); j++) {
-                    tempArray.add(availableEpisodesArray.getString(j));
-                }
+    }
 
-                // Reverse episodes array for Ascending order
-                ArrayList<String> episodesArray = new ArrayList<>();
-                for (int j = tempArray.size() - 1; j >= 0; j--) {
-                    episodesArray.add(tempArray.get(j));
-                }
+    /**
+     * If `anime` is null, returns recently updated anime
+     */
+    public static String getAnimeIDs(String anime){
+        OkHttpClient client = new OkHttpClient();
+        String baseUrl = "https://api.allanime.day/api";
+        String queryUrl = baseUrl + "?variables=" +
+                Uri.encode("{\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"" + anime + "\"},\"limit\":39,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}") + "&query=" + Uri.encode("query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{" +
+                "_id" +
+                "}}}");
+        Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
+        String rawJson = "NULL";
 
-                WanPisuConstants.wanPisus.add(new WanPisu(
-                        animeID,
-                        animeName,
-                        animeThumbnailUrl,
-                        malID,
-                        episodesArray
-                ));
+        try (Response response = client.newCall(request).execute()) {
+            if (response.body() != null) {
+                rawJson = response.body().string();
             }
-        } catch (JSONException e) {
+        } catch (IOException e) {
             Log.e("TAG", e.getCause() + "");
         }
 
-        return WanPisuConstants.wanPisus;
-
+        return rawJson;
     }
 
     public static ArrayList<String> getAnimeServer(String animeID, String episodeNumber) {
@@ -118,11 +95,6 @@ public class AllAnime {
             String server = linkObject.getString("link");
             servers.add(server);
 
-            if (linkObject.has("mp4")) {
-                WanPisuConstants.isHLS = !linkObject.getBoolean("mp4");
-            } else {
-                WanPisuConstants.isHLS = true;
-            }
 
             return servers;
         } catch (JSONException | IOException e) {
@@ -235,13 +207,7 @@ public class AllAnime {
                         episodesArray.add(tempArray.get(j));
                     }
 
-                    WanPisuConstants.wanPisu = new WanPisu(
-                            edge.getString("_id"),
-                            edge.getString("name"),
-                            edge.getString("thumbnail"),
-                            malId,
-                            episodesArray
-                    );
+
                     return edge.getString("_id");
                 }
             }

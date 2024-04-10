@@ -31,9 +31,6 @@ public class AnimeFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            ArrayList<WanPisu> animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail("");
-            AnimeSearchAdapter adapter = new AnimeSearchAdapter(view.getContext(), animeDetailsArray);
-            requireActivity().runOnUiThread(() -> animeContainerView.setAdapter(adapter));
         };
         executor.execute(task);
 
@@ -44,10 +41,6 @@ public class AnimeFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 Executor executor = Executors.newSingleThreadExecutor();
                 Runnable task = () -> {
-                    String animeName = animeSearchView.getQuery().toString();
-                    ArrayList<WanPisu> animeDetailsArray = AllAnime.parseAnimeIDAnimeNameAnimeThumbnail(animeName);
-                    AnimeSearchAdapter adapter = new AnimeSearchAdapter(view.getContext(), animeDetailsArray);
-                    requireActivity().runOnUiThread(() -> animeContainerView.setAdapter(adapter));
                 };
                 executor.execute(task);
                 return true;

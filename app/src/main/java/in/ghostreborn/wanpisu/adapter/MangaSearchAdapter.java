@@ -33,23 +33,11 @@ public class MangaSearchAdapter extends RecyclerView.Adapter<MangaSearchAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MangaSearchAdapter.ViewHolder holder, int position) {
-        AllManga allManga = WanPisuConstants.allMangas.get(position);
-        holder.mangaTextView.setText(allManga.getName());
-        Picasso.get().load(allManga.getThumbnail())
-                .into(holder.mangaImageView);
-        Context context = holder.itemView.getContext();
-        holder.itemView.setOnClickListener(v -> {
-            WanPisuConstants.MANGA_ID = allManga.getId();
-            context.startActivity(new Intent(
-                    context,
-                    MangaActivity.class
-            ));
-        });
     }
 
     @Override
     public int getItemCount() {
-        return WanPisuConstants.allMangas.size();
+        return 100;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

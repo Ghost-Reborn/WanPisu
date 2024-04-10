@@ -84,7 +84,6 @@ public class MangaParser {
                 "}}}");
 
         String rawJSON = connectAndGetJSON(queryUrl);
-        WanPisuConstants.allMangas = new ArrayList<>();
         try {
             JSONObject rawObject = new JSONObject(rawJSON);
             JSONArray edgesArray = rawObject
@@ -98,7 +97,6 @@ public class MangaParser {
                 String id = edges.getString("_id");
                 String thumbnail = "https://wp.youtube-anime.com/aln.youtube-anime.com/" +
                         edges.getString("thumbnail");
-                WanPisuConstants.allMangas.add(new AllManga(name, id, thumbnail));
             }
 
         } catch (JSONException e) {

@@ -34,7 +34,6 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         animeDetailsWatchButton = findViewById(R.id.anime_details_watch_button);
         animeDetailsSynopsis = findViewById(R.id.anime_details_synopsis);
 
-        Picasso.get().load(WanPisuConstants.animeImageURL).into(animeDetailsImageView);
         animeDetailsWatchButton.setOnClickListener(view -> {
             startActivity(new Intent(AnimeDetailsActivity.this, AnimeEpisodesActivity.class));
         });
