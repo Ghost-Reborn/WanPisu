@@ -20,15 +20,14 @@ public class TestParser {
         OkHttpClient client = new OkHttpClient();
 
         String baseUrl = "https://api.allanime.day/api";
-        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"_id\":\"DdTHXmTjwHji2aApQ\"}") + "&query=" + Uri.encode("query($_id:String!){show(_id:$_id){" +
-                "_id," +
-                "availableEpisodesDetail" +
-                "}}");
+        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"showId\":\"" + "ReooPAxPMsHM4KPMY" + "\",\"translationType\":\"sub\",\"episodeString\":\"" +
+                "1100" +
+                "\"}") + "&query=" + Uri.encode("query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){}}");
 
         /**
          * This is the Test Query
          */
-//        queryUrl = "https://api.allanime.day/api?variables={%22_id%22:%22ReooPAxPMsHM4KPMY%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%229d7439c90f203e534ca778c4901f9aa2d3ad42c06243ab2c5e6b79612af32028%22}}";
+        queryUrl = "https://api.allanime.day/api?variables={%22showId%22:%22ReooPAxPMsHM4KPMY%22,%22translationType%22:%22sub%22,%22episodeString%22:%221100%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%225f1a64b73793cc2234a389cf3a8f93ad82de7043017dd551f38f65b89daa65e0%22}}";
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
         String rawJson = "NULL";

@@ -4,40 +4,40 @@ import java.util.ArrayList;
 
 public class WanPisu {
 
-    private final String animeID;
-    private final String animeName;
-    private final String animeThumbnailUrl;
-    private final String malID;
-    private final ArrayList<String> availableEpisodes;
+    String id;
+    String name;
+    String thumbnail;
+    String lastEpisode;
+    ArrayList<String> availableEpisodes;
 
     public WanPisu(
-            String animeID,
-            String animeName,
-            String animeThumbnailUrl,
-            String malID,
+            String id,
+            String name,
+            String thumbnail,
+            String lastEpisode,
             ArrayList<String> availableEpisodes
-    ) {
-        this.animeID = animeID;
-        this.animeName = animeName;
-        this.animeThumbnailUrl = animeThumbnailUrl;
-        this.malID = malID;
+    ){
+        this.id = id;
+        this.name = name;
+        this.thumbnail = thumbnail;
+        this.lastEpisode = lastEpisode;
         this.availableEpisodes = availableEpisodes;
     }
 
-    public String getAnimeID() {
-        return animeID;
+    public String getId() {
+        return id;
     }
 
-    public String getAnimeName() {
-        return animeName;
+    public String getName() {
+        return name;
     }
 
-    public String getAnimeThumbnailUrl() {
-        return animeThumbnailUrl;
+    public String getLastEpisode() {
+        return lastEpisode;
     }
 
-    public String getMalID() {
-        return malID;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
     public ArrayList<String> getAvailableEpisodes() {

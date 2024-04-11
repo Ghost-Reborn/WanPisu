@@ -38,13 +38,17 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-
+        String episode = WanPisuConstants.episodes.get(position);
+        holder.episodeNumberTextView.setText(episode);
+        holder.episodeTitleTextView.setText("Episode " + episode);
+        Picasso.get()
+                .load(WanPisuConstants.animeThumbnail)
+                .into(holder.episodeImageView);
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return WanPisuConstants.episodes.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,25 +1,15 @@
 package in.ghostreborn.wanpisu.ui;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
-
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeEpisodesAdapter;
 import in.ghostreborn.wanpisu.adapter.AnimeGroupAdapter;
-import in.ghostreborn.wanpisu.constants.WanPisuConstants;
-import in.ghostreborn.wanpisu.model.WanPisu;
 
 public class AnimeEpisodesActivity extends AppCompatActivity {
 

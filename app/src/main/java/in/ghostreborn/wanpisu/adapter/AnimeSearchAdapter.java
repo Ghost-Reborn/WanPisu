@@ -22,12 +22,9 @@ import in.ghostreborn.wanpisu.ui.AnimeEpisodesActivity;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
 
-    private static ArrayList<WanPisu> animeNames;
     Context context;
-
-    public AnimeSearchAdapter(Context mContext, ArrayList<WanPisu> mAnimeNames) {
-        animeNames = mAnimeNames;
-        context = mContext;
+    public AnimeSearchAdapter(Context context){
+        this.context = context;
     }
 
     @NonNull
@@ -41,18 +38,23 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
     @Override
     public void onBindViewHolder(@NonNull AnimeSearchAdapter.ViewHolder holder, int position) {
 
-        holder.animeTextView.setText(animeNames.get(position).getAnimeName());
-        Picasso.get().load(animeNames.get(position).getAnimeThumbnailUrl())
+        WanPisu wanPisu = WanPisuConstants.wanPisus.get(position);
+
+        holder.animeTextView.setText(wanPisu.getName());
+        Picasso.get().load(wanPisu.getThumbnail())
                 .into(holder.animeImageView);
         holder.itemView.setOnClickListener(v -> {
+            WanPisuConstants.episodes = wanPisu.getAvailableEpisodes();
+            WanPisuConstants.animeThumbnail = wanPisu.getThumbnail();
             Intent intent = new Intent(context, AnimeEpisodesActivity.class);
             context.startActivity(intent);
         });
+
     }
 
     @Override
     public int getItemCount() {
-        return animeNames.size();
+        return WanPisuConstants.wanPisus.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

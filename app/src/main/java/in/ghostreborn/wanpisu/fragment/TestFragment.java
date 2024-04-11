@@ -28,7 +28,7 @@ public class TestFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            String test = AllAnime.getAnimeIDs("One Piece");
+            String test = TestParser.getAllAnimeID("One Piece", "ReooPAxPMsHM4KPMY");
             requireActivity().runOnUiThread(() -> {
                 testText.setText(test);
             });

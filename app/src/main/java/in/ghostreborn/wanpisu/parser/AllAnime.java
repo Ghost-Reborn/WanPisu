@@ -22,43 +22,24 @@ import okhttp3.Response;
 
 public class AllAnime {
 
-    public static String parseByAllAnimeID(String allAnimeID) {
-        OkHttpClient client = new OkHttpClient();
-
-        String baseUrl = "https://api.allanime.day/api";
-        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"_id\":\"DdTHXmTjwHji2aApQ\"}") + "&query=" + Uri.encode("query($_id:String!){show(_id:$_id){" +
-                "_id," +
-                "availableEpisodesDetail" +
-                "}}");
-
-        Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
-        String rawJson = "NULL";
-
-        try (Response response = client.newCall(request).execute()) {
-            if (response.body() != null) {
-                rawJson = response.body().string();
-            }
-        } catch (IOException e) {
-            Log.e("TAG", e.getCause() + "");
-        }
-
-        return rawJson;
-
-    }
 
     /**
      * anime - name of anime
      * If not provided, returns recently updated anime
      */
-    public static String getAnimeIDs(String anime) {
+    public static String getAnimes(String anime) {
 
-        WanPisuConstants.animeIDs = new ArrayList<>();
+        WanPisuConstants.wanPisus = new ArrayList<>();
 
         OkHttpClient client = new OkHttpClient();
         String baseUrl = "https://api.allanime.day/api";
         String queryUrl = baseUrl + "?variables=" +
                 Uri.encode("{\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"" + anime + "\"},\"limit\":39,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}") + "&query=" + Uri.encode("query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{" +
-                "_id" +
+                "_id," +
+                "name," +
+                "thumbnail," +
+                "lastEpisodeInfo," +
+                "availableEpisodesDetail" +
                 "}}}");
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
         String rawJson = "NULL";
@@ -79,7 +60,25 @@ public class AllAnime {
             for (int i=0; i<edgesArray.length(); i++){
                 JSONObject edge = edgesArray.getJSONObject(i);
                 String id = edge.getString("_id");
-                WanPisuConstants.animeIDs.add(id);
+                String name = edge.getString("name");
+                String thumbnail = edge.getString("thumbnail");
+                String lastEpisode = edge.getJSONObject("lastEpisodeInfo")
+                        .getJSONObject("sub")
+                        .getString("episodeString");
+                ArrayList<String> availableEpisodes = new ArrayList<>();
+                JSONArray episodesArray = edge
+                        .getJSONObject("availableEpisodesDetail")
+                        .getJSONArray("sub");
+                for (int j=0; j<episodesArray.length(); j++){
+                    availableEpisodes.add(episodesArray.getString(j));
+                }
+                WanPisuConstants.wanPisus.add(new WanPisu(
+                        id,
+                        name,
+                        thumbnail,
+                        lastEpisode,
+                        availableEpisodes
+                ));
             }
         } catch (JSONException e) {
             Log.e("TAG", e.getCause() + "");

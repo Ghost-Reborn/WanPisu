@@ -10,13 +10,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
-import in.ghostreborn.wanpisu.model.WanPisu;
 import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class AnimeFragment extends Fragment {
@@ -31,6 +29,11 @@ public class AnimeFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
+            AllAnime.getAnimes("");
+            AnimeSearchAdapter adapter = new AnimeSearchAdapter(getContext());
+            requireActivity().runOnUiThread(() -> {
+                animeContainerView.setAdapter(adapter);
+            });
         };
         executor.execute(task);
 
