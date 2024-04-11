@@ -46,6 +46,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         holder.itemView.setOnClickListener(v -> {
             WanPisuConstants.episodes = wanPisu.getAvailableEpisodes();
             WanPisuConstants.animeThumbnail = wanPisu.getThumbnail();
+            WanPisuConstants.ALL_ANIME_ID = wanPisu.getId();
             Intent intent = new Intent(context, AnimeEpisodesActivity.class);
             context.startActivity(intent);
         });

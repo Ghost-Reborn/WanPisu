@@ -112,6 +112,11 @@ public class AllAnime {
             String server = linkObject.getString("link");
             servers.add(server);
 
+            if (linkObject.has("mp4")) {
+                WanPisuConstants.isHLS = !linkObject.getBoolean("mp4");
+            } else {
+                WanPisuConstants.isHLS = true;
+            }
 
             return servers;
         } catch (JSONException | IOException e) {

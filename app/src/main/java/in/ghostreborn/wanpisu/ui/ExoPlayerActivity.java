@@ -50,7 +50,22 @@ public class ExoPlayerActivity extends AppCompatActivity {
     private static void createMediaSource(String url, Context context) {
 
         simpleExoPlayer.seekTo(0);
-
+        boolean isHLS = WanPisuConstants.isHLS;
+        if (!isHLS) {
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
+                    context,
+                    Util.getUserAgent(context, context.getApplicationInfo().name)
+            );
+            mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(MediaItem.fromUri(Uri.parse(url)));
+        } else {
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
+                    context,
+                    Util.getUserAgent(context, context.getApplicationInfo().name)
+            );
+            mediaSource = new HlsMediaSource.Factory(dataSourceFactory)
+                    .createMediaSource(MediaItem.fromUri(Uri.parse(url)));
+        }
     }
 
     @Override
@@ -60,7 +75,11 @@ public class ExoPlayerActivity extends AppCompatActivity {
 
         exoPlayerProgressBar = findViewById(R.id.exoplayer_progress_bar);
 
-
+        AnimeAsync animeAsync = new AnimeAsync(
+                WanPisuConstants.ALL_ANIME_ID,
+                WanPisuConstants.ALL_ANIME_EPISODE_NUMBER
+        );
+        animeAsync.execute();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -87,7 +106,6 @@ public class ExoPlayerActivity extends AppCompatActivity {
 
         @Override
         protected ArrayList<String> doInBackground(String... strings) {
-
             return AllAnime.getAnimeServer(animeID, episodeNumber);
         }
 
@@ -95,9 +113,12 @@ public class ExoPlayerActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<String> servers) {
             super.onPostExecute(servers);
 
+            // TODO show in separate popup of servers
+
             String server = "";
             for (int i = 0; i < servers.size(); i++) {
                 String currentServer = servers.get(i).trim();
+                Log.e("TAG", currentServer);
                 if (currentServer.contains("workfields")) ;
                 {
                     server = servers.get(i);
