@@ -39,16 +39,43 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String episode = WanPisuConstants.episodes.get(position);
+        if (isInteger(episode)){
+            episode = Integer.parseInt(episode) + WanPisuConstants.ALL_ANIME_EPISODE_ADD + "";
+        }else {
+            episode = Float.parseFloat(episode) + WanPisuConstants.ALL_ANIME_EPISODE_ADD + "";
+        }
+
         holder.episodeNumberTextView.setText(episode);
-        holder.episodeTitleTextView.setText("Episode " + episode);
-        Picasso.get()
-                .load(WanPisuConstants.animeThumbnail)
-                .into(holder.episodeImageView);
+        holder.episodeTitleTextView.setText(String.format("Episode %s", episode));
+        Picasso.get().load(WanPisuConstants.animeThumbnail).into(holder.episodeImageView);
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ExoPlayerActivity.class);
+            WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = WanPisuConstants.episodes.get(position);
+            context.startActivity(intent);
+        });
+    }
+
+    public static boolean isInteger(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return WanPisuConstants.episodes.size();
+        if ((WanPisuConstants.ALL_ANIME_EPISODE_ADD + 100) < WanPisuConstants.episodes.size()) {
+            return 100;
+        } else {
+            int start = Integer.parseInt(WanPisuConstants.episodes.get(0));
+            if (start == 0) {
+                return (WanPisuConstants.episodes.size() % 100) - 1;
+            }
+            return WanPisuConstants.episodes.size() % 100;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

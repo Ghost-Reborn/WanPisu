@@ -69,7 +69,7 @@ public class AllAnime {
                 JSONArray episodesArray = edge
                         .getJSONObject("availableEpisodesDetail")
                         .getJSONArray("sub");
-                for (int j=0; j<episodesArray.length(); j++){
+                for (int j=episodesArray.length() - 1; j>=0; j--){
                     availableEpisodes.add(episodesArray.getString(j));
                 }
                 WanPisuConstants.wanPisus.add(new WanPisu(

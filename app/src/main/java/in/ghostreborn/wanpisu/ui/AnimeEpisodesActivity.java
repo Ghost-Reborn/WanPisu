@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeEpisodesAdapter;
 import in.ghostreborn.wanpisu.adapter.AnimeGroupAdapter;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 
 public class AnimeEpisodesActivity extends AppCompatActivity {
 
@@ -18,6 +19,8 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anime_episodes);
+
+        WanPisuConstants.ALL_ANIME_EPISODE_ADD = 0;
 
         RecyclerView animeContainerView = findViewById(R.id.anime_episode_recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -32,7 +35,12 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
     }
 
     private int getPages() {
-        return 100;
+        int size = WanPisuConstants.episodes.size();
+        if (size % 100 == 0) {
+            return size / 100;
+        } else {
+            return (int) (double) (size / 100) + 1;
+        }
     }
 
 }
