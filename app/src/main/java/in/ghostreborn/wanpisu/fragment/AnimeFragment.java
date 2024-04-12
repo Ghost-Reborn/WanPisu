@@ -29,7 +29,7 @@ public class AnimeFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            AllAnime.getAnimes("Solo");
+            AllAnime.getAnimes("");
             AnimeSearchAdapter adapter = new AnimeSearchAdapter(getContext());
             requireActivity().runOnUiThread(() -> {
                 animeContainerView.setAdapter(adapter);
