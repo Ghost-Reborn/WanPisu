@@ -76,7 +76,7 @@ public class AllAnime {
         String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"showId\":\"" + animeID + "\",\"translationType\":\"sub\",\"episodeString\":\"" + episode + "\"}") + "&query=" + Uri.encode("query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){" + "episodeInfo{" + "notes" + "}" + "}}");
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
-        String rawJson = "NULL";
+        String rawJson = "{}";
 
         try (Response response = client.newCall(request).execute()) {
             if (response.body() != null) {
@@ -87,16 +87,19 @@ public class AllAnime {
         }
 
         try {
-            Log.e("TAG", rawJson);
             JSONObject episodeObject = new JSONObject(rawJson).getJSONObject("data").getJSONObject("episode").getJSONObject("episodeInfo");
-            String episodeName = episodeObject.getString("notes");
-            Log.e("TAG", "Episode name: " + episodeName);
+            String episodeName = "";
+            if (!episodeObject.isNull("notes")){
+                episodeName = episodeObject.getString("notes");
+            }
+            Log.e("TAG", episodeName);
             return episodeName;
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return "";
+
     }
 
 

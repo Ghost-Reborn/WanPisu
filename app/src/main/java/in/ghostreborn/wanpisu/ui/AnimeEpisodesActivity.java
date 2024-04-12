@@ -60,10 +60,10 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
 
     private int getPages() {
         int size = WanPisuConstants.episodes.size();
-        if (size % 100 == 0) {
-            return size / 100;
+        if (size % WanPisuConstants.EPISODE_VISIBLE == 0) {
+            return size / WanPisuConstants.EPISODE_VISIBLE;
         } else {
-            return (int) (double) (size / 100) + 1;
+            return (int) (double) (size / WanPisuConstants.EPISODE_VISIBLE) + 1;
         }
     }
 

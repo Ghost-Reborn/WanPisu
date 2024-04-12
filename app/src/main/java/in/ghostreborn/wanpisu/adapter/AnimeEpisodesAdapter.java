@@ -74,14 +74,14 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
     @Override
     public int getItemCount() {
-        if ((WanPisuConstants.ALL_ANIME_EPISODE_ADD + 100) < WanPisuConstants.episodes.size()) {
-            return 100;
+        if ((WanPisuConstants.ALL_ANIME_EPISODE_ADD + WanPisuConstants.EPISODE_VISIBLE) < WanPisuConstants.episodes.size()) {
+            return WanPisuConstants.EPISODE_VISIBLE;
         } else {
             int start = Integer.parseInt(WanPisuConstants.episodes.get(0).getEpisodeNumber());
             if (start == 0) {
-                return (WanPisuConstants.episodes.size() % 100) - 1;
+                return (WanPisuConstants.episodes.size() % WanPisuConstants.EPISODE_VISIBLE) - 1;
             }
-            return WanPisuConstants.episodes.size() % 100;
+            return WanPisuConstants.episodes.size() % WanPisuConstants.EPISODE_VISIBLE;
         }
     }
 

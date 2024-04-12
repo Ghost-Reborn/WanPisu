@@ -13,4 +13,5 @@ public class WanPisuConstants {
     public static String animeThumbnail;
     public static int ALL_ANIME_EPISODE_ADD = 0;
     public static boolean isHLS;
+    public static int EPISODE_VISIBLE = 25;
 }
