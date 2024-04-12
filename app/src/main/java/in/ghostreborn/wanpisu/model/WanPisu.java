@@ -8,14 +8,14 @@ public class WanPisu {
     String name;
     String thumbnail;
     String lastEpisode;
-    ArrayList<String> availableEpisodes;
+    ArrayList<WanPisuEpisodes> availableEpisodes;
 
     public WanPisu(
             String id,
             String name,
             String thumbnail,
             String lastEpisode,
-            ArrayList<String> availableEpisodes
+            ArrayList<WanPisuEpisodes> availableEpisodes
     ){
         this.id = id;
         this.name = name;
@@ -40,7 +40,7 @@ public class WanPisu {
         return thumbnail;
     }
 
-    public ArrayList<String> getAvailableEpisodes() {
+    public ArrayList<WanPisuEpisodes> getAvailableEpisodes() {
         return availableEpisodes;
     }
 }

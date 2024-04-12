@@ -1,5 +1,7 @@
 package in.ghostreborn.wanpisu.ui;
 
+import static java.security.AccessController.getContext;
+
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,10 +9,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeEpisodesAdapter;
 import in.ghostreborn.wanpisu.adapter.AnimeGroupAdapter;
+import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.parser.AllAnime;
 
 public class AnimeEpisodesActivity extends AppCompatActivity {
 
@@ -31,6 +39,22 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
         GridLayoutManager groupManager = new GridLayoutManager(this, 1, RecyclerView.HORIZONTAL, false);
         animeGroupContainerView.setLayoutManager(groupManager);
         animeGroupContainerView.setAdapter(new AnimeGroupAdapter(getPages(), animeContainerView));
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        Runnable task = () -> {
+            for (int i = 0; i < WanPisuConstants.episodes.size(); i++) {
+                String title = AllAnime.getEpisodeName(WanPisuConstants.ALL_ANIME_ID, WanPisuConstants.episodes.get(i).getEpisodeNumber());
+                if (!title.isEmpty()){
+                    WanPisuConstants.episodes.get(i).setEpisodeTitle(title);
+                }
+            }
+            runOnUiThread(() -> {
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+                animeContainerView.setLayoutManager(linearLayoutManager);
+                animeContainerView.setAdapter(new AnimeEpisodesAdapter(this));
+            });
+        };
+        executor.execute(task);
 
     }
 

@@ -38,20 +38,27 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String episode = WanPisuConstants.episodes.get(position);
-        if (isInteger(episode)){
-            episode = Integer.parseInt(episode) + WanPisuConstants.ALL_ANIME_EPISODE_ADD + "";
+        String episodeNumber = WanPisuConstants.episodes.get(position).getEpisodeNumber();
+        String episodeTitle = WanPisuConstants.episodes.get(position).getEpisodeTitle();
+        if (isInteger(episodeNumber)){
+            episodeNumber = Integer.parseInt(episodeNumber) + WanPisuConstants.ALL_ANIME_EPISODE_ADD + "";
         }else {
-            episode = Float.parseFloat(episode) + WanPisuConstants.ALL_ANIME_EPISODE_ADD + "";
+            episodeNumber = Float.parseFloat(episodeNumber) + WanPisuConstants.ALL_ANIME_EPISODE_ADD + "";
         }
 
-        holder.episodeNumberTextView.setText(episode);
-        holder.episodeTitleTextView.setText(String.format("Episode %s", episode));
+        holder.episodeNumberTextView.setText(episodeNumber);
+
+        if (episodeTitle.isEmpty()){
+            holder.episodeTitleTextView.setText(String.format("Episode %s", episodeNumber));
+        }else {
+            holder.episodeTitleTextView.setText(episodeTitle);
+        }
+
         Picasso.get().load(WanPisuConstants.animeThumbnail).into(holder.episodeImageView);
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ExoPlayerActivity.class);
-            WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = WanPisuConstants.episodes.get(position);
+            WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = WanPisuConstants.episodes.get(position).getEpisodeNumber();
             context.startActivity(intent);
         });
     }
@@ -70,7 +77,7 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
         if ((WanPisuConstants.ALL_ANIME_EPISODE_ADD + 100) < WanPisuConstants.episodes.size()) {
             return 100;
         } else {
-            int start = Integer.parseInt(WanPisuConstants.episodes.get(0));
+            int start = Integer.parseInt(WanPisuConstants.episodes.get(0).getEpisodeNumber());
             if (start == 0) {
                 return (WanPisuConstants.episodes.size() % 100) - 1;
             }

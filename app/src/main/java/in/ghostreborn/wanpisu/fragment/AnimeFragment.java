@@ -29,7 +29,7 @@ public class AnimeFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            AllAnime.getAnimes("");
+            AllAnime.getAnimes("Solo");
             AnimeSearchAdapter adapter = new AnimeSearchAdapter(getContext());
             requireActivity().runOnUiThread(() -> {
                 animeContainerView.setAdapter(adapter);
@@ -44,6 +44,11 @@ public class AnimeFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 Executor executor = Executors.newSingleThreadExecutor();
                 Runnable task = () -> {
+                    AllAnime.getAnimes(animeSearchView.getQuery().toString());
+                    AnimeSearchAdapter adapter = new AnimeSearchAdapter(getContext());
+                    requireActivity().runOnUiThread(() -> {
+                        animeContainerView.setAdapter(adapter);
+                    });
                 };
                 executor.execute(task);
                 return true;
