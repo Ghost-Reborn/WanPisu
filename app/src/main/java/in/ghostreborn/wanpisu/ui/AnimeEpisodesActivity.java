@@ -65,13 +65,6 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
                 }
                 start++;
             }
-
-
-            runOnUiThread(() -> {
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-                animeContainerView.setLayoutManager(linearLayoutManager);
-                animeContainerView.setAdapter(new AnimeEpisodesAdapter(this));
-            });
         };
         executor.execute(task);
 

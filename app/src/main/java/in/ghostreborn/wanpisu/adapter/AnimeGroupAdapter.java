@@ -74,12 +74,6 @@ public class AnimeGroupAdapter extends RecyclerView.Adapter<AnimeGroupAdapter.Vi
                 }
                 start++;
             }
-
-            activity.runOnUiThread(() -> {
-                LinearLayoutManager manager = new LinearLayoutManager(holder.itemView.getContext());
-                recyclerView.setLayoutManager(manager);
-                recyclerView.setAdapter(new AnimeEpisodesAdapter(holder.itemView.getContext()));
-            });
         };
         executor.execute(task);
     }
