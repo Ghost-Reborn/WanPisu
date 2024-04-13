@@ -20,6 +20,7 @@ import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.AllManga;
 import in.ghostreborn.wanpisu.ui.MangaActivity;
+import in.ghostreborn.wanpisu.ui.MangaChaptersActivity;
 
 public class MangaSearchAdapter extends RecyclerView.Adapter<MangaSearchAdapter.ViewHolder> {
 
@@ -40,9 +41,10 @@ public class MangaSearchAdapter extends RecyclerView.Adapter<MangaSearchAdapter.
         Context context = holder.itemView.getContext();
         holder.itemView.setOnClickListener(v -> {
             WanPisuConstants.MANGA_ID = allManga.getId();
+            WanPisuConstants.mangaChapters = allManga.getAvailableChapters();
             context.startActivity(new Intent(
                     context,
-                    MangaActivity.class
+                    MangaChaptersActivity.class
             ));
         });
     }

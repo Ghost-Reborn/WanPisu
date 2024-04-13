@@ -32,6 +32,10 @@ public class TestParser {
          */
         queryUrl = "https://api.allanime.day/api?variables={%22showId%22:%22DdTHXmTjwHji2aApQ%22,%22translationType%22:%22sub%22,%22episodeString%22:%222%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%225f1a64b73793cc2234a389cf3a8f93ad82de7043017dd551f38f65b89daa65e0%22}}";
 
+        // Manga test
+        queryUrl = "https://api.allanime.day/api?variables={%22type%22:%22manga%22,%22size%22:20,%22dateRange%22:1,%22page%22:1,%22allowAdult%22:false,%22allowUnknown%22:false}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%221fc9651b0d4c3b9dfd2fa6e1d50b8f4d11ce37f988c23b8ee20f82159f7c1147%22}}";
+        queryUrl = "https://api.allanime.day/api?variables={%22_id%22:%22SFrub9DDGMrmdZWyh%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%22a42e1106694628f5e4eaecd8d7ce0c73895a22a3c905c29836e2c220cf26e55f%22}}";
+
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
         String rawJson = "NULL";
 

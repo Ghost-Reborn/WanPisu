@@ -12,10 +12,12 @@ public class WanPisuConstants {
     public static String ALL_ANIME_EPISODE_NUMBER = "1";
     public static ArrayList<WanPisu> wanPisus;
     public static ArrayList<WanPisuEpisodes> episodes;
+    public static ArrayList<String> mangaChapters;
     public static String animeThumbnail;
     public static int ALL_ANIME_EPISODE_ADD = 0;
     public static boolean isHLS;
     public static int EPISODE_VISIBLE = 25;
     public static int PAGE = 0;
     public static ArrayList<AllManga> allMangas;
+    public static String MANGA_CHAPTER = "1";
 }

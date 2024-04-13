@@ -51,10 +51,9 @@ public class MangaParser {
                 + mangaName
                 + "\",\"isManga\":true},\"limit\":39,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}") + "&query=" + Uri.encode("query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeMangaEnumType,$countryOrigin:VaildCountryOriginEnumType){mangas(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{" +
                 "name," +
-                "_id" +
+                "_id," +
+                "availableChaptersDetail" +
                 "}}}");
-
-        queryUrl = "https://api.allanime.day/api?variables={%22search%22:{%22query%22:%22one%20piece%22,%22isManga%22:true},%22limit%22:26,%22page%22:1,%22translationType%22:%22sub%22,%22countryOrigin%22:%22ALL%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%22a27e57ef5de5bae714db701fb7b5cf57e13d57938fc6256f7d5c70a975d11f3d%22}}";
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
         String rawJson = "NULL";
@@ -80,7 +79,8 @@ public class MangaParser {
                 + "\",\"isManga\":true},\"limit\":39,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}") + "&query=" + Uri.encode("query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeMangaEnumType,$countryOrigin:VaildCountryOriginEnumType){mangas(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{" +
                 "name," +
                 "_id," +
-                "thumbnail" +
+                "thumbnail," +
+                "availableChaptersDetail" +
                 "}}}");
 
         String rawJSON = connectAndGetJSON(queryUrl);
@@ -91,6 +91,7 @@ public class MangaParser {
                     .getJSONObject("data")
                     .getJSONObject("mangas")
                     .getJSONArray("edges");
+            ArrayList<String> chapters;
 
             for (int i = 0; i < edgesArray.length(); i++) {
                 JSONObject edges = edgesArray.getJSONObject(i);
@@ -98,7 +99,14 @@ public class MangaParser {
                 String id = edges.getString("_id");
                 String thumbnail = "https://wp.youtube-anime.com/aln.youtube-anime.com/" +
                         edges.getString("thumbnail");
-                WanPisuConstants.allMangas.add(new AllManga(name, id, thumbnail));
+                chapters = new ArrayList<>();
+                JSONArray subArray = edges
+                        .getJSONObject("availableChaptersDetail")
+                                .getJSONArray("sub");
+                for (int j=subArray.length() - 1; j>=0; j--){
+                    chapters.add(subArray.getString(j));
+                }
+                WanPisuConstants.allMangas.add(new AllManga(name, id, thumbnail, chapters));
             }
 
         } catch (JSONException e) {

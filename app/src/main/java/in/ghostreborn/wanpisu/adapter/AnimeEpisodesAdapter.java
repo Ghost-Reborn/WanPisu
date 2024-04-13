@@ -13,9 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
@@ -101,9 +98,9 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
         public ViewHolder(View itemView) {
             super(itemView);
-            episodeNumberTextView = itemView.findViewById(R.id.episode_number_text_view);
-            episodeTitleTextView = itemView.findViewById(R.id.episode_title_text_view);
-            episodeImageView = itemView.findViewById(R.id.episode_image_view);
+            episodeNumberTextView = itemView.findViewById(R.id.chapter_number_text_view);
+            episodeTitleTextView = itemView.findViewById(R.id.chapter_title_text_view);
+            episodeImageView = itemView.findViewById(R.id.chapter_image_view);
         }
     }
 

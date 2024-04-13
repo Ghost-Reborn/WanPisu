@@ -39,7 +39,7 @@ public class MangaActivity extends AppCompatActivity {
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
             WanPisuConstants.wanPisus = new ArrayList<>();
-            mangas = MangaParser.getManga(WanPisuConstants.MANGA_ID, "1");
+            mangas = MangaParser.getManga(WanPisuConstants.MANGA_ID, WanPisuConstants.MANGA_CHAPTER);
             runOnUiThread(() -> {
                 String url = mangas.get(0).getUrl();
                 Picasso.get()
