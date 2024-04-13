@@ -99,18 +99,22 @@ public class AllAnime {
             if (!episodeObject.isNull("notes")) {
                 episodeName = episodeObject.getString("notes");
             }
-            String thumbnail =
-                    "https://wp.youtube-anime.com/aln.youtube-anime.com" +
-                            episodeObject
-                                    .getJSONArray("thumbnails")
-                                    .getString(0);
-            Log.e("TAG", episodeName);
             titleAndThumbnail.add(episodeName);
-            titleAndThumbnail.add(thumbnail);
+
+            if (!episodeObject.isNull("thumbnails")){
+                String thumbnail =
+                        "https://wp.youtube-anime.com/aln.youtube-anime.com" +
+                                episodeObject
+                                        .getJSONArray("thumbnails")
+                                        .getString(0);
+                titleAndThumbnail.add(thumbnail);
+                return titleAndThumbnail;
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        titleAndThumbnail.add("");
         return titleAndThumbnail;
 
     }

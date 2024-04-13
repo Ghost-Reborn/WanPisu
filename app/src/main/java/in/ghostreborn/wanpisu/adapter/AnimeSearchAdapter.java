@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.WanPisu;
@@ -66,7 +64,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         public ViewHolder(View itemView) {
             super(itemView);
             animeTextView = itemView.findViewById(R.id.anime_text_view);
-            animeImageView = itemView.findViewById(R.id.anime_image_view);
+            animeImageView = itemView.findViewById(R.id.episode_image_view);
         }
     }
 }
