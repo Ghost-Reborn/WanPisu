@@ -14,4 +14,7 @@ public class WanPisuConstants {
     public static int ALL_ANIME_EPISODE_ADD = 0;
     public static boolean isHLS;
     public static int EPISODE_VISIBLE = 25;
+    public static int PAGE = 0;
+    public static int start = 0;
+    public static int end = 0;
 }

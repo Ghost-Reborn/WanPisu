@@ -52,6 +52,7 @@ public class AllAnime {
                 String id = edge.getString("_id");
                 String name = edge.getString("name");
                 String thumbnail = edge.getString("thumbnail");
+                // TODO Fix no value for sub
                 String lastEpisode = edge.getJSONObject("lastEpisodeInfo").getJSONObject("sub").getString("episodeString");
                 ArrayList<WanPisuEpisodes> availableEpisodes = new ArrayList<>();
                 JSONArray episodesArray = edge.getJSONObject("availableEpisodesDetail").getJSONArray("sub");

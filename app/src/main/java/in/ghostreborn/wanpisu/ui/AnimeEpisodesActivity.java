@@ -29,6 +29,8 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_anime_episodes);
 
         WanPisuConstants.ALL_ANIME_EPISODE_ADD = 0;
+        WanPisuConstants.PAGE = 1;
+        WanPisuConstants.start = 0;
 
         RecyclerView animeContainerView = findViewById(R.id.anime_episode_recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -38,16 +40,33 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
         RecyclerView animeGroupContainerView = findViewById(R.id.anime_episode_group_recycler_view);
         GridLayoutManager groupManager = new GridLayoutManager(this, 1, RecyclerView.HORIZONTAL, false);
         animeGroupContainerView.setLayoutManager(groupManager);
-        animeGroupContainerView.setAdapter(new AnimeGroupAdapter(getPages(), animeContainerView));
+        animeGroupContainerView.setAdapter(new AnimeGroupAdapter(getPages(), animeContainerView, this));
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            for (int i = 0; i < WanPisuConstants.episodes.size(); i++) {
-                String title = AllAnime.getEpisodeName(WanPisuConstants.ALL_ANIME_ID, WanPisuConstants.episodes.get(i).getEpisodeNumber());
-                if (!title.isEmpty()){
-                    WanPisuConstants.episodes.get(i).setEpisodeTitle(title);
+            int start = 0;
+            int end = WanPisuConstants.EPISODE_VISIBLE;
+            if (WanPisuConstants.episodes.size() < WanPisuConstants.EPISODE_VISIBLE){
+                end = WanPisuConstants.episodes.size();
+            }else {
+                if (WanPisuConstants.PAGE > 1){
+                    start = WanPisuConstants.PAGE * WanPisuConstants.EPISODE_VISIBLE;
+                    if ((start + WanPisuConstants.EPISODE_VISIBLE) < WanPisuConstants.episodes.size()){
+                        end = WanPisuConstants.episodes.size();
+                    }else {
+                        end = start = WanPisuConstants.EPISODE_VISIBLE;
+                    }
                 }
             }
+            while (start<end) {
+                String title = AllAnime.getEpisodeName(WanPisuConstants.ALL_ANIME_ID, WanPisuConstants.episodes.get(start).getEpisodeNumber());
+                if (!title.isEmpty()){
+                    WanPisuConstants.episodes.get(start).setEpisodeTitle(title);
+                }
+                start++;
+            }
+
+
             runOnUiThread(() -> {
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
                 animeContainerView.setLayoutManager(linearLayoutManager);

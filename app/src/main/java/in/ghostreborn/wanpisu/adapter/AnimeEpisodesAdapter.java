@@ -38,8 +38,8 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         String episodeNumber = WanPisuConstants.episodes.get(position).getEpisodeNumber();
-        String episodeTitle = WanPisuConstants.episodes.get(position).getEpisodeTitle();
         if (isInteger(episodeNumber)){
             episodeNumber = Integer.parseInt(episodeNumber) + WanPisuConstants.ALL_ANIME_EPISODE_ADD + "";
         }else {
@@ -48,6 +48,9 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
 
         holder.episodeNumberTextView.setText(episodeNumber);
 
+        int pos = WanPisuConstants.ALL_ANIME_EPISODE_ADD + position;
+
+        String episodeTitle = WanPisuConstants.episodes.get(pos).getEpisodeTitle();
         if (episodeTitle.isEmpty()){
             holder.episodeTitleTextView.setText(String.format("Episode %s", episodeNumber));
         }else {

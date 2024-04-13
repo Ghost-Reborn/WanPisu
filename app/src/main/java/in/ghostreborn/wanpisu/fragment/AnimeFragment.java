@@ -29,7 +29,7 @@ public class AnimeFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            AllAnime.getAnimes("");
+            AllAnime.getAnimes("One Piece");
             AnimeSearchAdapter adapter = new AnimeSearchAdapter(getContext());
             requireActivity().runOnUiThread(() -> {
                 animeContainerView.setAdapter(adapter);
