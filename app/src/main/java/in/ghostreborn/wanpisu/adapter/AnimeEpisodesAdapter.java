@@ -57,7 +57,12 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
             holder.episodeTitleTextView.setText(episodeTitle);
         }
 
-        Picasso.get().load(WanPisuConstants.animeThumbnail).into(holder.episodeImageView);
+        String episodeThumbnail = WanPisuConstants.episodes.get(pos).getEpisodeThumbnail();
+        if (episodeThumbnail.isEmpty()){
+            Picasso.get().load(WanPisuConstants.animeThumbnail).into(holder.episodeImageView);
+        }else {
+            Picasso.get().load(episodeThumbnail).into(holder.episodeImageView);
+        }
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ExoPlayerActivity.class);

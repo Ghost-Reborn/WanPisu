@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -43,14 +44,14 @@ public class AnimeGroupAdapter extends RecyclerView.Adapter<AnimeGroupAdapter.Vi
         holder.itemView.setOnClickListener(v -> {
             WanPisuConstants.PAGE = position + 1;
             WanPisuConstants.ALL_ANIME_EPISODE_ADD = holder.getAdapterPosition() * WanPisuConstants.EPISODE_VISIBLE;
-            getTitle(holder);
+            getTitle();
             LinearLayoutManager manager = new LinearLayoutManager(holder.itemView.getContext());
             recyclerView.setLayoutManager(manager);
             recyclerView.setAdapter(new AnimeEpisodesAdapter(holder.itemView.getContext()));
         });
     }
 
-    private void getTitle(ViewHolder holder){
+    private void getTitle(){
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
             int start = 0;
@@ -68,9 +69,12 @@ public class AnimeGroupAdapter extends RecyclerView.Adapter<AnimeGroupAdapter.Vi
                 }
             }
             while (start<end) {
-                String title = AllAnime.getEpisodeName(WanPisuConstants.ALL_ANIME_ID, WanPisuConstants.episodes.get(start).getEpisodeNumber());
-                if (!title.isEmpty()){
-                    WanPisuConstants.episodes.get(start).setEpisodeTitle(title);
+                ArrayList<String> titleAndThumbnail = AllAnime.getEpisodeName(WanPisuConstants.ALL_ANIME_ID, WanPisuConstants.episodes.get(start).getEpisodeNumber());
+                if (!titleAndThumbnail.get(0).isEmpty()){
+                    WanPisuConstants.episodes.get(start).setEpisodeTitle(titleAndThumbnail.get(0));
+                }
+                if (!titleAndThumbnail.get(1).isEmpty()){
+                    WanPisuConstants.episodes.get(start).setEpisodeThumbnail(titleAndThumbnail.get(1));
                 }
                 start++;
             }

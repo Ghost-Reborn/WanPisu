@@ -58,9 +58,12 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
                 }
             }
             while (start<end) {
-                String title = AllAnime.getEpisodeName(WanPisuConstants.ALL_ANIME_ID, WanPisuConstants.episodes.get(start).getEpisodeNumber());
-                if (!title.isEmpty()){
-                    WanPisuConstants.episodes.get(start).setEpisodeTitle(title);
+                ArrayList<String> titleAndThumbnail = AllAnime.getEpisodeName(WanPisuConstants.ALL_ANIME_ID, WanPisuConstants.episodes.get(start).getEpisodeNumber());
+                if (!titleAndThumbnail.get(0).isEmpty()){
+                    WanPisuConstants.episodes.get(start).setEpisodeTitle(titleAndThumbnail.get(0));
+                }
+                if (!titleAndThumbnail.get(1).isEmpty()){
+                    WanPisuConstants.episodes.get(start).setEpisodeThumbnail(titleAndThumbnail.get(1));
                 }
                 start++;
             }

@@ -30,7 +30,7 @@ public class TestParser {
         /**
          * This is the Test Query
          */
-//        queryUrl = "https://api.allanime.day/api?variables={%22showId%22:%22DdTHXmTjwHji2aApQ%22,%22translationType%22:%22sub%22,%22episodeString%22:%222%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%225f1a64b73793cc2234a389cf3a8f93ad82de7043017dd551f38f65b89daa65e0%22}}";
+        queryUrl = "https://api.allanime.day/api?variables={%22showId%22:%22DdTHXmTjwHji2aApQ%22,%22translationType%22:%22sub%22,%22episodeString%22:%222%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%225f1a64b73793cc2234a389cf3a8f93ad82de7043017dd551f38f65b89daa65e0%22}}";
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
         String rawJson = "NULL";
