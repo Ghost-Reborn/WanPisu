@@ -30,7 +30,6 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
 
         WanPisuConstants.ALL_ANIME_EPISODE_ADD = 0;
         WanPisuConstants.PAGE = 1;
-        WanPisuConstants.start = 0;
 
         RecyclerView animeContainerView = findViewById(R.id.anime_episode_recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this);
