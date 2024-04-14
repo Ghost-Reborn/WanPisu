@@ -1,7 +1,6 @@
 package in.ghostreborn.wanpisu.parser;
 
 import android.net.Uri;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +51,6 @@ public class AllAnime {
                 String id = edge.getString("_id");
                 String name = edge.getString("name");
                 String thumbnail = edge.getString("thumbnail");
-                // TODO Fix no value for sub
                 String lastEpisode = edge.getJSONObject("lastEpisodeInfo").getJSONObject("sub").getString("episodeString");
                 ArrayList<WanPisuEpisodes> availableEpisodes = new ArrayList<>();
                 JSONArray episodesArray = edge.getJSONObject("availableEpisodesDetail").getJSONArray("sub");
@@ -94,27 +92,35 @@ public class AllAnime {
         }
 
         try {
-            JSONObject episodeObject = new JSONObject(rawJson).getJSONObject("data").getJSONObject("episode").getJSONObject("episodeInfo");
-            String episodeName = "";
-            if (!episodeObject.isNull("notes")) {
-                episodeName = episodeObject.getString("notes");
-            }
-            titleAndThumbnail.add(episodeName);
-
-            if (!episodeObject.isNull("thumbnails")){
-                String thumbnail =
-                        "https://wp.youtube-anime.com/aln.youtube-anime.com" +
-                                episodeObject
-                                        .getJSONArray("thumbnails")
-                                        .getString(0);
-                titleAndThumbnail.add(thumbnail);
-                return titleAndThumbnail;
+            JSONObject episodeObj = new JSONObject(rawJson).getJSONObject("data").getJSONObject("episode");
+            JSONObject episodeInfo;
+            if (!episodeObj.isNull("episodeInfo")) {
+                episodeInfo = episodeObj.getJSONObject("episodeInfo");
+                String episodeName = "";
+                if (!episodeInfo.isNull("notes")) {
+                    episodeName = episodeInfo.getString("notes");
+                }
+                titleAndThumbnail.add(episodeName);
+                if (!episodeInfo.isNull("thumbnails")) {
+                    String thumbnail =
+                            "https://wp.youtube-anime.com/aln.youtube-anime.com" +
+                                    episodeInfo
+                                            .getJSONArray("thumbnails")
+                                            .getString(0);
+                    titleAndThumbnail.add(thumbnail);
+                    return titleAndThumbnail;
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        titleAndThumbnail.add("");
+        if (titleAndThumbnail.size() == 0) {
+            titleAndThumbnail.add("");
+            titleAndThumbnail.add("");
+        } else if (titleAndThumbnail.size() == 1) {
+            titleAndThumbnail.add("");
+        }
         return titleAndThumbnail;
 
     }

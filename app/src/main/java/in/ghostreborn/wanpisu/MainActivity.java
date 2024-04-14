@@ -15,10 +15,9 @@ import in.ghostreborn.wanpisu.fragment.MangaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    // TODO Get recently updated anime's AllAnime ID and parse latest episode and show it in main screen
+    // TODO show last available episode in search list
     // TODO show multiple servers
     // TODO fix playback of modern ts files
-    // TODO show selection of manga chapters
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
