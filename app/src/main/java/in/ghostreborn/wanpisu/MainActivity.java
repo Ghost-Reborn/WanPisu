@@ -15,6 +15,7 @@ import in.ghostreborn.wanpisu.fragment.MangaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    // TODO Show user anime by storing allAnime ID and parse it
     // TODO show multiple servers
     // TODO fix playback of modern ts files
 
