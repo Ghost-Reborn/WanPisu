@@ -39,6 +39,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         WanPisu wanPisu = WanPisuConstants.wanPisus.get(position);
 
         holder.animeTextView.setText(wanPisu.getName());
+        holder.animeLastEpisodeTextView.setText(wanPisu.getLastEpisode());
         Picasso.get().load(wanPisu.getThumbnail())
                 .into(holder.animeImageView);
         holder.itemView.setOnClickListener(v -> {
@@ -59,11 +60,13 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView animeTextView;
+        public TextView animeLastEpisodeTextView;
         public ImageView animeImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             animeTextView = itemView.findViewById(R.id.anime_text_view);
+            animeLastEpisodeTextView = itemView.findViewById(R.id.anime_last_episode_text);
             animeImageView = itemView.findViewById(R.id.chapter_image_view);
         }
     }

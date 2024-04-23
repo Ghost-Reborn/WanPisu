@@ -1,6 +1,7 @@
 package in.ghostreborn.wanpisu.parser;
 
 import android.net.Uri;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -115,7 +116,7 @@ public class AllAnime {
             e.printStackTrace();
         }
 
-        if (titleAndThumbnail.size() == 0) {
+        if (titleAndThumbnail.isEmpty()) {
             titleAndThumbnail.add("");
             titleAndThumbnail.add("");
         } else if (titleAndThumbnail.size() == 1) {

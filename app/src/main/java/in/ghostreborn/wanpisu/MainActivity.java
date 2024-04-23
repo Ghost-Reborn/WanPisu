@@ -15,7 +15,6 @@ import in.ghostreborn.wanpisu.fragment.MangaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    // TODO show last available episode in search list
     // TODO show multiple servers
     // TODO fix playback of modern ts files
 
