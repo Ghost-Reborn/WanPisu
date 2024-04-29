@@ -1,4 +1,4 @@
-package in.ghostreborn.wanpisu.parser;
+package in.ghostreborn.wanpisu.parser.ServerParser;
 
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.AGENT;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.ALL_ANIME_REFER;
@@ -13,9 +13,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SakParser {
+public class SMp4Parser {
 
-    public static String parseSak(String url) {
+    public static String parseSMp4(String url) {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder().url(url).header("Referer", ALL_ANIME_REFER).header("Cipher", "AES256-SHA256").header("User-Agent", AGENT).build();
@@ -30,7 +30,7 @@ public class SakParser {
             throw new RuntimeException(e);
         }
 
-        try {
+        try{
             JSONArray links = new JSONObject(rawJson)
                     .getJSONArray("links");
             for (int i = 0; i < links.length(); i++) {
@@ -45,5 +45,4 @@ public class SakParser {
         return out.toString();
 
     }
-
 }

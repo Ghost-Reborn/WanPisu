@@ -26,4 +26,9 @@ public class WanPisuConstants {
     public static String ALL_ANIME_BASE = "allanime.day";
     public static String ALL_ANIME_API = "https://api." + ALL_ANIME_BASE + "/api";
 
+    public static boolean EPISODE_360P_AVAILABLE = false;
+    public static boolean EPISODE_480P_AVAILABLE = false;
+    public static boolean EPISODE_720P_AVAILABLE = false;
+    public static boolean EPISODE_1080P_AVAILABLE = false;
+
 }
