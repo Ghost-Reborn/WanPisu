@@ -14,27 +14,15 @@ import okhttp3.Response;
 
 public class TestParser {
 
+    // TODO check this for server selection
+    // There are many source names, and parsing is different
+    // Test Luf-mp4
+
     public static String getAllAnimeID(String anime, String allAnimeID) {
 
         OkHttpClient client = new OkHttpClient();
-
         String baseUrl = "https://api.allanime.day/api";
-        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"showId\":\"" + "DdTHXmTjwHji2aApQ" + "\",\"translationType\":\"sub\",\"episodeString\":\"" +
-                "1" +
-                "\"}") + "&query=" + Uri.encode("query($showId:String!,$translationType:VaildTranslationTypeEnumType!,$episodeString:String!){episode(showId:$showId,translationType:$translationType,episodeString:$episodeString){" +
-                "episodeInfo{" +
-                "notes" +
-                "}"+
-                "}}");
-
-        /**
-         * This is the Test Query
-         */
-        queryUrl = "https://api.allanime.day/api?variables={%22showId%22:%22DdTHXmTjwHji2aApQ%22,%22translationType%22:%22sub%22,%22episodeString%22:%222%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%225f1a64b73793cc2234a389cf3a8f93ad82de7043017dd551f38f65b89daa65e0%22}}";
-
-        // Manga test
-        queryUrl = "https://api.allanime.day/api?variables={%22type%22:%22manga%22,%22size%22:20,%22dateRange%22:1,%22page%22:1,%22allowAdult%22:false,%22allowUnknown%22:false}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%221fc9651b0d4c3b9dfd2fa6e1d50b8f4d11ce37f988c23b8ee20f82159f7c1147%22}}";
-        queryUrl = "https://api.allanime.day/api?variables={%22_id%22:%22SFrub9DDGMrmdZWyh%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%22a42e1106694628f5e4eaecd8d7ce0c73895a22a3c905c29836e2c220cf26e55f%22}}";
+        String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"showId\":\"LYKSutL2PaAjYyXWz\",\"translationType\":\"sub\",\"episodeString\":\"1\"}") + "&query=" + Uri.encode("query ($showId: String!, $translationType: VaildTranslationTypeEnumType!, $episodeString: String!) {    episode(        showId: $showId        translationType: $translationType        episodeString: $episodeString    ) {        episodeString sourceUrls    }}");
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
         String rawJson = "NULL";
@@ -48,18 +36,70 @@ public class TestParser {
         }
 
         try {
-            JSONArray edgesArray = new JSONObject(rawJson)
+            JSONArray sourceUrls = new JSONObject(rawJson)
                     .getJSONObject("data")
-                    .getJSONObject("shows")
-                    .getJSONArray("edges");
-            for (int i = 0; i < edgesArray.length(); i++) {
-                JSONObject edges = edgesArray.getJSONObject(i);
-                String animeID = edges.getString("_id");
-                if (animeID.equals(allAnimeID)) {
-                    return edges.getJSONObject("availableEpisodesDetail")
-                            .getString("sub");
+                    .getJSONObject("episode")
+                    .getJSONArray("sourceUrls");
+
+            String sourceUrl = "";
+
+            for (int i = 0; i < sourceUrls.length(); i++) {
+                JSONObject source = sourceUrls.getJSONObject(i);
+                sourceUrl = source.getString("sourceUrl");
+                if (sourceUrl.contains("--")) {
+                    sourceUrl = AllAnime.decryptAllAnimeServer(sourceUrl.substring(2));
+                    if (sourceUrl.contains("clock")) {
+                        String sourceName = source.getString("sourceName");
+                        sourceUrl = "https://allanime.day" + sourceUrl.replace("clock", "clock.json");
+
+                        if (sourceName.equals("Luf-mp4")) {
+                        }
+                    }
                 }
             }
+            return getClock(sourceUrl);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return rawJson;
+
+    }
+
+    public static String getClock(String url) {
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder().url(url).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
+        String rawJson = "NULL";
+
+        try (Response response = client.newCall(request).execute()) {
+            if (response.body() != null) {
+                rawJson = response.body().string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONArray links = new JSONObject(rawJson)
+                    .getJSONArray("links");
+            StringBuilder out = new StringBuilder();
+
+            for (int i = 0; i < links.length(); i++) {
+                JSONObject link = links.getJSONObject(i);
+                JSONArray vidArray = link
+                        .getJSONObject("rawUrls")
+                        .getJSONArray("vids");
+                for (int j = 0; j < vidArray.length(); j++) {
+                    String vidUrl = vidArray.getJSONObject(i)
+                            .getString("url");
+                    out.append(vidUrl + "\n\n");
+                }
+            }
+
+            return out.toString();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     // TODO show multiple servers
     // TODO fix playback of modern ts files
 
+    // TODO scrape every servers, like Luf-Mp4 etc, cross check every json data
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

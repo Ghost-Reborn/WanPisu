@@ -1,20 +1,18 @@
 package in.ghostreborn.wanpisu.fragment;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
-import in.ghostreborn.wanpisu.parser.AllAnime;
-import in.ghostreborn.wanpisu.parser.TestParser;
+import in.ghostreborn.wanpisu.parser.AllAnimeParser;
 
 public class TestFragment extends Fragment {
 
@@ -28,7 +26,7 @@ public class TestFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            String test = TestParser.getAllAnimeID("One Piece", "ReooPAxPMsHM4KPMY");
+            String test = AllAnimeParser.getEpisodeServers("ReooPAxPMsHM4KPMY", "25");
             requireActivity().runOnUiThread(() -> {
                 testText.setText(test);
             });

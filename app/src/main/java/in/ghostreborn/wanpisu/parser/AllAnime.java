@@ -155,7 +155,7 @@ public class AllAnime {
 
     }
 
-    private static String decryptAllAnime(String showID, String episodeNumber) {
+    public static String decryptAllAnime(String showID, String episodeNumber) {
 
         // Connect and get encrypted url
 
@@ -192,7 +192,7 @@ public class AllAnime {
 
     }
 
-    private static String decryptAllAnimeServer(String decrypt) {
+    public static String decryptAllAnimeServer(String decrypt) {
         StringBuilder decryptedString = new StringBuilder();
 
         for (int i = 0; i < decrypt.length(); i += 2) {
