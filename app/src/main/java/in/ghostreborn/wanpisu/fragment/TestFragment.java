@@ -26,9 +26,9 @@ public class TestFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            String test = AllAnimeParser.getEpisodeServers("ReooPAxPMsHM4KPMY", "1");
+            AllAnimeParser.getEpisodeServers("ReooPAxPMsHM4KPMY", "1");
             requireActivity().runOnUiThread(() -> {
-                testText.setText(test);
+                testText.setText("test");
             });
         };
         executor.execute(task);
