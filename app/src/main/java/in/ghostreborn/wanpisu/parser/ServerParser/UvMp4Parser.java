@@ -3,6 +3,8 @@ package in.ghostreborn.wanpisu.parser.ServerParser;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.AGENT;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.ALL_ANIME_REFER;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +19,8 @@ public class UvMp4Parser {
 
     public static String parseUvMp4(String url) {
         OkHttpClient client = new OkHttpClient();
+
+        Log.e("TAG", "Error: " + url);
 
         Request request = new Request.Builder().url(url).header("Referer", ALL_ANIME_REFER).header("Cipher", "AES256-SHA256").header("User-Agent", AGENT).build();
         String rawJson = "NULL";
@@ -39,7 +43,7 @@ public class UvMp4Parser {
                 out.append(link).append("\n\n");
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            return rawJson;
         }
 
         return out.toString();

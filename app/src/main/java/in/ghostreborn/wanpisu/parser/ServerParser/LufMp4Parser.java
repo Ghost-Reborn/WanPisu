@@ -34,10 +34,12 @@ public class LufMp4Parser {
             JSONArray links = new JSONObject(rawJson)
                     .getJSONArray("links");
             for (int i = 0; i < links.length(); i++) {
-                String link = links.getJSONObject(i)
+                JSONObject linkObject = links.getJSONObject(i);
+                String link = linkObject
                         .getString("link");
-
-                out.append(link).append("\n\n");
+                boolean isHls = linkObject
+                        .getBoolean("hls");
+                out.append(link).append("\nHls: ").append(isHls).append("\n\n");
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);

@@ -36,6 +36,11 @@ public class SakParser {
             for (int i = 0; i < links.length(); i++) {
                 String link = links.getJSONObject(i)
                         .getString("link");
+
+                if (link.contains("dropbox")){
+                    link = link + " - DropBox";
+                }
+
                 out.append(link).append("\n\n");
             }
         } catch (JSONException e) {
