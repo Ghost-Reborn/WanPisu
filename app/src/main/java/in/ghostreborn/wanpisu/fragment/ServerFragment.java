@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.ServersAdapter;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.AllAnimeParser;
 
 public class ServerFragment extends Fragment {
@@ -26,7 +27,7 @@ public class ServerFragment extends Fragment {
         RecyclerView serverRecyclerView = view.findViewById(R.id.server_recycler_view);
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            AllAnimeParser.getEpisodeServers("ReooPAxPMsHM4KPMY", "1");
+            AllAnimeParser.getEpisodeServers(WanPisuConstants.ALL_ANIME_ID, WanPisuConstants.ALL_ANIME_EPISODE_NUMBER);
             requireActivity().runOnUiThread(() -> {
                 ServersAdapter adapter = new ServersAdapter(requireActivity());
                 LinearLayoutManager manager = new LinearLayoutManager(requireContext());

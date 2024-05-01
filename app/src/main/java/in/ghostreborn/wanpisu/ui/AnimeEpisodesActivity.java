@@ -34,12 +34,12 @@ public class AnimeEpisodesActivity extends AppCompatActivity {
         RecyclerView animeContainerView = findViewById(R.id.anime_episode_recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         animeContainerView.setLayoutManager(manager);
-        animeContainerView.setAdapter(new AnimeEpisodesAdapter(this));
+        animeContainerView.setAdapter(new AnimeEpisodesAdapter(this, getSupportFragmentManager().beginTransaction()));
 
         RecyclerView animeGroupContainerView = findViewById(R.id.anime_episode_group_recycler_view);
         GridLayoutManager groupManager = new GridLayoutManager(this, 1, RecyclerView.HORIZONTAL, false);
         animeGroupContainerView.setLayoutManager(groupManager);
-        animeGroupContainerView.setAdapter(new AnimeGroupAdapter(getPages(), animeContainerView, this));
+        animeGroupContainerView.setAdapter(new AnimeGroupAdapter(getPages(), animeContainerView, this, getSupportFragmentManager().beginTransaction()));
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {

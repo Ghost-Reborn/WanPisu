@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 
 public class SubServersAdapter extends RecyclerView.Adapter<SubServersAdapter.ViewHolder> {
 
@@ -38,11 +39,8 @@ public class SubServersAdapter extends RecyclerView.Adapter<SubServersAdapter.Vi
 
         holder.animeServerTextView.setText(serverName);
         holder.animeServerTextView.setOnClickListener(v -> {
-            Toast.makeText(activity, serverUrl, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(serverUrl));
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            activity.startActivity(intent);
+            WanPisuConstants.WAN_PISU_SERVER = serverUrl;
+            activity.startActivity(new Intent(activity, ExoPlayerActivity.class));
         });
     }
 

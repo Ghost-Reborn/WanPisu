@@ -75,18 +75,16 @@ public class ExoPlayerActivity extends AppCompatActivity {
 
         exoPlayerProgressBar = findViewById(R.id.exoplayer_progress_bar);
 
-        AnimeAsync animeAsync = new AnimeAsync(
-                WanPisuConstants.ALL_ANIME_ID,
-                WanPisuConstants.ALL_ANIME_EPISODE_NUMBER
-        );
-        animeAsync.execute();
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
+
+        findViews();
+        exoPlayerProgressBar.setVisibility(View.GONE);
+        initPlayer(WanPisuConstants.WAN_PISU_SERVER, ExoPlayerActivity.this);
 
     }
 
@@ -126,9 +124,6 @@ public class ExoPlayerActivity extends AppCompatActivity {
                 }
             }
             Log.e("SERVER: ", "SERVER: " + server);
-            findViews();
-            exoPlayerProgressBar.setVisibility(View.GONE);
-            initPlayer(server, ExoPlayerActivity.this);
 
         }
     }

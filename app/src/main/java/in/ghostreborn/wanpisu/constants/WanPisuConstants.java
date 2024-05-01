@@ -48,4 +48,6 @@ public class WanPisuConstants {
     public static String S_MP4_URL = "";
     public static String UV_MP4_URL = "";
 
+    public static String WAN_PISU_SERVER = "";
+
 }
