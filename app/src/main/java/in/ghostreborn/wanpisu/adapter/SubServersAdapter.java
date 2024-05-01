@@ -1,6 +1,8 @@
 package in.ghostreborn.wanpisu.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,10 @@ public class SubServersAdapter extends RecyclerView.Adapter<SubServersAdapter.Vi
         holder.animeServerTextView.setText(serverName);
         holder.animeServerTextView.setOnClickListener(v -> {
             Toast.makeText(activity, serverUrl, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(serverUrl));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(intent);
         });
     }
 
