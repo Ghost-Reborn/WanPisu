@@ -45,7 +45,7 @@ public class LufMp4Parser {
             throw new RuntimeException(e);
         }
 
-        return out.toString();
+        return rawJson;
 
     }
 

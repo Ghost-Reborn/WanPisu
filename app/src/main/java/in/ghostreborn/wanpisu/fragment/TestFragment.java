@@ -12,7 +12,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.parser.AllAnimeParser;
+import in.ghostreborn.wanpisu.parser.ServerParser.LufMp4Parser;
 
 public class TestFragment extends Fragment {
 
@@ -27,8 +29,9 @@ public class TestFragment extends Fragment {
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
             AllAnimeParser.getEpisodeServers("ReooPAxPMsHM4KPMY", "1");
+            String test = LufMp4Parser.parseLufMp4(WanPisuConstants.LUF_MP4_URL);
             requireActivity().runOnUiThread(() -> {
-                testText.setText("test");
+                testText.setText(test);
             });
         };
         executor.execute(task);

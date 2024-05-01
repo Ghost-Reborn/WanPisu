@@ -113,6 +113,19 @@ public class AllAnimeParser {
                             .replace("clock", "clock.json");
                     if (sourceUrl.contains("clock")) {
                         String sourceName = sourceObject.getString("sourceName");
+
+                        if (sourceName.equals(WanPisuConstants.SERVER_SAK)){
+                            WanPisuConstants.SAK_URL = sourceUrl;
+                        }else if (sourceName.equals(WanPisuConstants.SERVER_DEFAULT)) {
+                            WanPisuConstants.DEFAULT_URL = sourceUrl;
+                        }else if (sourceName.equals(WanPisuConstants.SERVER_LUF_MP4)){
+                            WanPisuConstants.LUF_MP4_URL = sourceUrl;
+                        }else if (sourceName.equals(WanPisuConstants.SERVER_UV_MP4)){
+                            WanPisuConstants.UV_MP4_URL = sourceUrl;
+                        }else if (sourceName.equals(WanPisuConstants.SERVER_S_MP4)){
+                            WanPisuConstants.S_MP4_URL = sourceUrl;
+                        }
+
                         WanPisuConstants.servers.add(new Servers(sourceName, sourceUrl));
                     }
                 }

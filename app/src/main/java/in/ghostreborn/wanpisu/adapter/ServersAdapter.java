@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.parser.ServerParser.LufMp4Parser;
 import in.ghostreborn.wanpisu.parser.ServerParser.SakParser;
 
 public class ServersAdapter extends RecyclerView.Adapter<ServersAdapter.ViewHolder> {
@@ -44,9 +45,11 @@ public class ServersAdapter extends RecyclerView.Adapter<ServersAdapter.ViewHold
             Runnable task = () -> {
                 if (serverName.equals(WanPisuConstants.SERVER_SAK)){
                     SakParser.parseSak(serverUrl);
+                }else if (serverName.equals(WanPisuConstants.SERVER_LUF_MP4)){
+                    LufMp4Parser.parseLufMp4(serverUrl);
                 }
                 activity.runOnUiThread(() -> {
-                    ServersAdapter adapter = new ServersAdapter(activity);
+                    SubServersAdapter adapter = new SubServersAdapter(activity);
                     LinearLayoutManager manager = new LinearLayoutManager(activity);
                     holder.animeServerRecyclerView.setLayoutManager(manager);
                     holder.animeServerRecyclerView.setAdapter(adapter);
@@ -68,7 +71,7 @@ public class ServersAdapter extends RecyclerView.Adapter<ServersAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-            animeServerTextView = itemView.findViewById(R.id.anime_server_select_text_view);
+            animeServerTextView = itemView.findViewById(R.id.anime_sub_server_select_text_view);
             animeServerRecyclerView = itemView.findViewById(R.id.anime_server_recycler_view);
         }
     }

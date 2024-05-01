@@ -35,10 +35,17 @@ public class WanPisuConstants {
     public static boolean EPISODE_1080P_AVAILABLE = false;
 
     public static ArrayList<Servers> servers;
+    public static ArrayList<Servers> subServers;
     public static String SERVER_SAK = "Sak";
     public static String SERVER_LUF_MP4 = "Luf-mp4";
     public static String SERVER_DEFAULT = "Default";
     public static String SERVER_S_MP4 = "S-mp4";
     public static String SERVER_UV_MP4 = "Uv-mp4";
+
+    public static String SAK_URL = "";
+    public static String LUF_MP4_URL = "";
+    public static String DEFAULT_URL = "";
+    public static String S_MP4_URL = "";
+    public static String UV_MP4_URL = "";
 
 }

@@ -20,7 +20,7 @@ public class SakParser {
 
     public static void parseSak(String url) {
         OkHttpClient client = new OkHttpClient();
-        WanPisuConstants.servers = new ArrayList<>();
+        WanPisuConstants.subServers = new ArrayList<>();
 
         Request request = new Request.Builder().url(url).header("Referer", ALL_ANIME_REFER).header("Cipher", "AES256-SHA256").header("User-Agent", AGENT).build();
         String rawJson = "NULL";
@@ -41,7 +41,7 @@ public class SakParser {
                         .getString("link");
 
                 if (link.contains("dropbox")){
-                    WanPisuConstants.servers.add(new Servers("DropBox", link));
+                    WanPisuConstants.subServers.add(new Servers("DropBox", link));
                 }
 
             }
