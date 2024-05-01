@@ -15,8 +15,11 @@ import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.parser.ServerParser.DefaultParser;
 import in.ghostreborn.wanpisu.parser.ServerParser.LufMp4Parser;
+import in.ghostreborn.wanpisu.parser.ServerParser.SMp4Parser;
 import in.ghostreborn.wanpisu.parser.ServerParser.SakParser;
+import in.ghostreborn.wanpisu.parser.ServerParser.UvMp4Parser;
 
 public class ServersAdapter extends RecyclerView.Adapter<ServersAdapter.ViewHolder> {
 
@@ -43,10 +46,18 @@ public class ServersAdapter extends RecyclerView.Adapter<ServersAdapter.ViewHold
         holder.animeServerTextView.setOnClickListener(v -> {
             Executor executor = Executors.newSingleThreadExecutor();
             Runnable task = () -> {
-                if (serverName.equals(WanPisuConstants.SERVER_SAK)){
-                    SakParser.parseSak(serverUrl);
+                if (serverName.equals(WanPisuConstants.SERVER_DEFAULT)){
+                    DefaultParser.parseDefault(serverUrl);
                 }else if (serverName.equals(WanPisuConstants.SERVER_LUF_MP4)){
                     LufMp4Parser.parseLufMp4(serverUrl);
+                }else if (serverName.equals(WanPisuConstants.SERVER_SAK)){
+                    SakParser.parseSak(serverUrl);
+                }else if (serverName.equals(WanPisuConstants.SERVER_S_MP4)){
+                    SMp4Parser.parseSMp4(serverUrl);
+                }else if (serverName.equals(WanPisuConstants.SERVER_UV_MP4)){
+                    UvMp4Parser.parseUvMp4(serverUrl);
+                }else {
+                    return;
                 }
                 activity.runOnUiThread(() -> {
                     SubServersAdapter adapter = new SubServersAdapter(activity);

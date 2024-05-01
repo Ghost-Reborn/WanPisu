@@ -42,6 +42,8 @@ public class SakParser {
 
                 if (link.contains("dropbox")){
                     WanPisuConstants.subServers.add(new Servers("DropBox", link));
+                }else {
+                    WanPisuConstants.subServers.add(new Servers(link, link));
                 }
 
             }
