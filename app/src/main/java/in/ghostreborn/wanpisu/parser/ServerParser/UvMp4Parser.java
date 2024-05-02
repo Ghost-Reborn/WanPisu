@@ -3,6 +3,8 @@ package in.ghostreborn.wanpisu.parser.ServerParser;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.AGENT;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.ALL_ANIME_REFER;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +43,7 @@ public class UvMp4Parser {
             for (int i = 0; i < links.length(); i++) {
                 String link = links.getJSONObject(i)
                         .getString("link");
-                WanPisuConstants.subServers.add(new Servers(link, link));
+                WanPisuConstants.subServers.add(new Servers(link, link, false));
             }
         } catch (JSONException e) {
             e.printStackTrace();

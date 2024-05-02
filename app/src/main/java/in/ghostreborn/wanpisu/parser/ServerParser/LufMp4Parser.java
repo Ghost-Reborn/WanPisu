@@ -3,6 +3,8 @@ package in.ghostreborn.wanpisu.parser.ServerParser;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.AGENT;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.ALL_ANIME_REFER;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +36,7 @@ public class LufMp4Parser {
             throw new RuntimeException(e);
         }
 
+
         try {
             JSONArray links = new JSONObject(rawJson)
                     .getJSONArray("links");
@@ -41,14 +44,16 @@ public class LufMp4Parser {
                 JSONObject linkObject = links.getJSONObject(i);
                 String link = linkObject
                         .getString("link");
+                boolean isHls = linkObject
+                        .getBoolean("hls");
                 if (link.contains("vipanicdn")) {
-                    WanPisuConstants.subServers.add(new Servers("Vipanicdn", link));
+                    WanPisuConstants.subServers.add(new Servers("Vipanicdn", link, isHls));
                 } else if (link.contains("anicdnstream")) {
-                    WanPisuConstants.subServers.add(new Servers("Anicdnstream", link));
+                    WanPisuConstants.subServers.add(new Servers("Anicdnstream", link, isHls));
                 } else if (link.contains("maverickki")) {
-                    WanPisuConstants.subServers.add(new Servers("Maverickki", link));
+                    WanPisuConstants.subServers.add(new Servers("Maverickki", link, isHls));
                 } else {
-                    WanPisuConstants.subServers.add(new Servers(link, link));
+                    WanPisuConstants.subServers.add(new Servers(link, link, isHls));
                 }
             }
         } catch (JSONException e) {

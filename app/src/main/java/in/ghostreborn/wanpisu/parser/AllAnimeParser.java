@@ -126,7 +126,7 @@ public class AllAnimeParser {
                             WanPisuConstants.S_MP4_URL = sourceUrl;
                         }
 
-                        WanPisuConstants.servers.add(new Servers(sourceName, sourceUrl));
+                        WanPisuConstants.servers.add(new Servers(sourceName, sourceUrl, false));
                     }
                 }
             }

@@ -40,6 +40,7 @@ public class SubServersAdapter extends RecyclerView.Adapter<SubServersAdapter.Vi
         holder.animeServerTextView.setText(serverName);
         holder.animeServerTextView.setOnClickListener(v -> {
             WanPisuConstants.WAN_PISU_SERVER = serverUrl;
+            WanPisuConstants.isHLS = WanPisuConstants.subServers.get(position).getIsHls();
             activity.startActivity(new Intent(activity, ExoPlayerActivity.class));
         });
     }

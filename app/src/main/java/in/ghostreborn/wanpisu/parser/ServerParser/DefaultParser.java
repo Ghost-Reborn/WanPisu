@@ -3,6 +3,8 @@ package in.ghostreborn.wanpisu.parser.ServerParser;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.AGENT;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.ALL_ANIME_REFER;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,9 +43,9 @@ public class DefaultParser {
                 String link = links.getJSONObject(i)
                         .getString("link");
                 if (link.contains("wixmp")){
-                    WanPisuConstants.subServers.add(new Servers("Wixmp", link));
+                    WanPisuConstants.subServers.add(new Servers("Wixmp", link, false));
                 }else {
-                    WanPisuConstants.subServers.add(new Servers(link, link));
+                    WanPisuConstants.subServers.add(new Servers(link, link, false));
                 }
             }
         } catch (JSONException e) {

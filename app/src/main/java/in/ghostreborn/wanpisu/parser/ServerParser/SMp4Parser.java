@@ -3,6 +3,8 @@ package in.ghostreborn.wanpisu.parser.ServerParser;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.AGENT;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.ALL_ANIME_REFER;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,12 +40,14 @@ public class SMp4Parser {
             JSONArray links = new JSONObject(rawJson)
                     .getJSONArray("links");
             for (int i = 0; i < links.length(); i++) {
-                String link = links.getJSONObject(i)
+                JSONObject linkObject = links.getJSONObject(i);
+                String link = linkObject
                         .getString("link");
+                boolean isHls = !linkObject.getBoolean("mp4");
                 if (link.contains("sharepoint")){
-                    WanPisuConstants.subServers.add(new Servers("Sharepoint", link));
+                    WanPisuConstants.subServers.add(new Servers("Sharepoint", link, isHls));
                 }else {
-                    WanPisuConstants.subServers.add(new Servers(link, link));
+                    WanPisuConstants.subServers.add(new Servers(link, link, isHls));
                 }
             }
         } catch (JSONException e) {
