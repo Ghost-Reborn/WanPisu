@@ -24,7 +24,8 @@ import in.ghostreborn.wanpisu.parser.ServerParser.UvMp4Parser;
 public class ServersAdapter extends RecyclerView.Adapter<ServersAdapter.ViewHolder> {
 
     Activity activity;
-    public ServersAdapter(Activity activity){
+
+    public ServersAdapter(Activity activity) {
         this.activity = activity;
     }
 
@@ -41,22 +42,23 @@ public class ServersAdapter extends RecyclerView.Adapter<ServersAdapter.ViewHold
 
         String serverName = WanPisuConstants.servers.get(position).getServerName();
         String serverUrl = WanPisuConstants.servers.get(position).getServerUrl();
+        String serverNameText = "⦿ " + serverName;
 
-        holder.animeServerTextView.setText(serverName);
+        holder.animeServerTextView.setText(serverNameText);
         holder.animeServerTextView.setOnClickListener(v -> {
             Executor executor = Executors.newSingleThreadExecutor();
             Runnable task = () -> {
-                if (serverName.equals(WanPisuConstants.SERVER_DEFAULT)){
+                if (serverName.equals(WanPisuConstants.SERVER_DEFAULT)) {
                     DefaultParser.parseDefault(serverUrl);
-                }else if (serverName.equals(WanPisuConstants.SERVER_LUF_MP4)){
+                } else if (serverName.equals(WanPisuConstants.SERVER_LUF_MP4)) {
                     LufMp4Parser.parseLufMp4(serverUrl);
-                }else if (serverName.equals(WanPisuConstants.SERVER_SAK)){
+                } else if (serverName.equals(WanPisuConstants.SERVER_SAK)) {
                     SakParser.parseSak(serverUrl);
-                }else if (serverName.equals(WanPisuConstants.SERVER_S_MP4)){
+                } else if (serverName.equals(WanPisuConstants.SERVER_S_MP4)) {
                     SMp4Parser.parseSMp4(serverUrl);
-                }else if (serverName.equals(WanPisuConstants.SERVER_UV_MP4)){
+                } else if (serverName.equals(WanPisuConstants.SERVER_UV_MP4)) {
                     UvMp4Parser.parseUvMp4(serverUrl);
-                }else {
+                } else {
                     return;
                 }
                 activity.runOnUiThread(() -> {

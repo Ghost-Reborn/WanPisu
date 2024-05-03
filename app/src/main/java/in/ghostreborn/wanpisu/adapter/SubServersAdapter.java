@@ -36,8 +36,9 @@ public class SubServersAdapter extends RecyclerView.Adapter<SubServersAdapter.Vi
 
         String serverName = WanPisuConstants.subServers.get(position).getServerName();
         String serverUrl = WanPisuConstants.subServers.get(position).getServerUrl();
+        String serverNameText = "○ " + serverName;
 
-        holder.animeServerTextView.setText(serverName);
+        holder.animeServerTextView.setText(serverNameText);
         holder.animeServerTextView.setOnClickListener(v -> {
             WanPisuConstants.WAN_PISU_SERVER = serverUrl;
             WanPisuConstants.isHLS = WanPisuConstants.subServers.get(position).getIsHls();
