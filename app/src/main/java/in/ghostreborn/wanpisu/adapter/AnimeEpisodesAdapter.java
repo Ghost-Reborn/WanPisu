@@ -10,12 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.ServerSelectActivity;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.fragment.ServerFragment;
 import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
@@ -23,11 +25,9 @@ import in.ghostreborn.wanpisu.ui.ExoPlayerActivity;
 public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdapter.ViewHolder> {
 
     Context context;
-    FragmentTransaction transaction;
 
-    public AnimeEpisodesAdapter(Context context, FragmentTransaction transaction) {
+    public AnimeEpisodesAdapter(Context context) {
         this.context = context;
-        this.transaction = transaction;
     }
 
     @NonNull
@@ -66,18 +66,12 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
             Picasso.get().load(episodeThumbnail).into(holder.episodeImageView);
         }
 
-        // TODO fix this
-//        holder.itemView.setOnClickListener(view -> {
-//            Intent intent = new Intent(context, ExoPlayerActivity.class);
-//            WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = WanPisuConstants.episodes.get(position).getEpisodeNumber();
-//            context.startActivity(intent);
-//        });
-
         holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ServerSelectActivity.class);
             WanPisuConstants.ALL_ANIME_EPISODE_NUMBER = WanPisuConstants.episodes.get(position).getEpisodeNumber();
-            transaction.replace(R.id.server_fragment_container, new ServerFragment())
-                    .commit();
+            context.startActivity(intent);
         });
+
 
     }
 
@@ -108,14 +102,12 @@ public class AnimeEpisodesAdapter extends RecyclerView.Adapter<AnimeEpisodesAdap
         public TextView episodeNumberTextView;
         public TextView episodeTitleTextView;
         public ImageView episodeImageView;
-        public FrameLayout serverFragmentContainer;
 
         public ViewHolder(View itemView) {
             super(itemView);
             episodeNumberTextView = itemView.findViewById(R.id.chapter_number_text_view);
             episodeTitleTextView = itemView.findViewById(R.id.chapter_title_text_view);
             episodeImageView = itemView.findViewById(R.id.chapter_image_view);
-            serverFragmentContainer = itemView.findViewById(R.id.server_fragment_container);
         }
     }
 

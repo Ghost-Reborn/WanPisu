@@ -24,12 +24,10 @@ public class AnimeGroupAdapter extends RecyclerView.Adapter<AnimeGroupAdapter.Vi
     int pages;
     RecyclerView recyclerView;
     Activity activity;
-    FragmentTransaction transaction;
-    public AnimeGroupAdapter(int pages, RecyclerView recyclerView, Activity activity, FragmentTransaction transaction){
+    public AnimeGroupAdapter(int pages, RecyclerView recyclerView, Activity activity){
         this.pages = pages;
         this.recyclerView = recyclerView;
         this.activity = activity;
-        this.transaction = transaction;
     }
 
     @NonNull
@@ -50,7 +48,7 @@ public class AnimeGroupAdapter extends RecyclerView.Adapter<AnimeGroupAdapter.Vi
             getTitle();
             LinearLayoutManager manager = new LinearLayoutManager(holder.itemView.getContext());
             recyclerView.setLayoutManager(manager);
-            recyclerView.setAdapter(new AnimeEpisodesAdapter(holder.itemView.getContext(), transaction));
+            recyclerView.setAdapter(new AnimeEpisodesAdapter(holder.itemView.getContext()));
         });
     }
 

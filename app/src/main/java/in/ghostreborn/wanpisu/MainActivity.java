@@ -16,7 +16,7 @@ import in.ghostreborn.wanpisu.fragment.MangaFragment;
 public class MainActivity extends AppCompatActivity {
 
     // TODO Show user anime by storing allAnime ID and parse it
-    // TODO check sub server is Hls or not and store it in isHls variable
+    // TODO Prioritize servers and don't show it to the user
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
