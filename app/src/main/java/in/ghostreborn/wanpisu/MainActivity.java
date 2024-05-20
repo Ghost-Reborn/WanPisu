@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO Show user anime by storing allAnime ID and parse it
     // TODO Prioritize servers and don't show it to the user
+    // TODO show user's anime on clicking anime bottom navigation twice
+    // TODO show user's manga on clicking manga bottom navigation twice
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
