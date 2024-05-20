@@ -1,5 +1,6 @@
 package in.ghostreborn.wanpisu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import in.ghostreborn.wanpisu.fragment.AnimeFragment;
 import in.ghostreborn.wanpisu.fragment.MangaFragment;
+import in.ghostreborn.wanpisu.ui.UserActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     homeTransaction.commit();
                     return true;
                 case R.id.menu_user:
+                    startActivity(new Intent(MainActivity.this, UserActivity.class));
                     return true;
                 case R.id.menu_manga:
                     Fragment mangaFragment = new MangaFragment();

@@ -15,6 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.UserActivity"
+            android:exported="false" />
+        <activity
             android:name=".ServerSelectActivity"
             android:exported="false" />
         <activity
