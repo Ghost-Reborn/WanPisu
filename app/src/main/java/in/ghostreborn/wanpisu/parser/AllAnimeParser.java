@@ -6,6 +6,7 @@ import static in.ghostreborn.wanpisu.constants.WanPisuConstants.ALL_ANIME_BASE;
 import static in.ghostreborn.wanpisu.constants.WanPisuConstants.ALL_ANIME_REFER;
 
 import android.net.Uri;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Servers;
+import in.ghostreborn.wanpisu.model.WanPisu;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -28,9 +30,11 @@ public class AllAnimeParser {
     // TODO scrape id and name, available episodes will be taken when tapped on anime
     public static String parseAnimeByName(String anime) {
         OkHttpClient client = new OkHttpClient();
+        WanPisuConstants.wanPisus = new ArrayList<>();
         String queryUrl = ALL_ANIME_API + "?variables=" + Uri.encode("{\"search\":{\"allowAdult\":false,\"allowUnknown\":false,\"query\":\"" + anime + "\"},\"limit\":39,\"page\":1,\"translationType\":\"sub\",\"countryOrigin\":\"ALL\"}") + "&query=" + Uri.encode("query($search:SearchInput,$limit:Int,$page:Int,$translationType:VaildTranslationTypeEnumType,$countryOrigin:VaildCountryOriginEnumType){shows(search:$search,limit:$limit,page:$page,translationType:$translationType,countryOrigin:$countryOrigin){edges{" +
                 "_id," +
-                "name" +
+                "name," +
+                "thumbnail" +
                 "}}}");
         Request request = new Request.Builder().url(queryUrl).header("Referer", ALL_ANIME_REFER).header("Cipher", "AES256-SHA256").header("User-Agent", AGENT).build();
         String rawJson = "NULL";
@@ -41,6 +45,22 @@ public class AllAnimeParser {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+        try{
+            JSONArray edges = new JSONObject(rawJson)
+                    .getJSONObject("data")
+                    .getJSONObject("shows")
+                    .getJSONArray("edges");
+            for (int i=0;i< edges.length();i++){
+                JSONObject edge = edges.getJSONObject(i);
+                String id = edge.getString("_id");
+                String name = edge.getString("name");
+                String thumbnail = edge.getString("thumbnail");
+                WanPisuConstants.wanPisus.add(new WanPisu(id, name, thumbnail));
+            }
+        } catch (JSONException e) {
+            Log.e(WanPisuConstants.LOG_TAG, e.toString());
         }
 
         return rawJson;

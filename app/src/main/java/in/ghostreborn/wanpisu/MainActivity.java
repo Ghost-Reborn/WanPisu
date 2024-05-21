@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     // TODO Prioritize servers and don't show it to the user
     // TODO show user's anime on clicking anime bottom navigation twice
     // TODO show user's manga on clicking manga bottom navigation twice
+    // TODO by checking lastEpisodeInfo, show notification when new episode is released
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

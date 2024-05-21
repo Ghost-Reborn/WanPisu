@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.adapter.AnimeSearchAdapter;
-import in.ghostreborn.wanpisu.parser.AllAnime;
+import in.ghostreborn.wanpisu.parser.AllAnimeParser;
 
 public class AnimeFragment extends Fragment {
 
@@ -29,7 +29,7 @@ public class AnimeFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            AllAnime.getAnimes("");
+            AllAnimeParser.parseAnimeByName("");
             AnimeSearchAdapter adapter = new AnimeSearchAdapter(getContext());
             requireActivity().runOnUiThread(() -> {
                 animeContainerView.setAdapter(adapter);
@@ -44,7 +44,7 @@ public class AnimeFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 Executor executor = Executors.newSingleThreadExecutor();
                 Runnable task = () -> {
-                    AllAnime.getAnimes(animeSearchView.getQuery().toString());
+                    AllAnimeParser.parseAnimeByName(animeSearchView.getQuery().toString());
                     AnimeSearchAdapter adapter = new AnimeSearchAdapter(getContext());
                     requireActivity().runOnUiThread(() -> {
                         animeContainerView.setAdapter(adapter);

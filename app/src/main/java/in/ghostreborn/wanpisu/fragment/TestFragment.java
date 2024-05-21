@@ -12,6 +12,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
+import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.model.WanPisu;
 import in.ghostreborn.wanpisu.parser.AllAnimeParser;
 
 public class TestFragment extends Fragment {
@@ -26,9 +28,15 @@ public class TestFragment extends Fragment {
 
         Executor executor = Executors.newSingleThreadExecutor();
         Runnable task = () -> {
-            AllAnimeParser.getEpisodeServers("ReooPAxPMsHM4KPMY", "150");
+            String out = AllAnimeParser.parseAnimeByName("One Piece");
             requireActivity().runOnUiThread(() -> {
-                testText.setText("test");
+                for (int i = 0; i < WanPisuConstants.wanPisus.size(); i++) {
+                    WanPisu wanPisu = WanPisuConstants.wanPisus.get(i);
+                    String id = "ID: " + wanPisu.getId()  + "\n";
+                    String name = "Name: " + wanPisu.getName() + "\n";
+                    String thumbnail = "Thumbnail: " + wanPisu.getThumbnail() + "\n\n\n";
+                    testText.append(id+name+thumbnail);
+                }
             });
         };
         executor.execute(task);

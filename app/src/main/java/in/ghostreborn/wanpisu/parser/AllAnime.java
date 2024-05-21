@@ -57,7 +57,7 @@ public class AllAnime {
                 for (int j = episodesArray.length() - 1; j >= 0; j--) {
                     availableEpisodes.add(new WanPisuEpisodes(episodesArray.getString(j), "", ""));
                 }
-                WanPisuConstants.wanPisus.add(new WanPisu(id, name, thumbnail, lastEpisode, availableEpisodes));
+                WanPisuConstants.wanPisus.add(new WanPisu(id, name, thumbnail));
             }
         } catch (JSONException e) {
             e.printStackTrace();

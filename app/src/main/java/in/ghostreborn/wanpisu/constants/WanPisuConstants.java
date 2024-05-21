@@ -8,6 +8,9 @@ import in.ghostreborn.wanpisu.model.WanPisu;
 import in.ghostreborn.wanpisu.model.WanPisuEpisodes;
 
 public class WanPisuConstants {
+
+    public static final String LOG_TAG = "WAN_PISU";
+
     public static String MANGA_ID;
     public static String ALL_ANIME_ID;
     public static String ALL_ANIME_EPISODE_NUMBER = "1";
