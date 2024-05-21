@@ -18,11 +18,13 @@ public class TestParser {
     // There are many source names, and parsing is different
     // Test Luf-mp4
 
-    public static String getAllAnimeID(String anime, String allAnimeID) {
+    public static String testParse() {
 
         OkHttpClient client = new OkHttpClient();
         String baseUrl = "https://api.allanime.day/api";
         String queryUrl = baseUrl + "?variables=" + Uri.encode("{\"showId\":\"LYKSutL2PaAjYyXWz\",\"translationType\":\"sub\",\"episodeString\":\"1\"}") + "&query=" + Uri.encode("query ($showId: String!, $translationType: VaildTranslationTypeEnumType!, $episodeString: String!) {    episode(        showId: $showId        translationType: $translationType        episodeString: $episodeString    ) {        episodeString sourceUrls    }}");
+
+        queryUrl = "https://api.allanime.day/api?variables={%22_id%22:%22ReooPAxPMsHM4KPMY%22}&extensions={%22persistedQuery%22:{%22version%22:1,%22sha256Hash%22:%229d7439c90f203e534ca778c4901f9aa2d3ad42c06243ab2c5e6b79612af32028%22}}";
 
         Request request = new Request.Builder().url(queryUrl).header("Referer", "https://allanime.to").header("Cipher", "AES256-SHA256").header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; rv:109.0) Gecko/20100101 Firefox/109.0").build();
         String rawJson = "NULL";
@@ -32,33 +34,6 @@ public class TestParser {
                 rawJson = response.body().string();
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            JSONArray sourceUrls = new JSONObject(rawJson)
-                    .getJSONObject("data")
-                    .getJSONObject("episode")
-                    .getJSONArray("sourceUrls");
-
-            String sourceUrl = "";
-
-            for (int i = 0; i < sourceUrls.length(); i++) {
-                JSONObject source = sourceUrls.getJSONObject(i);
-                sourceUrl = source.getString("sourceUrl");
-                if (sourceUrl.contains("--")) {
-                    sourceUrl = AllAnime.decryptAllAnimeServer(sourceUrl.substring(2));
-                    if (sourceUrl.contains("clock")) {
-                        String sourceName = source.getString("sourceName");
-                        sourceUrl = "https://allanime.day" + sourceUrl.replace("clock", "clock.json");
-
-                        if (sourceName.equals("Luf-mp4")) {
-                        }
-                    }
-                }
-            }
-            return getClock(sourceUrl);
-        } catch (JSONException e) {
             e.printStackTrace();
         }
 

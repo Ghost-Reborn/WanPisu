@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.Servers;
 import in.ghostreborn.wanpisu.model.WanPisu;
+import in.ghostreborn.wanpisu.model.WanPisuEpisodes;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -70,7 +71,8 @@ public class AllAnimeParser {
     // TODO scrape available episodes and show it in episode selection
     public static String parseAnimeByID(String animeID) {
         OkHttpClient client = new OkHttpClient();
-        String queryUrl = ALL_ANIME_API + "?variables=" + Uri.encode("{\"showId\":\"LYKSutL2PaAjYyXWz\"}") + "&query=" + Uri.encode("query ($showId: String!) {    show(        _id: $showId    ) {        " +
+        WanPisuConstants.episodes = new ArrayList<>();
+        String queryUrl = ALL_ANIME_API + "?variables=" + Uri.encode("{\"showId\":\""+animeID+"\"}") + "&query=" + Uri.encode("query ($showId: String!) {    show(        _id: $showId    ) {        " +
                 "_id," +
                 "availableEpisodesDetail" +
                 "}}");
@@ -83,6 +85,20 @@ public class AllAnimeParser {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+        try{
+            JSONArray sub = new JSONObject(rawJson)
+                    .getJSONObject("data")
+                    .getJSONObject("show")
+                    .getJSONObject("availableEpisodesDetail")
+                    .getJSONArray("sub");
+            for (int i=sub.length()-1;i>0;i--) {
+                String episode = sub.getString(i);
+                WanPisuConstants.episodes.add(new WanPisuEpisodes(episode, "", ""));
+            }
+        } catch (JSONException e) {
+            Log.e(WanPisuConstants.LOG_TAG, e.toString());
         }
 
         return rawJson;

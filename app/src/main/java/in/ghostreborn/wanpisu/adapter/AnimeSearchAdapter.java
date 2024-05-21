@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
 import in.ghostreborn.wanpisu.model.WanPisu;
-import in.ghostreborn.wanpisu.ui.AnimeEpisodesActivity;
+import in.ghostreborn.wanpisu.ui.AnimeDetailsActivity;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.ViewHolder> {
 
@@ -44,7 +44,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         holder.itemView.setOnClickListener(v -> {
             WanPisuConstants.animeThumbnail = wanPisu.getThumbnail();
             WanPisuConstants.ALL_ANIME_ID = wanPisu.getId();
-            Intent intent = new Intent(context, AnimeEpisodesActivity.class);
+            Intent intent = new Intent(context, AnimeDetailsActivity.class);
             context.startActivity(intent);
         });
 

@@ -8,10 +8,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.squareup.picasso.Picasso;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import in.ghostreborn.wanpisu.R;
 import in.ghostreborn.wanpisu.constants.WanPisuConstants;
+import in.ghostreborn.wanpisu.parser.AllAnimeParser;
 
 public class AnimeDetailsActivity extends AppCompatActivity {
 
@@ -33,6 +35,15 @@ public class AnimeDetailsActivity extends AppCompatActivity {
         animeDetailsSequel = findViewById(R.id.anime_details_sequel);
         animeDetailsWatchButton = findViewById(R.id.anime_details_watch_button);
         animeDetailsSynopsis = findViewById(R.id.anime_details_synopsis);
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        Runnable task = () -> {
+            AllAnimeParser.parseAnimeByID(WanPisuConstants.ALL_ANIME_ID);
+            runOnUiThread(() -> {
+                animeDetailsTextView.setText("");
+            });
+        };
+        executor.execute(task);
 
         animeDetailsWatchButton.setOnClickListener(view -> {
             startActivity(new Intent(AnimeDetailsActivity.this, AnimeEpisodesActivity.class));
